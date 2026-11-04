@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reetama Ghosh | Geopolitical risk analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #eef1f0;
+    --ink: #14232e;
+    --muted: #55656f;
+    --sea: #1d4e66;
+    --signal: #c2410c;
+    --line: #c9d2d3;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", system-ui, sans-serif;
+    line-height: 1.55;
+  }
+  a:focus-visible { outline: 3px solid var(--signal); outline-offset: 3px; }
+
+  header, .intro, .grid-wrap, footer { max-width: 1120px; margin: 0 auto; padding-left: 24px; padding-right: 24px; }
+
+  header { padding-top: 28px; display: flex; justify-content: space-between; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  header .name { font-weight: 600; }
+  header nav a { color: var(--muted); text-decoration: none; margin-left: 20px; }
+  header nav a:hover { color: var(--ink); text-decoration: underline; }
+
+  .intro { padding-top: 72px; padding-bottom: 56px; }
+  h1 {
+    font-family: Fraunces, Georgia, serif;
+    font-weight: 800;
+    font-size: clamp(2.4rem, 6vw, 4.4rem);
+    line-height: 1.04;
+    margin: 0 0 24px;
+    max-width: 14em;
+    letter-spacing: -0.01em;
+  }
+  .intro p { max-width: 38em; font-size: 1.1rem; color: var(--muted); margin: 0 0 14px; }
+  .intro p strong { color: var(--ink); font-weight: 600; }
+
+  .grid-wrap { padding-bottom: 72px; }
+  h2 { font-family: Fraunces, Georgia, serif; font-size: 1.6rem; margin: 0 0 6px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-auto-rows: 150px;
+    gap: 8px;
+  }
+  .tile {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    color: #fff;
+    text-decoration: none;
+    background: var(--sea);
+  }
+  .tile.wide { grid-column: span 3; grid-row: span 2; }
+  .tile.mid  { grid-column: span 3; }
+  .tile.sm   { grid-column: span 2; }
+
+  /* Placeholder artwork. Delete the .thumb div and use an <img> once you have screenshots. */
+  .thumb {
+    position: absolute; inset: 0;
+    background:
+      repeating-radial-gradient(circle at 78% 30%, transparent 0 14px, rgba(255,255,255,.09) 14px 15px),
+      var(--c, var(--sea));
+  }
+  .tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+  .cap {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    padding: 14px 16px;
+    background: linear-gradient(to top, rgba(10,20,28,.88), rgba(10,20,28,0));
+    transition: padding .2s;
+  }
+  .cap b { display: block; font-family: Fraunces, Georgia, serif; font-size: 1.08rem; line-height: 1.25; }
+  .cap span { font-size: .85rem; opacity: .85; }
+  .tile:hover .cap, .tile:focus-visible .cap { padding-bottom: 22px; }
+  .tile:hover .thumb, .tile:hover img { filter: brightness(1.08); }
+
+  .c1 { --c: #1d4e66; } .c2 { --c: #7c2d12; } .c3 { --c: #3b4a3f; }
+  .c4 { --c: #4a3b5c; } .c5 { --c: #5b4a1f; } .c6 { --c: #26404f; }
+
+  .method { border-top: 1px solid var(--line); padding-top: 28px; margin-top: 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  .method h3 { font-size: 1rem; margin: 0 0 8px; }
+  .method p { margin: 0; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); padding-top: 24px; padding-bottom: 48px; color: var(--muted); font-size: .95rem; }
+  footer a { color: var(--sea); }
+
+  @media (max-width: 760px) {
+    .grid { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 140px; }
+    .tile.wide, .tile.mid { grid-column: span 2; }
+    .tile.wide { grid-row: span 2; }
+    .tile.sm { grid-column: span 1; }
+    .method { grid-template-columns: 1fr; }
+    .intro { padding-top: 48px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span class="name">Reetama Ghosh</span>
+  <nav>
+    <a href="#work">Work</a>
+    <a href="#approach">Approach</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<section class="intro">
+  <h1>Tracking Middle East conflict and trade risk with open data</h1>
+  <p>I am a geopolitical risk and OSINT analyst with an M.A. in International Relations and Strategic Studies from the University of Mumbai. My focus is maritime security, hybrid warfare and strategic studies.</p>
+  <p>The projects below turn public data into maps and dashboards that answer one question each. <strong>Click a tile to open the full project.</strong></p>
+</section>
+
+<main class="grid-wrap" id="work">
+  <h2>Portfolio</h2>
+  <p class="sub">Personal research projects on the Middle East.</p>
+
+  <!-- To add a project: change href to your live Tableau Public / Flourish / Datawrapper link,
+       and replace the .thumb div with <img src="images/your-screenshot.png" alt="Short description"> -->
+  <div class="grid">
+
+    <a class="tile wide" href="#" target="_blank" rel="noopener">
+      <div class="thumb c1"></div>
+      <div class="cap"><b>Red Sea and Suez shipping after the Houthi attacks</b><span>Daily transit counts, IMF PortWatch</span></div>
+    </a>
+
+    <a class="tile mid" href="#" target="_blank" rel="noopener">
+      <div class="thumb c2"></div>
+      <div class="cap"><b>Conflict events by country and month</b><span>ACLED</span></div>
+    </a>
+
+    <a class="tile sm" href="#" target="_blank" rel="noopener">
+      <div class="thumb c3"></div>
+      <div class="cap"><b>US-Iran escalation timeline</b><span>Own OSINT tracking</span></div>
+    </a>
+
+    <a class="tile sm" href="#" target="_blank" rel="noopener">
+      <div class="thumb c4"></div>
+      <div class="cap"><b>Arms imports in the Gulf</b><span>SIPRI</span></div>
+    </a>
+
+    <a class="tile sm" href="#" target="_blank" rel="noopener">
+      <div class="thumb c5"></div>
+      <div class="cap"><b>Displacement flows from Syria and Yemen</b><span>UNHCR</span></div>
+    </a>
+
+    <a class="tile mid" href="#" target="_blank" rel="noopener">
+      <div class="thumb c6"></div>
+      <div class="cap"><b>Gulf oil exports and trading partners</b><span>UN Comtrade, EIA</span></div>
+    </a>
+
+  </div>
+
+  <div class="method" id="approach">
+    <div>
+      <h3>How each project is built</h3>
+      <p>One question, one public dataset, one visual, and a short note on what the data shows and where it falls short.</p>
+    </div>
+    <div>
+      <h3>Tools</h3>
+      <p>Tableau Public, Excel, and open sources. Add SQL and Python here as you learn them.</p>
+    </div>
+  </div>
+</main>
+
+<footer id="contact">
+  Contact: <a href="mailto:your.email@example.com">your.email@example.com</a> |
+  <a href="https://www.linkedin.com/in/your-profile">LinkedIn</a> |
+  <a href="https://github.com/your-username">GitHub</a>
+</footer>
+
+</body>
+</html>
