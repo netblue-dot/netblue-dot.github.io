@@ -1,0 +1,8 @@
+date,type,label,source,confidence
+2023-11-19,ship_attack,Galaxy Leader seized,Multiple outlets,confirmed
+2026-07-20,policy,Houthi ban on Saudi-linked shipping takes effect,Alupetra / CNBC,single-source
+2026-08-11,ship_attack,Tihamah cargo ship hit in Bab el-Mandeb (6 killed),UPI / Semafor,confirmed
+2026-08-24,ship_attack,Bahri tanker Amzan hit off Yanbu,Al Jazeera / UKMTO,confirmed
+2026-10-07,ship_attack,CU Lines container ship fired on off Yemen (unclaimed),Alupetra,single-source
+2026-11-01,escalation,Saudi-led coalition operation against Houthi resources,Gulf News,confirmed
+2026-11-03,escalation,Yemen govt claims 21 IRGC/Hezbollah agents aiding Houthis,The National,claim
