@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red Sea shipping after the Houthi attacks | Reetama Ghosh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#eef1f0; --ink:#14232e; --muted:#55656f; --sea:#1d4e66; --signal:#c2410c; --plum:#6b21a8; --line:#c9d2d3; --news:#ece3cd; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:"Public Sans",system-ui,sans-serif; line-height:1.6; }
+  a { color:var(--sea); }
+  a:focus-visible { outline:3px solid var(--signal); outline-offset:3px; }
+  .wrap { max-width:1040px; margin:0 auto; padding:0 24px; }
+  h1,h2,h3 { font-family:Fraunces,Georgia,serif; line-height:1.15; }
+  h2 { font-size:1.7rem; margin:0 0 8px; }
+  section { padding:56px 0; border-top:1px solid var(--line); }
+  .lead { color:var(--muted); max-width:42em; margin:0 0 28px; }
+
+  .top { padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
+  .top a { text-decoration:none; color:var(--muted); }
+  .top a:hover { color:var(--ink); text-decoration:underline; }
+
+  .hero { padding:56px 0 48px; }
+  h1 { font-size:clamp(2.2rem,5.5vw,3.9rem); font-weight:800; margin:0 0 20px; max-width:15em; letter-spacing:-.01em; }
+  .q { font-size:1.2rem; max-width:36em; margin:0 0 24px; }
+  .meta { display:flex; flex-wrap:wrap; gap:10px 28px; color:var(--muted); font-size:.92rem; margin:0; padding:0; list-style:none; }
+  .meta b { color:var(--ink); font-weight:600; }
+
+  /* route diagram */
+  .diagram { background:#fff; border:1px solid var(--line); padding:12px; }
+  .diagram svg { width:100%; height:auto; display:block; }
+  .cap { font-size:.88rem; color:var(--muted); margin:10px 2px 0; }
+  .phases { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:28px; }
+  .phases h3 { font-size:1.05rem; margin:0 0 6px; }
+  .phases p { margin:0; color:var(--muted); font-size:.95rem; }
+  .phases div { border-top:3px solid var(--sea); padding-top:10px; }
+  .phases div:nth-child(3) { border-color:var(--signal); }
+
+  /* chart */
+  .chart { background:#fff; border:1px solid var(--line); padding:12px; }
+  .chart img { width:100%; height:auto; display:block; }
+  .chart .missing { display:none; padding:56px 20px; text-align:center; color:var(--muted); border:2px dashed var(--line); }
+
+  /* timeline */
+  .legend { display:flex; flex-wrap:wrap; gap:18px; font-size:.9rem; margin:0 0 24px; padding:0; list-style:none; }
+  .legend i, .tl .dot { display:inline-block; width:12px; height:12px; }
+  .tl { list-style:none; margin:0; padding:0 0 0 28px; border-left:2px solid var(--line); }
+  .tl li { position:relative; padding:0 0 26px 18px; max-width:46em; }
+  .tl .dot { position:absolute; left:-37px; top:6px; background:var(--sea); border:3px solid var(--paper); box-sizing:content-box; }
+  .tl li[data-t="attack"] .dot { background:var(--signal); border-radius:0; transform:rotate(45deg); }
+  .tl li[data-t="policy"] .dot { background:var(--sea); border-radius:50%; }
+  .tl li[data-t="escalation"] .dot { background:var(--plum); border-radius:2px; }
+  .tl time { font-weight:600; font-size:.9rem; display:block; }
+  .tl p { margin:2px 0 0; }
+  .src { font-size:.85rem; display:block; margin-top:3px; }
+  .tl li[data-t="incident"] .dot { background:#7a8890; border-radius:50%; }
+  .legend .i { background:#7a8890; border-radius:50%; }
+  figure.photo { margin:28px 0 0; }
+  figure.photo img { width:100%; max-height:420px; object-fit:cover; display:block; border:1px solid var(--line); }
+  figure.photo figcaption { font-size:.88rem; color:var(--muted); margin-top:8px; max-width:48em; }
+  .tag { display:inline-block; font-size:.78rem; padding:1px 8px; border:1px solid var(--line); background:#fff; color:var(--muted); margin-left:6px; }
+  .legend .a { background:var(--signal); transform:rotate(45deg); }
+  .legend .p { background:var(--sea); border-radius:50%; }
+  .legend .e { background:var(--plum); border-radius:2px; }
+
+  /* newspaper cutouts */
+  .board { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:26px; }
+  .clip { background:var(--news); color:#2a2418; padding:18px 18px 16px; box-shadow:2px 3px 0 rgba(20,35,46,.18); font-family:Georgia,"Times New Roman",serif;
+          background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.025) 0 1px,transparent 1px 4px); }
+  .clip:nth-child(1) { transform:rotate(-1.2deg); clip-path:polygon(0 2%,6% 0,14% 2%,24% 0,36% 2%,48% 0,60% 2%,72% 0,84% 2%,94% 0,100% 2%,100% 98%,92% 100%,80% 98%,66% 100%,52% 98%,40% 100%,26% 98%,12% 100%,0 98%); }
+  .clip:nth-child(2) { transform:rotate(.9deg); clip-path:polygon(0 0,100% 2%,98% 100%,70% 97%,40% 100%,0 98%); }
+  .clip:nth-child(3) { transform:rotate(-.6deg); clip-path:polygon(2% 0,100% 0,100% 97%,60% 100%,25% 98%,0 100%); }
+  .clip:nth-child(4) { transform:rotate(1.3deg); clip-path:polygon(0 3%,30% 0,70% 3%,100% 0,98% 100%,60% 97%,30% 100%,0 97%); }
+  .clip .mast { font-weight:700; font-size:.95rem; border-bottom:2px solid #2a2418; border-top:1px solid #2a2418; padding:3px 0; margin:0 0 10px; display:flex; justify-content:space-between; gap:8px; }
+  .clip .mast span:last-child { font-weight:400; font-size:.82rem; }
+  .clip h3 { font-size:1.12rem; margin:0 0 8px; font-family:Georgia,serif; }
+  .clip p { font-size:.93rem; margin:0 0 10px; line-height:1.5; }
+  .clip a { color:#7c2d12; font-size:.88rem; }
+  .note { font-size:.88rem; color:var(--muted); margin:22px 0 0; max-width:44em; }
+
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:36px; }
+  .two h3 { font-size:1.1rem; margin:0 0 8px; }
+  .two ul { margin:0; padding-left:1.1em; color:var(--muted); }
+  .two li { margin-bottom:6px; }
+  footer { border-top:1px solid var(--line); padding:28px 0 56px; color:var(--muted); font-size:.95rem; }
+
+  @media (max-width:760px) { .phases,.two { grid-template-columns:1fr; } .top { font-size:.95rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top"><a href="index.html">Back to portfolio</a><span style="color:var(--muted)">Reetama Ghosh</span></div>
+
+<header class="hero">
+  <h1>Red Sea shipping after the Houthi attacks</h1>
+  <p class="q">How much did ship traffic through Suez and Bab el-Mandeb fall once the attacks began, how much moved to the Cape of Good Hope, and what changed in 2026?</p>
+  <ul class="meta">
+    <li><b>Data</b> IMF PortWatch, satellite AIS</li>
+    <li><b>Tools</b> Python, pandas, matplotlib</li>
+    <li><b>Events</b> sourced log, 2023 to 4 Nov 2026</li>
+    <li><b>Code</b> <a href="https://github.com/netblue-dot/netblue-dot.github.io">GitHub</a></li>
+  </ul>
+</header>
+
+<section>
+  <h2>Two routes, one chokepoint</h2>
+  <p class="lead">Ships between Asia and Europe pass Bab el-Mandeb and the Suez Canal, or sail around Africa. The attacks happen at the strait, not at the canal, so the strait decides which route ship owners choose.</p>
+  <div class="diagram">
+    <svg viewBox="0 0 700 380" role="img" aria-label="Schematic of the Suez route and the Cape of Good Hope route between Europe and Asia">
+      <rect width="700" height="380" fill="#f4f8f8"/>
+      <g fill="#d3dcdb" stroke="#b9c6c6" stroke-width="1.5">
+        <path d="M30 20 L360 20 L330 78 L260 70 L120 92 L30 64 Z"/>
+        <path d="M150 112 L330 104 L385 112 L398 175 L430 240 L392 262 L368 316 L300 352 L232 308 L196 214 L150 160 Z"/>
+        <path d="M452 112 L650 136 L664 270 L540 282 L476 226 L446 168 Z"/>
+      </g>
+      <g font-family="Public Sans,sans-serif" font-size="13" fill="#55656f">
+        <text x="150" y="52">EUROPE</text><text x="232" y="212">AFRICA</text><text x="528" y="212">ARABIA</text>
+        <text x="40" y="306">Atlantic</text><text x="560" y="344">Indian Ocean</text>
+      </g>
+      <path d="M335 62 L394 104 C408 150 426 200 436 236 L520 322" fill="none" stroke="#1d4e66" stroke-width="5" stroke-linecap="round"/>
+      <path d="M330 66 C 96 96 84 280 214 340 C 300 380 420 346 520 326" fill="none" stroke="#c2410c" stroke-width="5" stroke-dasharray="2 9" stroke-linecap="round"/>
+      <circle cx="436" cy="238" r="26" fill="none" stroke="#c2410c" stroke-width="2" stroke-dasharray="5 4"/>
+      <g font-family="Public Sans,sans-serif" font-size="13" font-weight="600">
+        <text x="404" y="96" fill="#1d4e66">Suez Canal</text>
+        <text x="452" y="262" fill="#c2410c">Bab el-Mandeb</text>
+        <text x="96" y="364" fill="#c2410c">Cape of Good Hope</text>
+        <text x="448" y="168" fill="#1d4e66">Red Sea</text>
+      </g>
+    </svg>
+  </div>
+  <p class="cap">Schematic, not to scale. Solid line: Suez route. Dotted line: Cape route. Dashed circle: where the attacks are concentrated.</p>
+
+  <div class="phases">
+    <div><h3>2023 to 2025: Gaza-linked campaign</h3><p>Attacks began on 19 November 2023 with the seizure of the Galaxy Leader. The UN Security Council demanded an end on 10 January 2024. After the Gaza ceasefire began on 10 October 2025, the Houthis signalled they had stopped attacking Israel and Red Sea shipping, though many shippers kept going around the Cape.</p></div>
+    <div><h3>February 2026: the Iran war</h3><p>The US and Israel struck Iran on 28 February 2026, and the Houthis warned of new Red Sea attacks. Hormuz has been effectively closed since, and Yanbu on the Red Sea became Saudi Arabia's main route for oil exports.</p></div>
+    <div><h3>From July 2026: Saudi-linked ships</h3><p>The Houthis announced a blockade of Saudi-linked shipping on 20 July. Traffic through the southern Red Sea has been lower since, and the port of Mokha has been closed to commercial traffic after repeated missile strikes, according to the JMIC naval information centre.</p></div>
+  </div>
+  <figure class="photo">
+    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Perim_and_entire_Shaikh_Said_Peninsula.jpg?width=1000" alt="Satellite-style photo from the International Space Station showing Perim Island and the Ras Menheli peninsula at the Bab el-Mandeb" onerror="this.parentNode.style.display='none'">
+    <figcaption>Perim Island and the Ras Menheli (Shaikh Said) peninsula at the Bab el-Mandeb, photographed from the International Space Station on 13 March 2010. Photo: NASA, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Perim_and_entire_Shaikh_Said_Peninsula.jpg">Wikimedia Commons</a>. Control of this coastline is contested in the current Yemen fighting.</figcaption>
+  </figure>
+</section>
+
+<section>
+  <h2>Transit traffic against the 2023 baseline</h2>
+  <p class="lead">Daily transits through Suez, Bab el-Mandeb and the Cape of Good Hope, 7-day average, indexed so that January to October 2023 equals 100. Numbered markers match the event log below.</p>
+  <div class="chart">
+    <img src="images/events_on_transits.png" alt="Line chart of daily ship transits through Suez, Bab el-Mandeb and the Cape of Good Hope with numbered Houthi event markers"
+         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+    <div class="missing">Chart not added yet. Run red_sea_tracker.py and upload output/events_on_transits.png to an images folder in this repo.</div>
+  </div>
+  <p class="cap">Source: IMF PortWatch, based on satellite AIS data from the UN Global Platform. Counts are ships detected, not cargo tonnage.</p>
+</section>
+
+<section>
+  <h2>Event timeline</h2>
+  <p class="lead">Each entry links to its source. Incidents without a confirmed attacker, and government claims, are labelled as such.</p>
+  <ul class="legend">
+    <li><i class="a"></i> Ship attack</li><li><i class="p"></i> Declaration or policy</li><li><i class="e"></i> Escalation</li><li><i class="i"></i> Unattributed incident</li>
+  </ul>
+  <ol class="tl">
+    <li data-t="attack"><span class="dot"></span><time>19 Nov 2023</time><p>Houthis seize the Galaxy Leader and its crew. Start of the shipping campaign.</p><span class="src">Source: <a href="https://digitallibrary.un.org/record/4033392">UN Security Council resolution 2722</a></span></li>
+    <li data-t="policy"><span class="dot"></span><time>10 Jan 2024</time><p>UN Security Council adopts resolution 2722 (11 votes in favour, 4 abstentions), demanding the Houthis stop attacks on merchant ships.</p><span class="src">Source: <a href="https://digitallibrary.un.org/record/4033392">UN Digital Library</a></span></li>
+    <li data-t="policy"><span class="dot"></span><time>10 Oct 2025</time><p>Gaza ceasefire begins. By November the Houthis signal they have stopped attacks on Israel and Red Sea shipping.</p><span class="src">Source: <a href="https://www.timesofisrael.com/yemens-houthis-signal-theyve-stopped-attacks-on-israel-and-red-sea-shipping/amp/">Associated Press, via Times of Israel</a></span></li>
+    <li data-t="escalation"><span class="dot"></span><time>28 Feb 2026</time><p>US and Israeli strikes on Iran begin the Iran war. The Houthis warn of missile and drone attacks in the Red Sea.</p><span class="src">Source: <a href="https://www.businesstoday.in/world/middle-east/story/us-israel-strike-on-iran-houthis-warn-of-imminent-missile-and-drone-attacks-in-red-sea-corridor-518464-2026-02-28">BusinessToday</a></span></li>
+    <li data-t="policy"><span class="dot"></span><time>20 Jul 2026</time><p>Houthis announce a blockade of Saudi-linked shipping.</p><span class="src">Source: <a href="https://www.seatrade-maritime.com/security/unmanned-cargo-ship-destroyed-off-yemen">Seatrade Maritime</a></span></li>
+    <li data-t="attack"><span class="dot"></span><time>11 Aug 2026</time><p>Cargo ship Tihamah hit by missiles in the Bab al-Mandab Strait. The Yemeni government says six people died and blames the Houthis. The Houthis had not commented at the time.</p><span class="src">Source: <a href="https://www.upi.com/Top_News/World-News/2026/08/11/yemen-houthis-kill-6-in-attack/1181786477788/">UPI</a></span></li>
+    <li data-t="incident"><span class="dot"></span><time>17 Aug 2026</time><p>Unmanned cargo ship hit by several unknown projectiles about 40 nm southeast of Al Mokha and declared a constructive total loss.<span class="tag">not attributed</span></p><span class="src">Source: <a href="https://www.seatrade-maritime.com/security/unmanned-cargo-ship-destroyed-off-yemen">Seatrade Maritime, citing UKMTO</a></span></li>
+    <li data-t="attack"><span class="dot"></span><time>24 Aug 2026</time><p>Tanker struck about 63 nm west of Yanbu. The Houthis claim the strike on Bahri's Amzan. Bahri confirms an incident and says the crew are safe.</p><span class="src">Source: <a href="https://www.aljazeera.com/news/2026/8/24/yemens-houthis-report-attack-on-saudi-ship">Al Jazeera</a></span></li>
+    <li data-t="incident"><span class="dot"></span><time>7 Oct 2026</time><p>Armed small craft fires on the container ship CUL Klang near Mokha. No injuries. No group claimed it, and a British defence official said UKMTO judged it neither piracy nor Houthi-related.<span class="tag">not attributed</span></p><span class="src">Source: <a href="https://mereja.com/index/837501">Kuehne+Nagel shipping news; Mereja</a></span></li>
+    <li data-t="escalation"><span class="dot"></span><time>1 Nov 2026</time><p>Saudi-led coalition announces an operation against resources the Houthis use for attacks.</p><span class="src">Source: <a href="https://gulfnews.com/world/gulf/saudi/saudi-led-coalition-launches-military-operation-targeting-houthi-resources-1.500731798">Gulf News</a></span></li>
+    <li data-t="escalation"><span class="dot"></span><time>3 Nov 2026</time><p>Yemen's government claims 21 IRGC and Hezbollah agents help direct Houthi operations.<span class="tag">government claim</span></p><span class="src">Source: <a href="https://www.thenationalnews.com/news/mena/2026/11/03/hidden-hands-behind-the-houthis-yemen-claims-21-irgc-and-hezbollah-agents-are-supporting-rebels/">The National</a></span></li>
+  </ol>
+</section>
+
+<section>
+  <h2>Press cutouts</h2>
+  <p class="lead">Four reports I relied on, summarised in my own words with a link to the original.</p>
+  <div class="board">
+    <article class="clip">
+      <div class="mast"><span>UPI</span><span>11 Aug 2026</span></div>
+      <h3>Six dead after missile strike on cargo ship</h3>
+      <p>The Yemeni government said Houthi missiles hit a food-carrying ship in the Bab al-Mandab Strait. A second missile reportedly killed two rescuers.</p>
+      <a href="https://www.upi.com/Top_News/World-News/2026/08/11/yemen-houthis-kill-6-in-attack/1181786477788/">Read the original</a>
+    </article>
+    <article class="clip">
+      <div class="mast"><span>Al Jazeera</span><span>24 Aug 2026</span></div>
+      <h3>Saudi tanker targeted off Yanbu</h3>
+      <p>The Houthis claimed a ballistic missile strike on a Bahri tanker. Bahri confirmed an incident and said all crew were safe.</p>
+      <a href="https://www.aljazeera.com/news/2026/8/24/yemens-houthis-report-attack-on-saudi-ship">Read the original</a>
+    </article>
+    <article class="clip">
+      <div class="mast"><span>Gulf News</span><span>1 Nov 2026</span></div>
+      <h3>Coalition acts against Houthi supply lines</h3>
+      <p>The Saudi-led coalition said it struck resources the Houthis use for attacks, citing threats to civilians and to shipping in the southern Red Sea.</p>
+      <a href="https://gulfnews.com/world/gulf/saudi/saudi-led-coalition-launches-military-operation-targeting-houthi-resources-1.500731798">Read the original</a>
+    </article>
+    <article class="clip">
+      <div class="mast"><span>The National</span><span>3 Nov 2026</span></div>
+      <h3>Yemen alleges foreign planners behind Houthis</h3>
+      <p>The government says 21 IRGC and Hezbollah agents are involved. This is an allegation, and the report also notes a Houthi push toward the Bab al-Mandeb coast since September.</p>
+      <a href="https://www.thenationalnews.com/news/mena/2026/11/03/hidden-hands-behind-the-houthis-yemen-claims-21-irgc-and-hezbollah-agents-are-supporting-rebels/">Read the original</a>
+    </article>
+  </div>
+  <p class="note">Headlines on the cutouts are my own descriptions, not the outlets' wording. The newspaper styling is decorative.</p>
+</section>
+
+<section>
+  <div class="two">
+    <div>
+      <h3>Method</h3>
+      <ul>
+        <li>Daily transit calls from IMF PortWatch for three routes.</li>
+        <li>7-day rolling average, indexed to the January to October 2023 mean.</li>
+        <li>Event log kept in data/events.csv, with source and confidence for each row.</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Limits</h3>
+      <ul>
+        <li>AIS counts ships detected, not cargo value or tonnage.</li>
+        <li>Rerouting has other causes, including insurance costs and the wider Iran war.</li>
+        <li>Several 2026 incidents have no confirmed attacker. They are shown as unattributed, not as Houthi attacks.</li>
+        <li>The event log is not complete. UKMTO and JMIC advisories are the primary record of incidents.</li>
+        <li>The baseline choice changes the percentages.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  Data: <a href="https://portwatch.imf.org">IMF PortWatch</a> | Code: <a href="https://github.com/netblue-dot/netblue-dot.github.io">GitHub repository</a> | Last updated 4 November 2026. Photo: NASA via Wikimedia Commons (public domain)
+</footer>
+
+</div>
+</body>
+</html>
