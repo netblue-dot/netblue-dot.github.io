@@ -8,10 +8,10 @@ moved to the Cape of Good Hope?
 Data: IMF PortWatch daily chokepoint transit calls (satellite AIS data).
 
 Setup:
-    pip install pandas matplotlib openbb openbb-imf
+    pip install pandas matplotlib requests
 
-Two ways to get data:
-  A) Automatic: the script tries OpenBB's IMF provider.
+Data sources, tried in order:
+  A) Automatic: the PortWatch ArcGIS service (needs only pandas, matplotlib, requests), then OpenBB.
   B) Manual: download the daily chokepoint data from portwatch.imf.org, save it
      as data/chokepoints.csv. The script finds the date, name and transit-count
      columns by keyword, so exact column names do not matter.
@@ -36,20 +36,55 @@ DATA_FILE = Path("data/chokepoints.csv")
 OUT = Path("output")
 
 
+ARCGIS_URL = ("https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/"
+              "Daily_Chokepoints_Data/FeatureServer/0/query")
+
+
+def load_arcgis() -> pd.DataFrame:
+    """Download daily chokepoint data straight from the PortWatch service (1000 rows per call)."""
+    import requests
+    where = "portid='CHOKEPOINT1' OR portid='CHOKEPOINT4' OR portid='CHOKEPOINT7'"
+    rows, offset = [], 0
+    for _ in range(100):  # safety limit
+        r = requests.get(ARCGIS_URL, params={
+            "where": where, "outFields": "date,portid,portname,n_total", "outSR": 4326,
+            "f": "json", "orderByFields": "portid,date",
+            "resultOffset": offset, "resultRecordCount": 1000,
+        }, timeout=60)
+        r.raise_for_status()
+        feats = r.json().get("features", [])
+        if not feats:
+            break
+        rows += [f["attributes"] for f in feats]
+        offset += len(feats)
+    if not rows:
+        raise ValueError("service returned no rows")
+    df = pd.DataFrame(rows)
+    df["date"] = pd.to_datetime(df["date"], unit="ms")
+    return df
+
+
 def load_raw() -> pd.DataFrame:
     """Return a dataframe with columns: date, chokepoint, transits."""
     df = None
     try:
-        from openbb import obb
-        res = obb.economy.shipping.chokepoint_volume(
-            provider="imf",
-            chokepoint="suez_canal,bab_el_mandeb_strait,cape_of_good_hope",
-            start_date=START_DATE,
-        )
-        df = res.to_df().reset_index()
-        print("Loaded data through OpenBB.")
+        df = load_arcgis()
+        print("Loaded data from the PortWatch ArcGIS service.")
     except Exception as err:
-        print(f"OpenBB load failed ({err}). Trying {DATA_FILE}.")
+        print(f"ArcGIS download failed ({err}).")
+
+    if df is None:
+        try:
+            from openbb import obb
+            res = obb.economy.shipping.chokepoint_volume(
+                provider="imf",
+                chokepoint="suez_canal,bab_el_mandeb_strait,cape_of_good_hope",
+                start_date=START_DATE,
+            )
+            df = res.to_df().reset_index()
+            print("Loaded data through OpenBB.")
+        except Exception as err:
+            print(f"OpenBB load failed ({err}). Trying {DATA_FILE}.")
 
     if df is None:
         if not DATA_FILE.exists():
