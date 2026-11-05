@@ -40,23 +40,39 @@ ARCGIS_URL = ("https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/service
               "Daily_Chokepoints_Data/FeatureServer/0/query")
 
 
-def load_arcgis() -> pd.DataFrame:
-    """Download daily chokepoint data straight from the PortWatch service (1000 rows per call)."""
+def _arcgis_pages(where: str) -> list:
+    """Fetch every record matching `where`, 1000 rows per call. Raises on a service error."""
     import requests
-    where = "portid='CHOKEPOINT1' OR portid='CHOKEPOINT4' OR portid='CHOKEPOINT7'"
     rows, offset = [], 0
     for _ in range(100):  # safety limit
         r = requests.get(ARCGIS_URL, params={
-            "where": where, "outFields": "date,portid,portname,n_total", "outSR": 4326,
-            "f": "json", "orderByFields": "portid,date",
+            "where": where, "outFields": "*", "outSR": 4326, "f": "json",
             "resultOffset": offset, "resultRecordCount": 1000,
         }, timeout=60)
         r.raise_for_status()
-        feats = r.json().get("features", [])
+        body = r.json()
+        if "error" in body:
+            raise ValueError(f"service error: {body['error']}")
+        feats = body.get("features", [])
         if not feats:
             break
         rows += [f["attributes"] for f in feats]
         offset += len(feats)
+    return rows
+
+
+def load_arcgis() -> pd.DataFrame:
+    """Download daily chokepoint data straight from the PortWatch service."""
+    ids = ["chokepoint1", "chokepoint4", "chokepoint7"]  # Suez, Bab el-Mandeb, Cape of Good Hope
+    rows = []
+    for variant in (lambda i: i, lambda i: i.upper()):  # try lower case, then upper case
+        where = " OR ".join(f"portid='{variant(i)}'" for i in ids)
+        rows = _arcgis_pages(where)
+        if rows:
+            break
+    if not rows:
+        names = "','".join(CHOKEPOINTS)
+        rows = _arcgis_pages(f"portname IN ('{names}')")
     if not rows:
         raise ValueError("service returned no rows")
     df = pd.DataFrame(rows)
