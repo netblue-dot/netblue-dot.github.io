@@ -6,7 +6,7 @@ Run after red_sea_shipping.py is in the same folder:
 
 Needs data/events.csv with columns: date, type, label, source, confidence.
 Add new rows as you track incidents (check UKMTO / JMIC advisories and ACLED).
-Types used for styling: ship_attack, policy, escalation.
+Types used for styling: ship_attack, policy, escalation, incident.
 
 Outputs (./output):
     events_on_transits.png   transit index since SINCE with numbered event markers
@@ -27,6 +27,7 @@ STYLE = {
     "ship_attack": ("#c2410c", "v", "Ship attack"),
     "policy": ("#1d4e66", "s", "Declaration or policy"),
     "escalation": ("#6b21a8", "D", "Escalation"),
+    "incident": ("#7a8890", "o", "Unattributed incident"),
 }
 
 
