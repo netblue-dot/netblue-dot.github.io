@@ -36,16 +36,18 @@ DATA_FILE = Path("data/chokepoints.csv")
 OUT = Path("output")
 
 
-ARCGIS_URL = ("https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/"
-              "Daily_Chokepoints_Data/FeatureServer/0/query")
+ARCGIS_URLS = [
+    "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/ArcGIS/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query",
+    "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query",
+]
 
 
-def _arcgis_pages(where: str) -> list:
+def _arcgis_pages(url: str, where: str) -> list:
     """Fetch every record matching `where`, 1000 rows per call. Raises on a service error."""
     import requests
     rows, offset = [], 0
     for _ in range(100):  # safety limit
-        r = requests.get(ARCGIS_URL, params={
+        r = requests.get(url, params={
             "where": where, "outFields": "*", "outSR": 4326, "f": "json",
             "resultOffset": offset, "resultRecordCount": 1000,
         }, timeout=60)
@@ -64,19 +66,32 @@ def _arcgis_pages(where: str) -> list:
 def load_arcgis() -> pd.DataFrame:
     """Download daily chokepoint data straight from the PortWatch service."""
     ids = ["chokepoint1", "chokepoint4", "chokepoint7"]  # Suez, Bab el-Mandeb, Cape of Good Hope
-    rows = []
-    for variant in (lambda i: i, lambda i: i.upper()):  # try lower case, then upper case
-        where = " OR ".join(f"portid='{variant(i)}'" for i in ids)
-        rows = _arcgis_pages(where)
+    names = "','".join(CHOKEPOINTS)
+    wheres = [
+        " OR ".join(f"portid='{i}'" for i in ids),
+        " OR ".join(f"portid='{i.upper()}'" for i in ids),
+        f"portname IN ('{names}')",
+    ]
+    rows, last_err = [], None
+    for url in ARCGIS_URLS:
+        for where in wheres:
+            try:
+                rows = _arcgis_pages(url, where)
+            except Exception as err:  # e.g. "Invalid URL": try the next variant
+                last_err = err
+                continue
+            if rows:
+                break
         if rows:
             break
     if not rows:
-        names = "','".join(CHOKEPOINTS)
-        rows = _arcgis_pages(f"portname IN ('{names}')")
-    if not rows:
-        raise ValueError("service returned no rows")
+        raise ValueError(last_err or "service returned no rows")
     df = pd.DataFrame(rows)
-    df["date"] = pd.to_datetime(df["date"], unit="ms")
+    # PortWatch sent dates as epoch milliseconds in the past and as "YYYY-MM-DD" text since 2026.
+    if pd.api.types.is_numeric_dtype(df["date"]):
+        df["date"] = pd.to_datetime(df["date"], unit="ms")
+    else:
+        df["date"] = pd.to_datetime(df["date"])
     return df
 
 
