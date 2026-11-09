@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red Sea traffic tracker, live | Reetama Ghosh</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root { --paper:#eef1f0; --ink:#14232e; --muted:#55656f; --sea:#1d4e66; --signal:#c2410c; --plum:#6b21a8; --grey:#7a8890; --line:#c9d2d3; --card:#fff; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--paper); color:var(--ink); font-family:"Public Sans",system-ui,sans-serif; line-height:1.55; }
+  a { color:var(--sea); }
+  a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline:3px solid var(--signal); outline-offset:2px; }
+  .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
+  h1,h2 { font-family:Fraunces,Georgia,serif; line-height:1.15; }
+  h1 { font-size:clamp(2rem,5vw,3.3rem); font-weight:800; margin:0 0 12px; letter-spacing:-.01em; }
+  h2 { font-size:1.35rem; margin:0 0 10px; }
+  .top { padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
+  .top a { color:var(--muted); text-decoration:none; } .top a:hover { color:var(--ink); text-decoration:underline; }
+  header { padding:40px 0 20px; }
+  .sub { color:var(--muted); max-width:44em; margin:0 0 16px; }
+  .status { display:inline-flex; align-items:center; gap:8px; font-size:.88rem; padding:5px 12px; background:var(--card); border:1px solid var(--line); }
+  .dot { width:9px; height:9px; border-radius:50%; background:var(--grey); }
+  .status.live .dot { background:#15803d; animation:pulse 1.8s infinite; }
+  .status.snap .dot { background:#b45309; }
+  .status.err .dot { background:#b91c1c; }
+  @keyframes pulse { 50% { opacity:.35; } }
+
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0 14px; }
+  .kpi { background:var(--card); border:1px solid var(--line); border-top:4px solid var(--c); padding:12px 16px; }
+  .kpi .n { font-size:.85rem; color:var(--muted); }
+  .kpi .v { font-family:Fraunces,Georgia,serif; font-size:2.2rem; font-weight:800; line-height:1.1; font-variant-numeric:tabular-nums; }
+  .kpi .d { font-size:.9rem; color:var(--muted); }
+  .panel { background:var(--card); border:1px solid var(--line); padding:14px; }
+  .bar { display:flex; flex-wrap:wrap; align-items:center; gap:10px 14px; margin-bottom:10px; }
+  .date { font-family:Fraunces,Georgia,serif; font-size:1.3rem; font-weight:600; min-width:9em; font-variant-numeric:tabular-nums; }
+  button, select { font:inherit; padding:6px 14px; border:1px solid var(--ink); background:var(--card); color:var(--ink); cursor:pointer; }
+  button.primary { background:var(--ink); color:#fff; min-width:6.5em; }
+  button:hover { filter:brightness(.95); }
+  input[type=range] { flex:1; min-width:160px; accent-color:var(--sea); }
+  .toggles { display:flex; flex-wrap:wrap; gap:6px 16px; font-size:.9rem; margin:0 0 6px; }
+  .toggles label { display:flex; align-items:center; gap:6px; cursor:pointer; }
+  .toggles i { width:14px; height:4px; background:var(--c); display:inline-block; }
+  svg.chart { width:100%; height:auto; display:block; }
+  .ax { font-size:11px; fill:var(--muted); font-family:"Public Sans",sans-serif; }
+  .grid { stroke:#e1e7e7; } .base { stroke:var(--ink); stroke-dasharray:4 4; opacity:.5; }
+  .ln { fill:none; stroke-width:2.4; stroke-linejoin:round; stroke-linecap:round; }
+  .ev { opacity:0; transform:scale(.2); transform-box:fill-box; transform-origin:center; transition:opacity .35s, transform .35s cubic-bezier(.3,1.6,.5,1); }
+  .ev.on { opacity:1; transform:scale(1); }
+  .lane { font-size:11px; fill:var(--muted); font-family:"Public Sans",sans-serif; }
+  .evcap { min-height:3.3em; margin-top:10px; padding:10px 14px; border-left:4px solid var(--grey); background:#f6f8f8; font-size:.95rem; }
+  .evcap b { display:block; }
+  .legend { display:flex; flex-wrap:wrap; gap:6px 18px; font-size:.85rem; color:var(--muted); margin-top:8px; }
+
+  section { padding:36px 0 8px; }
+  .scroll { overflow-x:auto; }
+  table { border-collapse:collapse; width:100%; font-size:.93rem; background:var(--card); border:1px solid var(--line); }
+  th, td { padding:7px 12px; text-align:left; border-bottom:1px solid #e6ebeb; vertical-align:top; }
+  th { font-size:.82rem; color:var(--muted); font-weight:600; background:#f6f8f8; position:sticky; top:0; }
+  td.num { font-variant-numeric:tabular-nums; position:relative; min-width:120px; }
+  td.num span { position:relative; z-index:1; }
+  td.num u { position:absolute; left:0; top:20%; bottom:20%; background:var(--c); opacity:.2; }
+  tr { transition:opacity .4s, background .4s; } tr.future { opacity:.28; } tr.now { background:#fff7ed; }
+  .t-attack { color:var(--signal); } .t-policy { color:var(--sea); } .t-escalation { color:var(--plum); } .t-incident { color:var(--grey); }
+  .note { font-size:.88rem; color:var(--muted); max-width:52em; }
+  .msg { padding:40px 20px; text-align:center; color:var(--muted); }
+  footer { border-top:1px solid var(--line); margin-top:36px; padding:22px 0 48px; color:var(--muted); font-size:.92rem; }
+  @media (max-width:760px) { .cards { grid-template-columns:1fr; } .kpi .v { font-size:1.8rem; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="top"><a href="red-sea.html">Back to the project write-up</a><a href="index.html">Portfolio</a></div>
+
+<header>
+  <h1>Red Sea traffic tracker</h1>
+  <p class="sub">Daily ship transits through Suez, Bab el-Mandeb and the Cape of Good Hope, replayed from September 2023 to the latest data. Index 100 is each route's average from January to October 2023.</p>
+  <span class="status" id="status" role="status"><i class="dot"></i><span id="statusText">Loading live data from IMF PortWatch...</span></span>
+</header>
+
+<main id="app" hidden>
+  <div class="cards" id="cards"></div>
+
+  <div class="panel">
+    <div class="bar">
+      <button class="primary" id="play" type="button">Pause</button>
+      <button id="restart" type="button">Restart</button>
+      <label>Speed <select id="speed" aria-label="Animation speed"><option value="1">1x</option><option value="2">2x</option><option value="4">4x</option><option value="8">8x</option></select></label>
+      <span class="date" id="date" aria-live="off"></span>
+      <input type="range" id="scrub" min="0" max="0" value="0" aria-label="Scrub through time">
+    </div>
+    <div class="toggles" id="toggles"></div>
+    <svg class="chart" id="chart" viewBox="0 0 900 430" role="img" aria-label="Animated line chart of daily ship transits indexed to the January to October 2023 average"></svg>
+    <div class="legend" id="legend"></div>
+    <div class="evcap" id="evcap">Press play to start the replay.</div>
+  </div>
+
+  <section>
+    <h2>Monthly average index</h2>
+    <p class="note">Average daily transits in the month divided by the route's January to October 2023 average, times 100. The latest month may be incomplete.</p>
+    <div class="scroll"><table id="monthly"></table></div>
+  </section>
+
+  <section>
+    <h2>Event log</h2>
+    <p class="note">Each event links to its source. Incidents without a confirmed attacker and government claims are labelled as such. Events dated after the latest PortWatch data appear in this table only.</p>
+    <div class="scroll"><table id="events"></table></div>
+  </section>
+</main>
+
+<footer>
+  Data: <a href="https://portwatch.imf.org">IMF PortWatch</a>, based on satellite AIS data from the UN Global Platform. Counts are ships detected, not cargo tonnage. Rerouting has several causes, so the chart shows timing and not cause.
+</footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var BASES = [
+    "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/ArcGIS/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query",
+    "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query"
+  ];
+  var IDS = ["chokepoint1", "chokepoint4", "chokepoint7"];
+  var SNAPSHOT = "data/portwatch_snapshot.json";
+  var ROUTES = [
+    { key: "Suez Canal", label: "Suez Canal", color: "#1d4e66", re: /suez/i },
+    { key: "Bab el-Mandeb Strait", label: "Bab el-Mandeb", color: "#c2410c", re: /mandeb/i },
+    { key: "Cape of Good Hope", label: "Cape of Good Hope", color: "#55656f", re: /cape of good hope/i }
+  ];
+  var EVENTS = [
+    { d: "2023-11-19", t: "attack", e: "Galaxy Leader seized by the Houthis", s: "UN Security Council res. 2722", u: "https://digitallibrary.un.org/record/4033392", c: "confirmed" },
+    { d: "2024-01-10", t: "policy", e: "UN Security Council res. 2722 demands an end to attacks", s: "UN Digital Library", u: "https://digitallibrary.un.org/record/4033392", c: "confirmed" },
+    { d: "2025-10-10", t: "policy", e: "Gaza ceasefire begins; Houthis later signal a halt to attacks", s: "AP via Times of Israel", u: "https://www.timesofisrael.com/yemens-houthis-signal-theyve-stopped-attacks-on-israel-and-red-sea-shipping/amp/", c: "confirmed" },
+    { d: "2026-02-28", t: "escalation", e: "US and Israeli strikes on Iran begin; Houthis warn of Red Sea attacks", s: "BusinessToday", u: "https://www.businesstoday.in/world/middle-east/story/us-israel-strike-on-iran-houthis-warn-of-imminent-missile-and-drone-attacks-in-red-sea-corridor-518464-2026-02-28", c: "confirmed" },
+    { d: "2026-07-20", t: "policy", e: "Houthis announce a blockade of Saudi-linked shipping", s: "Seatrade Maritime", u: "https://www.seatrade-maritime.com/security/unmanned-cargo-ship-destroyed-off-yemen", c: "confirmed" },
+    { d: "2026-08-11", t: "attack", e: "Cargo ship Tihamah hit in Bab al-Mandab; six dead per Yemeni government", s: "UPI", u: "https://www.upi.com/Top_News/World-News/2026/08/11/yemen-houthis-kill-6-in-attack/1181786477788/", c: "attributed by Yemeni government" },
+    { d: "2026-08-17", t: "incident", e: "Unmanned cargo ship destroyed off Al Mokha", s: "Seatrade Maritime, citing UKMTO", u: "https://www.seatrade-maritime.com/security/unmanned-cargo-ship-destroyed-off-yemen", c: "unattributed" },
+    { d: "2026-08-24", t: "attack", e: "Bahri tanker Amzan struck off Yanbu; Houthis claim it", s: "Al Jazeera", u: "https://www.aljazeera.com/news/2026/8/24/yemens-houthis-report-attack-on-saudi-ship", c: "confirmed incident, Houthi claim" },
+    { d: "2026-10-07", t: "incident", e: "Container ship CUL Klang fired on near Mokha", s: "Mereja", u: "https://mereja.com/index/837501", c: "unattributed" },
+    { d: "2026-11-01", t: "escalation", e: "Saudi-led coalition launches operation against Houthi resources", s: "Gulf News", u: "https://gulfnews.com/world/gulf/saudi/saudi-led-coalition-launches-military-operation-targeting-houthi-resources-1.500731798", c: "confirmed" },
+    { d: "2026-11-03", t: "escalation", e: "Yemen government claims 21 IRGC and Hezbollah agents aid the Houthis", s: "The National", u: "https://www.thenationalnews.com/news/mena/2026/11/03/hidden-hands-behind-the-houthis-yemen-claims-21-irgc-and-hezbollah-agents-are-supporting-rebels/", c: "government claim" }
+  ];
+  var TYPE = {
+    attack: { name: "Ship attack", col: "#c2410c", cls: "t-attack" },
+    policy: { name: "Declaration or policy", col: "#1d4e66", cls: "t-policy" },
+    escalation: { name: "Escalation", col: "#6b21a8", cls: "t-escalation" },
+    incident: { name: "Unattributed incident", col: "#7a8890", cls: "t-incident" }
+  };
+
+  var DAY = 86400000;
+  function $(id) { return document.getElementById(id); }
+  function dn(s) { return Math.floor(Date.parse(s + "T00:00:00Z") / DAY); }
+  function fmt(n) { return new Date(n * DAY).toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" }); }
+  function ym(n) { return new Date(n * DAY).toISOString().slice(0, 7); }
+  function toDn(v) {
+    if (typeof v === "number") return Math.floor(v / DAY);
+    var m = String(v).match(/^(\d{4}-\d{2}-\d{2})/);
+    return m ? dn(m[1]) : Math.floor(Date.parse(v) / DAY);
+  }
+  function setStatus(cls, text) { var s = $("status"); s.className = "status " + cls; $("statusText").textContent = text; }
+
+  /* ---------- data loading ---------- */
+  function getJSON(url, ms) {
+    var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, ms || 25000);
+    return fetch(url, { signal: ctl.signal }).then(function (r) {
+      clearTimeout(t);
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    });
+  }
+  function pages(base, where) {
+    var rows = [];
+    function next(offset, n) {
+      var q = base + "?where=" + encodeURIComponent(where) + "&outFields=" + encodeURIComponent("date,portid,portname,n_total") +
+        "&outSR=4326&f=json&resultRecordCount=1000&resultOffset=" + offset;
+      return getJSON(q).then(function (b) {
+        if (b.error) throw new Error(b.error.message || "service error");
+        var f = b.features || [];
+        if (!f.length || n > 60) return rows;
+        f.forEach(function (x) { rows.push(x.attributes); });
+        return next(offset + f.length, n + 1);
+      });
+    }
+    return next(0, 0);
+  }
+  function loadLive() {
+    var where = IDS.map(function (i) { return "portid='" + i + "'"; }).join(" OR ");
+    return BASES.reduce(function (p, base) {
+      return p.then(function (r) { return r.length ? r : pages(base, where).catch(function () { return []; }); });
+    }, Promise.resolve([])).then(function (rows) {
+      if (!rows.length) throw new Error("no rows");
+      return { rows: rows, mode: "live", stamp: new Date() };
+    });
+  }
+  function loadSnapshot() {
+    return getJSON(SNAPSHOT, 15000).then(function (j) {
+      var rows = Array.isArray(j) ? j : j.rows;
+      if (!rows || !rows.length) throw new Error("empty snapshot");
+      return { rows: rows, mode: "snap", stamp: j.fetched || null };
+    });
+  }
+
+  /* ---------- series ---------- */
+  function build(rows) {
+    var first = dn("2023-01-01"), last = -Infinity, raw = ROUTES.map(function () { return {}; });
+    rows.forEach(function (r) {
+      var k = ROUTES.findIndex(function (x) { return x.re.test(r.portname || ""); });
+      var d = toDn(r.date), v = Number(r.n_total);
+      if (k < 0 || isNaN(d) || isNaN(v)) return;
+      raw[k][d] = v;
+      if (d > last) last = d;
+    });
+    var L = last - first + 1;
+    var out = ROUTES.map(function (route, k) {
+      var arr = [], i, j, s, c, b = 0, bn = 0;
+      for (i = 0; i < L; i++) arr.push(raw[k][first + i] == null ? null : raw[k][first + i]);
+      for (i = 0; i < dn("2023-10-31") - first + 1 && i < L; i++) if (arr[i] != null) { b += arr[i]; bn++; }
+      var base = bn ? b / bn : null;
+      var idx = arr.map(function (_, i) {
+        s = 0; c = 0;
+        for (j = Math.max(0, i - 6); j <= i; j++) if (arr[j] != null) { s += arr[j]; c++; }
+        return base && c >= 4 ? s / c / base * 100 : null;
+      });
+      return { raw: arr, idx: idx, base: base };
+    });
+    return { first: first, last: last, series: out };
+  }
+
+  /* ---------- app ---------- */
+  var D, V0, N, cur = 0, playing = true, speed = 1, lastT = 0, acc = 0, shown = [true, true, true];
+  var W = 900, H = 430, M = { l: 46, r: 16, t: 14, b: 62 }, X, Y, ymax;
+
+  function init(data) {
+    D = build(data.rows);
+    var S = D.series;
+    if (S.some(function (s) { return !s.base; })) throw new Error("baseline missing");
+    V0 = dn("2023-09-01") - D.first; N = D.last - D.first - V0 + 1;
+    var mx = 0;
+    S.forEach(function (s) { s.idx.forEach(function (v, i) { if (i >= V0 && v != null && v > mx) mx = v; }); });
+    ymax = Math.max(150, Math.ceil(mx / 50) * 50);
+    X = function (i) { return M.l + (W - M.l - M.r) * i / (N - 1); };
+    Y = function (v) { return M.t + (H - M.t - M.b) * (1 - v / ymax); };
+
+    $("app").hidden = false;
+    var when = data.mode === "live" ? "loaded " + data.stamp.toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) :
+      (data.stamp ? "saved " + data.stamp : "saved copy");
+    setStatus(data.mode === "live" ? "live" : "snap",
+      (data.mode === "live" ? "Live from IMF PortWatch" : "Saved copy (live server unreachable)") + ", data through " + fmt(D.last) + ", " + when);
+
+    drawStatic(); buildCards(); buildToggles(); buildTables();
+    var sc = $("scrub"); sc.max = N - 1;
+    cur = 0;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) { cur = N - 1; playing = false; }
+    render(); setBtn();
+    if (playing) requestAnimationFrame(tick);
+  }
+
+  function drawStatic() {
+    var h = "", v, i, d, ticks = [];
+    for (v = 0; v <= ymax; v += 50) h += '<line class="grid" x1="' + M.l + '" x2="' + (W - M.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/><text class="ax" x="' + (M.l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + v + '</text>';
+    h += '<line class="base" x1="' + M.l + '" x2="' + (W - M.r) + '" y1="' + Y(100) + '" y2="' + Y(100) + '"/>';
+    h += '<text class="ax" x="' + (W - M.r) + '" y="' + (Y(100) - 6) + '" text-anchor="end">2023 average = 100</text>';
+    for (i = 0; i < N; i++) { d = new Date((D.first + V0 + i) * DAY); if (d.getUTCDate() === 1 && d.getUTCMonth() % 3 === 0) ticks.push([i, d.toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" })]); }
+    ticks.forEach(function (t) { h += '<text class="ax" x="' + X(t[0]) + '" y="' + (Y(0) + 16) + '" text-anchor="middle">' + t[1] + '</text><line class="grid" x1="' + X(t[0]) + '" x2="' + X(t[0]) + '" y1="' + Y(0) + '" y2="' + (Y(0) + 4) + '"/>'; });
+    h += '<text class="lane" x="' + M.l + '" y="' + (H - 30) + '">Events</text>';
+    ROUTES.forEach(function (r, k) { h += '<path class="ln" id="ln' + k + '" stroke="' + r.color + '"/>'; });
+    EVENTS.forEach(function (e, k) {
+      var i = dn(e.d) - D.first - V0; if (i < 0 || i >= N) return;
+      var x = X(i), y = H - 16, c = TYPE[e.t].col;
+      h += '<g class="ev" id="ev' + k + '"><title>' + fmt(dn(e.d)) + ': ' + e.e + '</title><line x1="' + x + '" x2="' + x + '" y1="' + (H - 24) + '" y2="' + Y(0) + '" stroke="' + c + '" stroke-opacity=".35"/>' +
+        (e.t === "attack" ? '<path d="M' + (x - 6) + ' ' + (y - 6) + 'L' + (x + 6) + ' ' + (y - 6) + 'L' + x + ' ' + (y + 6) + 'Z"' : e.t === "policy" ? '<rect x="' + (x - 5) + '" y="' + (y - 5) + '" width="10" height="10"' : e.t === "incident" ? '<circle cx="' + x + '" cy="' + y + '" r="5.5"' : '<path d="M' + x + ' ' + (y - 7) + 'L' + (x + 7) + ' ' + y + 'L' + x + ' ' + (y + 7) + 'L' + (x - 7) + ' ' + y + 'Z"') +
+        ' fill="' + c + '"/></g>';
+    });
+    h += '<g id="cursor"><line id="cl" y1="' + Y(ymax) + '" y2="' + Y(0) + '" stroke="#14232e" stroke-opacity=".5"/>' +
+      ROUTES.map(function (r, k) { return '<circle id="cd' + k + '" r="5" fill="' + r.color + '" stroke="#fff" stroke-width="2"/>'; }).join("") + '</g>';
+    $("chart").innerHTML = h;
+    $("legend").innerHTML = Object.keys(TYPE).map(function (k) { return '<span><b style="color:' + TYPE[k].col + '">&#9679;</b> ' + TYPE[k].name + '</span>'; }).join("");
+  }
+
+  function buildCards() {
+    $("cards").innerHTML = ROUTES.map(function (r, k) {
+      return '<div class="kpi" style="--c:' + r.color + '"><div class="n">' + r.label + '</div><div class="v" id="kv' + k + '">-</div><div class="d" id="kd' + k + '"></div></div>';
+    }).join("");
+  }
+  function buildToggles() {
+    $("toggles").innerHTML = ROUTES.map(function (r, k) {
+      return '<label style="--c:' + r.color + '"><input type="checkbox" data-k="' + k + '" checked><i></i>' + r.label + '</label>';
+    }).join("");
+    $("toggles").addEventListener("change", function (e) { shown[+e.target.dataset.k] = e.target.checked; render(); });
+  }
+
+  function buildTables() {
+    var S = D.series, months = {}, i, m, h;
+    for (i = V0; i < D.last - D.first + 1; i++) {
+      m = ym(D.first + i);
+      if (!months[m]) months[m] = { start: D.first + i, v: ROUTES.map(function () { return [0, 0]; }) };
+      S.forEach(function (s, k) { if (s.raw[i] != null) { months[m].v[k][0] += s.raw[i]; months[m].v[k][1]++; } });
+    }
+    h = '<thead><tr><th>Month</th>' + ROUTES.map(function (r) { return '<th>' + r.label + '</th>'; }).join("") + '</tr></thead><tbody>';
+    Object.keys(months).forEach(function (k) {
+      var row = months[k];
+      h += '<tr data-start="' + row.start + '"><td>' + new Date(row.start * DAY).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" }) + '</td>' +
+        row.v.map(function (p, j) {
+          if (!p[1]) return '<td class="num">-</td>';
+          var val = p[0] / p[1] / S[j].base * 100;
+          return '<td class="num" style="--c:' + ROUTES[j].color + '"><u style="width:' + Math.min(100, val / ymax * 100) + '%"></u><span>' + Math.round(val) + '</span></td>';
+        }).join("") + '</tr>';
+    });
+    $("monthly").innerHTML = h + '</tbody>';
+    $("events").innerHTML = '<thead><tr><th>Date</th><th>Type</th><th>Event</th><th>Source</th><th>Status</th></tr></thead><tbody>' +
+      EVENTS.map(function (e) {
+        return '<tr data-d="' + dn(e.d) + '"><td>' + fmt(dn(e.d)) + '</td><td class="' + TYPE[e.t].cls + '">' + TYPE[e.t].name + '</td><td>' + e.e + '</td><td><a href="' + e.u + '">' + e.s + '</a></td><td>' + e.c + '</td></tr>';
+      }).join("") + '</tbody>';
+  }
+
+  function render() {
+    var S = D.series, day = D.first + V0 + cur;
+    ROUTES.forEach(function (r, k) {
+      var p = "", pen = false, x = 0, y = 0;
+      for (var i = 0; i <= cur; i++) {
+        var v = S[k].idx[V0 + i];
+        if (v == null) { pen = false; continue; }
+        p += (pen ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); pen = true;
+      }
+      var el = $("ln" + k); el.setAttribute("d", p); el.style.display = shown[k] ? "" : "none";
+      var cv = S[k].idx[V0 + cur], dot = $("cd" + k);
+      if (cv == null) { dot.style.display = "none"; $("kv" + k).textContent = "-"; $("kd" + k).textContent = ""; }
+      else {
+        dot.style.display = shown[k] ? "" : "none"; dot.setAttribute("cx", X(cur)); dot.setAttribute("cy", Y(cv));
+        $("kv" + k).textContent = Math.round(cv);
+        var ch = Math.round(cv - 100);
+        $("kd" + k).textContent = (ch > 0 ? "+" : ch < 0 ? "\u2212" : "") + Math.abs(ch) + "% vs 2023 average";
+      }
+    });
+    $("cl").setAttribute("x1", X(cur)); $("cl").setAttribute("x2", X(cur));
+    $("date").textContent = fmt(day); $("scrub").value = cur;
+    var latest = null;
+    EVENTS.forEach(function (e, k) {
+      var on = dn(e.d) <= day, g = $("ev" + k);
+      if (g) g.classList.toggle("on", on);
+      if (on) latest = e;
+    });
+    var cap = $("evcap");
+    if (latest) {
+      cap.style.borderLeftColor = TYPE[latest.t].col;
+      cap.innerHTML = '<b>' + fmt(dn(latest.d)) + ': ' + latest.e + '</b>Source: <a href="' + latest.u + '">' + latest.s + '</a> (' + latest.c + ')';
+    } else cap.textContent = "Before the first logged event.";
+    Array.prototype.forEach.call($("monthly").querySelectorAll("tbody tr"), function (tr) {
+      var s = +tr.dataset.start; tr.classList.toggle("future", s > day);
+      tr.classList.toggle("now", s <= day && day < s + 31 && ym(s) === ym(day));
+    });
+    Array.prototype.forEach.call($("events").querySelectorAll("tbody tr"), function (tr) {
+      tr.classList.toggle("future", +tr.dataset.d > day);
+      tr.classList.toggle("now", latest && +tr.dataset.d === dn(latest.d));
+    });
+  }
+
+  function setBtn() { $("play").textContent = playing ? "Pause" : (cur >= N - 1 ? "Replay" : "Play"); }
+  function tick(t) {
+    if (!playing) return;
+    if (!lastT) lastT = t;
+    acc += (t - lastT) / 1000 * (N / 26) * speed; lastT = t;
+    var step = Math.floor(acc);
+    if (step > 0) { acc -= step; cur = Math.min(N - 1, cur + step); render(); }
+    if (cur >= N - 1) { playing = false; setBtn(); return; }
+    requestAnimationFrame(tick);
+  }
+  function play() { if (cur >= N - 1) cur = 0; playing = true; lastT = 0; acc = 0; setBtn(); requestAnimationFrame(tick); }
+  function pause() { playing = false; setBtn(); }
+
+  $("play").addEventListener("click", function () { playing ? pause() : play(); });
+  $("restart").addEventListener("click", function () { cur = 0; render(); play(); });
+  $("speed").addEventListener("change", function (e) { speed = +e.target.value; });
+  $("scrub").addEventListener("input", function (e) { pause(); cur = +e.target.value; render(); });
+
+  loadLive().catch(function () { return loadSnapshot(); }).then(init).catch(function () {
+    setStatus("err", "Data unavailable");
+    var m = document.createElement("div");
+    m.className = "msg panel";
+    m.innerHTML = "The live PortWatch server could not be reached and no saved copy was found. Try again later, or see the static charts in the <a href=\"red-sea.html\">project write-up</a>.";
+    $("status").parentNode.appendChild(m);
+  });
+})();
+</script>
+</body>
+</html>
