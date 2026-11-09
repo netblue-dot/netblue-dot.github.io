@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Red Sea traffic tracker, live | Reetama Ghosh</title>
+<title>Red Sea and chokepoint tracker, live | Reetama Ghosh</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -12,22 +12,19 @@
   body { margin:0; background:var(--paper); color:var(--ink); font-family:"Public Sans",system-ui,sans-serif; line-height:1.55; }
   a { color:var(--sea); }
   a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible { outline:3px solid var(--signal); outline-offset:2px; }
-  .wrap { max-width:1080px; margin:0 auto; padding:0 24px; }
-  h1,h2 { font-family:Fraunces,Georgia,serif; line-height:1.15; }
+  .wrap { max-width:1120px; margin:0 auto; padding:0 24px; }
+  h1,h2,h3 { font-family:Fraunces,Georgia,serif; line-height:1.15; }
   h1 { font-size:clamp(2rem,5vw,3.3rem); font-weight:800; margin:0 0 12px; letter-spacing:-.01em; }
-  h2 { font-size:1.35rem; margin:0 0 10px; }
+  h2 { font-size:1.45rem; margin:0 0 6px; } h3 { font-size:1.02rem; margin:0 0 6px; }
   .top { padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; }
   .top a { color:var(--muted); text-decoration:none; } .top a:hover { color:var(--ink); text-decoration:underline; }
-  header { padding:40px 0 20px; }
-  .sub { color:var(--muted); max-width:44em; margin:0 0 16px; }
+  header { padding:36px 0 18px; }
+  .sub { color:var(--muted); max-width:46em; margin:0 0 16px; }
   .status { display:inline-flex; align-items:center; gap:8px; font-size:.88rem; padding:5px 12px; background:var(--card); border:1px solid var(--line); }
   .dot { width:9px; height:9px; border-radius:50%; background:var(--grey); }
-  .status.live .dot { background:#15803d; animation:pulse 1.8s infinite; }
-  .status.snap .dot { background:#b45309; }
-  .status.err .dot { background:#b91c1c; }
+  .status.live .dot { background:#15803d; animation:pulse 1.8s infinite; } .status.snap .dot { background:#b45309; } .status.err .dot { background:#b91c1c; }
   @keyframes pulse { 50% { opacity:.35; } }
-
-  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:20px 0 14px; }
+  .cards { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:18px 0 14px; }
   .kpi { background:var(--card); border:1px solid var(--line); border-top:4px solid var(--c); padding:12px 16px; }
   .kpi .n { font-size:.85rem; color:var(--muted); }
   .kpi .v { font-family:Fraunces,Georgia,serif; font-size:2.2rem; font-weight:800; line-height:1.1; font-variant-numeric:tabular-nums; }
@@ -37,36 +34,38 @@
   .date { font-family:Fraunces,Georgia,serif; font-size:1.3rem; font-weight:600; min-width:9em; font-variant-numeric:tabular-nums; }
   button, select { font:inherit; padding:6px 14px; border:1px solid var(--ink); background:var(--card); color:var(--ink); cursor:pointer; }
   button.primary { background:var(--ink); color:#fff; min-width:6.5em; }
-  button:hover { filter:brightness(.95); }
   input[type=range] { flex:1; min-width:160px; accent-color:var(--sea); }
   .toggles { display:flex; flex-wrap:wrap; gap:6px 16px; font-size:.9rem; margin:0 0 6px; }
   .toggles label { display:flex; align-items:center; gap:6px; cursor:pointer; }
   .toggles i { width:14px; height:4px; background:var(--c); display:inline-block; }
-  svg.chart { width:100%; height:auto; display:block; }
+  svg { display:block; width:100%; height:auto; }
   .ax { font-size:11px; fill:var(--muted); font-family:"Public Sans",sans-serif; }
   .grid { stroke:#e1e7e7; } .base { stroke:var(--ink); stroke-dasharray:4 4; opacity:.5; }
-  .ln { fill:none; stroke-width:2.4; stroke-linejoin:round; stroke-linecap:round; }
+  .ln { fill:none; stroke-width:2.2; stroke-linejoin:round; stroke-linecap:round; }
   .ev { opacity:0; transform:scale(.2); transform-box:fill-box; transform-origin:center; transition:opacity .35s, transform .35s cubic-bezier(.3,1.6,.5,1); }
   .ev.on { opacity:1; transform:scale(1); }
-  .lane { font-size:11px; fill:var(--muted); font-family:"Public Sans",sans-serif; }
   .evcap { min-height:3.3em; margin-top:10px; padding:10px 14px; border-left:4px solid var(--grey); background:#f6f8f8; font-size:.95rem; }
   .evcap b { display:block; }
-  .legend { display:flex; flex-wrap:wrap; gap:6px 18px; font-size:.85rem; color:var(--muted); margin-top:8px; }
-
-  section { padding:36px 0 8px; }
+  .legend { display:flex; flex-wrap:wrap; gap:4px 16px; font-size:.84rem; color:var(--muted); margin-top:6px; }
+  .legend i { display:inline-block; width:12px; height:4px; margin-right:5px; vertical-align:middle; background:var(--c); }
+  section { padding:34px 0 6px; }
+  .split { display:grid; grid-template-columns:1.15fr .85fr; gap:14px; }
+  figure { margin:0; } figure img { width:100%; height:100%; min-height:220px; max-height:420px; object-fit:cover; display:block; border:1px solid var(--line); }
+  figcaption, .note { font-size:.86rem; color:var(--muted); margin-top:6px; max-width:52em; }
+  .minis { display:grid; grid-template-columns:repeat(auto-fit,minmax(320px,1fr)); gap:14px; }
   .scroll { overflow-x:auto; }
-  table { border-collapse:collapse; width:100%; font-size:.93rem; background:var(--card); border:1px solid var(--line); }
+  table { border-collapse:collapse; width:100%; font-size:.92rem; background:var(--card); border:1px solid var(--line); }
   th, td { padding:7px 12px; text-align:left; border-bottom:1px solid #e6ebeb; vertical-align:top; }
-  th { font-size:.82rem; color:var(--muted); font-weight:600; background:#f6f8f8; position:sticky; top:0; }
-  td.num { font-variant-numeric:tabular-nums; position:relative; min-width:120px; }
-  td.num span { position:relative; z-index:1; }
+  th { font-size:.8rem; color:var(--muted); font-weight:600; background:#f6f8f8; }
+  td.num { font-variant-numeric:tabular-nums; position:relative; min-width:110px; } td.num span { position:relative; z-index:1; }
   td.num u { position:absolute; left:0; top:20%; bottom:20%; background:var(--c); opacity:.2; }
   tr { transition:opacity .4s, background .4s; } tr.future { opacity:.28; } tr.now { background:#fff7ed; }
+  .neg { color:#b91c1c; } .pos { color:#15803d; }
   .t-attack { color:var(--signal); } .t-policy { color:var(--sea); } .t-escalation { color:var(--plum); } .t-incident { color:var(--grey); }
-  .note { font-size:.88rem; color:var(--muted); max-width:52em; }
   .msg { padding:40px 20px; text-align:center; color:var(--muted); }
   footer { border-top:1px solid var(--line); margin-top:36px; padding:22px 0 48px; color:var(--muted); font-size:.92rem; }
-  @media (max-width:760px) { .cards { grid-template-columns:1fr; } .kpi .v { font-size:1.8rem; } }
+  @media (max-width:800px) { .cards, .split { grid-template-columns:1fr; } .kpi .v { font-size:1.8rem; } }
+  @media (prefers-reduced-motion:reduce) { .status.live .dot { animation:none; } }
 </style>
 </head>
 <body>
@@ -75,8 +74,8 @@
 <div class="top"><a href="red-sea.html">Back to the project write-up</a><a href="index.html">Portfolio</a></div>
 
 <header>
-  <h1>Red Sea traffic tracker</h1>
-  <p class="sub">Daily ship transits through Suez, Bab el-Mandeb and the Cape of Good Hope, replayed from September 2023 to the latest data. Index 100 is each route's average from January to October 2023.</p>
+  <h1>Red Sea and chokepoint tracker</h1>
+  <p class="sub">A replay of daily ship traffic through Suez, Bab el-Mandeb and the Cape of Good Hope from September 2023 to the latest data, with the Strait of Hormuz, trade volume estimates and vessel types alongside. Every chart moves on one shared timeline. Index 100 is each route's January to October 2023 average.</p>
   <span class="status" id="status" role="status"><i class="dot"></i><span id="statusText">Loading live data from IMF PortWatch...</span></span>
 </header>
 
@@ -88,30 +87,90 @@
       <button class="primary" id="play" type="button">Pause</button>
       <button id="restart" type="button">Restart</button>
       <label>Speed <select id="speed" aria-label="Animation speed"><option value="1">1x</option><option value="2">2x</option><option value="4">4x</option><option value="8">8x</option></select></label>
-      <span class="date" id="date" aria-live="off"></span>
+      <span class="date" id="date"></span>
       <input type="range" id="scrub" min="0" max="0" value="0" aria-label="Scrub through time">
     </div>
     <div class="toggles" id="toggles"></div>
-    <svg class="chart" id="chart" viewBox="0 0 900 430" role="img" aria-label="Animated line chart of daily ship transits indexed to the January to October 2023 average"></svg>
+    <svg id="chart" viewBox="0 0 900 430" role="img" aria-label="Animated line chart of daily ship transits indexed to the January to October 2023 average"></svg>
     <div class="legend" id="legend"></div>
     <div class="evcap" id="evcap">Press play to start the replay.</div>
   </div>
 
   <section>
+    <h2>Two routes, one strait</h2>
+    <p class="note" style="margin:0 0 10px">Ships move between Asia and Europe through Bab el-Mandeb and Suez, or around Africa. The dots below follow the replay: more dots, more traffic.</p>
+    <div class="split">
+      <div class="panel">
+        <svg viewBox="0 0 700 380" role="img" aria-label="Schematic map of the Suez route and the Cape route, with dots for traffic">
+          <rect width="700" height="380" fill="#f4f8f8"/>
+          <g fill="#d3dcdb" stroke="#b9c6c6" stroke-width="1.5">
+            <path d="M30 20 L360 20 L330 78 L260 70 L120 92 L30 64 Z"/>
+            <path d="M150 112 L330 104 L385 112 L398 175 L430 240 L392 262 L368 316 L300 352 L232 308 L196 214 L150 160 Z"/>
+            <path d="M452 112 L650 136 L664 270 L540 282 L476 226 L446 168 Z"/>
+          </g>
+          <g font-family="Public Sans,sans-serif" font-size="13" fill="#55656f"><text x="150" y="52">EUROPE</text><text x="232" y="212">AFRICA</text><text x="528" y="212">ARABIA</text></g>
+          <path id="rS" d="M335 62 L394 104 C408 150 426 200 436 236 L520 322" fill="none" stroke="#1d4e66" stroke-width="2" stroke-opacity=".4"/>
+          <path id="rC" d="M330 66 C 96 96 84 280 214 340 C 300 380 420 346 520 326" fill="none" stroke="#55656f" stroke-width="2" stroke-opacity=".4" stroke-dasharray="3 6"/>
+          <circle cx="436" cy="238" r="26" fill="none" stroke="#c2410c" stroke-width="2" stroke-dasharray="5 4"/>
+          <g id="dotsS" fill="#1d4e66"></g><g id="dotsC" fill="#55656f"></g>
+          <g font-family="Public Sans,sans-serif" font-size="13" font-weight="600">
+            <text x="404" y="96" fill="#1d4e66">Suez Canal</text><text x="452" y="262" fill="#c2410c">Bab el-Mandeb</text>
+            <text x="96" y="364" fill="#55656f">Cape of Good Hope</text>
+            <text id="mapS" x="452" y="300" fill="#1d4e66"></text><text id="mapC" x="96" y="346" fill="#55656f"></text>
+          </g>
+        </svg>
+        <p class="note">Schematic, not to scale. One dot is 12.5% of a route's 2023 average daily traffic. The Suez route uses the Bab el-Mandeb count.</p>
+      </div>
+      <figure>
+        <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Perim_and_entire_Shaikh_Said_Peninsula.jpg?width=900" alt="Photo from the International Space Station of Perim Island and the Ras Menheli peninsula at the Bab el-Mandeb" onerror="this.parentNode.style.display='none'">
+        <figcaption>Perim Island and the Ras Menheli (Shaikh Said) peninsula at the Bab el-Mandeb, photographed from the International Space Station on 13 March 2010. NASA, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Perim_and_entire_Shaikh_Said_Peninsula.jpg">Wikimedia Commons</a>.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section id="ctxSec">
+    <h2>Context charts</h2>
+    <p class="note" style="margin:0 0 10px">Same timeline, same cursor. Panels appear only when PortWatch returns the needed fields.</p>
+    <div class="minis" id="minis"></div>
+  </section>
+
+  <section>
+    <h2>Traffic by period</h2>
+    <p class="note" style="margin:0 0 10px">Average daily transits in each period, with the change against the January to October 2023 average. Periods follow the event log.</p>
+    <div class="scroll"><table id="periods"></table></div>
+  </section>
+
+  <section>
+    <h2>Latest week against the previous 90 days</h2>
+    <div class="scroll"><table id="latest"></table></div>
+  </section>
+
+  <section>
+    <h2>Cross-check against the World Bank</h2>
+    <p class="note" style="margin:0 0 10px">The World Bank Data Lab published changes in vessel calls for the first months of the crisis, using the same PortWatch data. This table computes the closest equivalent from the live data. The baselines differ (World Bank: January 2022 to October 2023 by day of year; here: January to October 2023), so expect similar direction and size, not identical numbers.</p>
+    <div class="scroll"><table id="wb"></table></div>
+  </section>
+
+  <section>
     <h2>Monthly average index</h2>
-    <p class="note">Average daily transits in the month divided by the route's January to October 2023 average, times 100. The latest month may be incomplete.</p>
+    <p class="note" style="margin:0 0 10px">Average daily transits in the month divided by the route's January to October 2023 average, times 100. The latest month may be incomplete.</p>
     <div class="scroll"><table id="monthly"></table></div>
   </section>
 
   <section>
     <h2>Event log</h2>
-    <p class="note">Each event links to its source. Incidents without a confirmed attacker and government claims are labelled as such. Events dated after the latest PortWatch data appear in this table only.</p>
+    <p class="note" style="margin:0 0 10px">Each event links to its source. Incidents without a confirmed attacker and government claims are labelled as such. Events dated after the latest PortWatch data appear in this table only.</p>
     <div class="scroll"><table id="events"></table></div>
+  </section>
+
+  <section>
+    <h2>Data provenance</h2>
+    <div class="scroll"><table id="prov"></table></div>
   </section>
 </main>
 
 <footer>
-  Data: <a href="https://portwatch.imf.org">IMF PortWatch</a>, based on satellite AIS data from the UN Global Platform. Counts are ships detected, not cargo tonnage. Rerouting has several causes, so the chart shows timing and not cause.
+  Sources: UN Global Platform; <a href="https://portwatch.imf.org">IMF PortWatch</a>. Counts are ships detected, not cargo tonnage, and trade volumes are estimates. Rerouting has several causes, so these charts show timing and not cause.
 </footer>
 </div>
 
@@ -122,13 +181,21 @@
     "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/ArcGIS/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query",
     "https://services9.arcgis.com/weJ1QsnbMYJlCHdG/arcgis/rest/services/Daily_Chokepoints_Data/FeatureServer/0/query"
   ];
-  var IDS = ["chokepoint1", "chokepoint4", "chokepoint7"];
+  var CORE_WHERE = "portid='chokepoint1' OR portid='chokepoint4' OR portid='chokepoint7'";
+  var CTX_WHERE = "portname LIKE '%Hormuz%' OR portname LIKE '%Malacca%' OR portname LIKE '%Panama%' OR portname LIKE '%Bosp%'";
   var SNAPSHOT = "data/portwatch_snapshot.json";
   var ROUTES = [
-    { key: "Suez Canal", label: "Suez Canal", color: "#1d4e66", re: /suez/i },
-    { key: "Bab el-Mandeb Strait", label: "Bab el-Mandeb", color: "#c2410c", re: /mandeb/i },
-    { key: "Cape of Good Hope", label: "Cape of Good Hope", color: "#55656f", re: /cape of good hope/i }
+    { label: "Suez Canal", color: "#1d4e66", re: /suez/i },
+    { label: "Bab el-Mandeb", color: "#c2410c", re: /mandeb/i },
+    { label: "Cape of Good Hope", color: "#55656f", re: /cape of good hope/i }
   ];
+  var CTX = [
+    { label: "Strait of Hormuz", color: "#6b21a8", re: /hormuz/i },
+    { label: "Strait of Malacca", color: "#0f766e", re: /malacca/i },
+    { label: "Panama Canal", color: "#a16207", re: /panama/i },
+    { label: "Bosporus", color: "#be185d", re: /bosp/i }
+  ];
+  var ALL = ROUTES.concat(CTX);
   var EVENTS = [
     { d: "2023-11-19", t: "attack", e: "Galaxy Leader seized by the Houthis", s: "UN Security Council res. 2722", u: "https://digitallibrary.un.org/record/4033392", c: "confirmed" },
     { d: "2024-01-10", t: "policy", e: "UN Security Council res. 2722 demands an end to attacks", s: "UN Digital Library", u: "https://digitallibrary.un.org/record/4033392", c: "confirmed" },
@@ -148,6 +215,7 @@
     escalation: { name: "Escalation", col: "#6b21a8", cls: "t-escalation" },
     incident: { name: "Unattributed incident", col: "#7a8890", cls: "t-incident" }
   };
+  var WB = [-55.39, -45.42, 67.15]; // World Bank Data Lab, % change in vessel calls from 17 Nov 2023: Bab el-Mandeb, Suez, Cape
 
   var DAY = 86400000;
   function $(id) { return document.getElementById(id); }
@@ -159,9 +227,12 @@
     var m = String(v).match(/^(\d{4}-\d{2}-\d{2})/);
     return m ? dn(m[1]) : Math.floor(Date.parse(v) / DAY);
   }
-  function setStatus(cls, text) { var s = $("status"); s.className = "status " + cls; $("statusText").textContent = text; }
+  function setStatus(cls, text) { $("status").className = "status " + cls; $("statusText").textContent = text; }
+  function pct(v) { if (v == null) return "-"; var r = Math.round(v); return '<span class="' + (r < 0 ? "neg" : r > 0 ? "pos" : "") + '">' + (r > 0 ? "+" : r < 0 ? "\u2212" : "") + Math.abs(r) + "%</span>"; }
+  function num(v, d) { return v == null ? "-" : v.toLocaleString("en-GB", { maximumFractionDigits: d == null ? 0 : d, minimumFractionDigits: d == null ? 0 : d }); }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 
-  /* ---------- data loading ---------- */
+  /* ---------- loading ---------- */
   function getJSON(url, ms) {
     var ctl = new AbortController(), t = setTimeout(function () { ctl.abort(); }, ms || 25000);
     return fetch(url, { signal: ctl.signal }).then(function (r) {
@@ -173,25 +244,26 @@
   function pages(base, where) {
     var rows = [];
     function next(offset, n) {
-      var q = base + "?where=" + encodeURIComponent(where) + "&outFields=" + encodeURIComponent("date,portid,portname,n_total") +
-        "&outSR=4326&f=json&resultRecordCount=1000&resultOffset=" + offset;
+      var q = base + "?where=" + encodeURIComponent(where) + "&outFields=*&outSR=4326&f=json&resultRecordCount=1000&resultOffset=" + offset;
       return getJSON(q).then(function (b) {
         if (b.error) throw new Error(b.error.message || "service error");
         var f = b.features || [];
-        if (!f.length || n > 60) return rows;
+        if (!f.length || n > 80) return rows;
         f.forEach(function (x) { rows.push(x.attributes); });
         return next(offset + f.length, n + 1);
       });
     }
     return next(0, 0);
   }
-  function loadLive() {
-    var where = IDS.map(function (i) { return "portid='" + i + "'"; }).join(" OR ");
+  function tryBases(where) {
     return BASES.reduce(function (p, base) {
       return p.then(function (r) { return r.length ? r : pages(base, where).catch(function () { return []; }); });
-    }, Promise.resolve([])).then(function (rows) {
-      if (!rows.length) throw new Error("no rows");
-      return { rows: rows, mode: "live", stamp: new Date() };
+    }, Promise.resolve([]));
+  }
+  function loadLive() {
+    return Promise.all([tryBases(CORE_WHERE), tryBases(CTX_WHERE)]).then(function (res) {
+      if (!res[0].length) throw new Error("no rows");
+      return { rows: res[0].concat(res[1]), mode: "live", stamp: new Date() };
     });
   }
   function loadSnapshot() {
@@ -202,39 +274,51 @@
     });
   }
 
-  /* ---------- series ---------- */
+  /* ---------- series maths ---------- */
+  var D, V0, N, cur = 0, playing = true, speed = 1, lastT = 0, acc = 0, shown = [true, true, true], minis = [], S = [], flow = { n: [0, 0], d: [[], []] };
   function build(rows) {
-    var first = dn("2023-01-01"), last = -Infinity, raw = ROUTES.map(function () { return {}; });
+    var first = dn("2023-01-01"), last = -Infinity, store = ALL.map(function () { return {}; });
     rows.forEach(function (r) {
-      var k = ROUTES.findIndex(function (x) { return x.re.test(r.portname || ""); });
-      var d = toDn(r.date), v = Number(r.n_total);
-      if (k < 0 || isNaN(d) || isNaN(v)) return;
-      raw[k][d] = v;
-      if (d > last) last = d;
+      var k = ALL.findIndex(function (x) { return x.re.test(r.portname || ""); }), d = toDn(r.date);
+      if (k < 0 || isNaN(d)) return;
+      store[k][d] = r;
+      if (k < 3 && d > last) last = d;
     });
-    var L = last - first + 1;
-    var out = ROUTES.map(function (route, k) {
-      var arr = [], i, j, s, c, b = 0, bn = 0;
-      for (i = 0; i < L; i++) arr.push(raw[k][first + i] == null ? null : raw[k][first + i]);
-      for (i = 0; i < dn("2023-10-31") - first + 1 && i < L; i++) if (arr[i] != null) { b += arr[i]; bn++; }
-      var base = bn ? b / bn : null;
-      var idx = arr.map(function (_, i) {
-        s = 0; c = 0;
-        for (j = Math.max(0, i - 6); j <= i; j++) if (arr[j] != null) { s += arr[j]; c++; }
-        return base && c >= 4 ? s / c / base * 100 : null;
-      });
-      return { raw: arr, idx: idx, base: base };
+    return { first: first, last: last, L: last - first + 1, store: store };
+  }
+  function arr(k, f) {
+    var a = [], o, v, i;
+    for (i = 0; i < D.L; i++) { o = D.store[k][D.first + i]; v = o ? o[f] : null; a.push(v == null || v === "" || isNaN(Number(v)) ? null : Number(v)); }
+    return a;
+  }
+  function has(k, f) { return arr(k, f).some(function (v) { return v != null; }); }
+  function sm(a) {
+    return a.map(function (_, i) {
+      var s = 0, c = 0, j;
+      for (j = Math.max(0, i - 6); j <= i; j++) if (a[j] != null) { s += a[j]; c++; }
+      return c >= 4 ? s / c : null;
     });
-    return { first: first, last: last, series: out };
+  }
+  function base(a) {
+    var e = dn("2023-10-31") - D.first, s = 0, c = 0, i;
+    for (i = 0; i <= e && i < a.length; i++) if (a[i] != null) { s += a[i]; c++; }
+    return c ? s / c : null;
+  }
+  function series(k, f) {
+    var a = arr(k, f), b = base(a);
+    return { raw: a, base: b, idx: sm(a).map(function (v) { return b && v != null ? v / b * 100 : null; }) };
+  }
+  function mean(a, from, to) {
+    var s = 0, c = 0, d, v;
+    for (d = from; d <= to; d++) { v = a[d - D.first]; if (v != null) { s += v; c++; } }
+    return c ? s / c : null;
   }
 
-  /* ---------- app ---------- */
-  var D, V0, N, cur = 0, playing = true, speed = 1, lastT = 0, acc = 0, shown = [true, true, true];
+  /* ---------- init ---------- */
   var W = 900, H = 430, M = { l: 46, r: 16, t: 14, b: 62 }, X, Y, ymax;
-
   function init(data) {
     D = build(data.rows);
-    var S = D.series;
+    S = ROUTES.map(function (r, k) { return series(k, "n_total"); });
     if (S.some(function (s) { return !s.base; })) throw new Error("baseline missing");
     V0 = dn("2023-09-01") - D.first; N = D.last - D.first - V0 + 1;
     var mx = 0;
@@ -242,89 +326,183 @@
     ymax = Math.max(150, Math.ceil(mx / 50) * 50);
     X = function (i) { return M.l + (W - M.l - M.r) * i / (N - 1); };
     Y = function (v) { return M.t + (H - M.t - M.b) * (1 - v / ymax); };
-
     $("app").hidden = false;
-    var when = data.mode === "live" ? "loaded " + data.stamp.toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) :
-      (data.stamp ? "saved " + data.stamp : "saved copy");
-    setStatus(data.mode === "live" ? "live" : "snap",
-      (data.mode === "live" ? "Live from IMF PortWatch" : "Saved copy (live server unreachable)") + ", data through " + fmt(D.last) + ", " + when);
-
-    drawStatic(); buildCards(); buildToggles(); buildTables();
-    var sc = $("scrub"); sc.max = N - 1;
-    cur = 0;
+    var when = data.mode === "live" ? "loaded " + data.stamp.toLocaleString("en-GB", { dateStyle: "medium", timeStyle: "short" }) : (data.stamp ? "saved " + data.stamp : "saved copy");
+    setStatus(data.mode === "live" ? "live" : "snap", (data.mode === "live" ? "Live from IMF PortWatch" : "Saved copy (live server unreachable)") + ", data through " + fmt(D.last) + ", " + when);
+    drawMain(); buildCards(); buildToggles(); buildMinis(); buildTables(); initMap();
+    $("scrub").max = N - 1;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduce) { cur = N - 1; playing = false; }
+    cur = reduce ? N - 1 : 0; playing = !reduce;
     render(); setBtn();
     if (playing) requestAnimationFrame(tick);
+    if (!reduce) requestAnimationFrame(flowLoop);
   }
 
-  function drawStatic() {
+  /* ---------- main chart ---------- */
+  function drawMain() {
     var h = "", v, i, d, ticks = [];
-    for (v = 0; v <= ymax; v += 50) h += '<line class="grid" x1="' + M.l + '" x2="' + (W - M.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/><text class="ax" x="' + (M.l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + v + '</text>';
-    h += '<line class="base" x1="' + M.l + '" x2="' + (W - M.r) + '" y1="' + Y(100) + '" y2="' + Y(100) + '"/>';
-    h += '<text class="ax" x="' + (W - M.r) + '" y="' + (Y(100) - 6) + '" text-anchor="end">2023 average = 100</text>';
+    for (v = 0; v <= ymax; v += 50) h += '<line class="grid" x1="' + M.l + '" x2="' + (W - M.r) + '" y1="' + Y(v) + '" y2="' + Y(v) + '"/><text class="ax" x="' + (M.l - 8) + '" y="' + (Y(v) + 4) + '" text-anchor="end">' + v + "</text>";
+    h += '<line class="base" x1="' + M.l + '" x2="' + (W - M.r) + '" y1="' + Y(100) + '" y2="' + Y(100) + '"/><text class="ax" x="' + (W - M.r) + '" y="' + (Y(100) - 6) + '" text-anchor="end">2023 average = 100</text>';
     for (i = 0; i < N; i++) { d = new Date((D.first + V0 + i) * DAY); if (d.getUTCDate() === 1 && d.getUTCMonth() % 3 === 0) ticks.push([i, d.toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" })]); }
-    ticks.forEach(function (t) { h += '<text class="ax" x="' + X(t[0]) + '" y="' + (Y(0) + 16) + '" text-anchor="middle">' + t[1] + '</text><line class="grid" x1="' + X(t[0]) + '" x2="' + X(t[0]) + '" y1="' + Y(0) + '" y2="' + (Y(0) + 4) + '"/>'; });
-    h += '<text class="lane" x="' + M.l + '" y="' + (H - 30) + '">Events</text>';
+    ticks.forEach(function (t) { h += '<text class="ax" x="' + X(t[0]) + '" y="' + (Y(0) + 16) + '" text-anchor="middle">' + t[1] + "</text>"; });
+    h += '<text class="ax" x="' + M.l + '" y="' + (H - 30) + '">Events</text>';
     ROUTES.forEach(function (r, k) { h += '<path class="ln" id="ln' + k + '" stroke="' + r.color + '"/>'; });
     EVENTS.forEach(function (e, k) {
       var i = dn(e.d) - D.first - V0; if (i < 0 || i >= N) return;
       var x = X(i), y = H - 16, c = TYPE[e.t].col;
-      h += '<g class="ev" id="ev' + k + '"><title>' + fmt(dn(e.d)) + ': ' + e.e + '</title><line x1="' + x + '" x2="' + x + '" y1="' + (H - 24) + '" y2="' + Y(0) + '" stroke="' + c + '" stroke-opacity=".35"/>' +
-        (e.t === "attack" ? '<path d="M' + (x - 6) + ' ' + (y - 6) + 'L' + (x + 6) + ' ' + (y - 6) + 'L' + x + ' ' + (y + 6) + 'Z"' : e.t === "policy" ? '<rect x="' + (x - 5) + '" y="' + (y - 5) + '" width="10" height="10"' : e.t === "incident" ? '<circle cx="' + x + '" cy="' + y + '" r="5.5"' : '<path d="M' + x + ' ' + (y - 7) + 'L' + (x + 7) + ' ' + y + 'L' + x + ' ' + (y + 7) + 'L' + (x - 7) + ' ' + y + 'Z"') +
-        ' fill="' + c + '"/></g>';
+      h += '<g class="ev" id="ev' + k + '"><title>' + fmt(dn(e.d)) + ": " + e.e + '</title><line x1="' + x + '" x2="' + x + '" y1="' + (H - 24) + '" y2="' + Y(0) + '" stroke="' + c + '" stroke-opacity=".35"/>' +
+        (e.t === "attack" ? '<path d="M' + (x - 6) + " " + (y - 6) + "L" + (x + 6) + " " + (y - 6) + "L" + x + " " + (y + 6) + 'Z"' : e.t === "policy" ? '<rect x="' + (x - 5) + '" y="' + (y - 5) + '" width="10" height="10"' : e.t === "incident" ? '<circle cx="' + x + '" cy="' + y + '" r="5.5"' : '<path d="M' + x + " " + (y - 7) + "L" + (x + 7) + " " + y + "L" + x + " " + (y + 7) + "L" + (x - 7) + " " + y + 'Z"') + ' fill="' + c + '"/></g>';
     });
-    h += '<g id="cursor"><line id="cl" y1="' + Y(ymax) + '" y2="' + Y(0) + '" stroke="#14232e" stroke-opacity=".5"/>' +
-      ROUTES.map(function (r, k) { return '<circle id="cd' + k + '" r="5" fill="' + r.color + '" stroke="#fff" stroke-width="2"/>'; }).join("") + '</g>';
+    h += '<g><line id="cl" y1="' + Y(ymax) + '" y2="' + Y(0) + '" stroke="#14232e" stroke-opacity=".5"/>' + ROUTES.map(function (r, k) { return '<circle id="cd' + k + '" r="5" fill="' + r.color + '" stroke="#fff" stroke-width="2"/>'; }).join("") + "</g>";
     $("chart").innerHTML = h;
-    $("legend").innerHTML = Object.keys(TYPE).map(function (k) { return '<span><b style="color:' + TYPE[k].col + '">&#9679;</b> ' + TYPE[k].name + '</span>'; }).join("");
+    $("legend").innerHTML = Object.keys(TYPE).map(function (k) { return '<span><b style="color:' + TYPE[k].col + '">&#9679;</b> ' + TYPE[k].name + "</span>"; }).join("");
   }
-
   function buildCards() {
-    $("cards").innerHTML = ROUTES.map(function (r, k) {
-      return '<div class="kpi" style="--c:' + r.color + '"><div class="n">' + r.label + '</div><div class="v" id="kv' + k + '">-</div><div class="d" id="kd' + k + '"></div></div>';
-    }).join("");
+    $("cards").innerHTML = ROUTES.map(function (r, k) { return '<div class="kpi" style="--c:' + r.color + '"><div class="n">' + r.label + '</div><div class="v" id="kv' + k + '">-</div><div class="d" id="kd' + k + '"></div></div>'; }).join("");
   }
   function buildToggles() {
-    $("toggles").innerHTML = ROUTES.map(function (r, k) {
-      return '<label style="--c:' + r.color + '"><input type="checkbox" data-k="' + k + '" checked><i></i>' + r.label + '</label>';
-    }).join("");
+    $("toggles").innerHTML = ROUTES.map(function (r, k) { return '<label style="--c:' + r.color + '"><input type="checkbox" data-k="' + k + '" checked><i></i>' + r.label + "</label>"; }).join("");
     $("toggles").addEventListener("change", function (e) { shown[+e.target.dataset.k] = e.target.checked; render(); });
   }
 
-  function buildTables() {
-    var S = D.series, months = {}, i, m, h;
-    for (i = V0; i < D.last - D.first + 1; i++) {
-      m = ym(D.first + i);
-      if (!months[m]) months[m] = { start: D.first + i, v: ROUTES.map(function () { return [0, 0]; }) };
-      S.forEach(function (s, k) { if (s.raw[i] != null) { months[m].v[k][0] += s.raw[i]; months[m].v[k][1]++; } });
+  /* ---------- context charts ---------- */
+  function niceStep(mx) { var raw = (mx || 1) / 4, p = Math.pow(10, Math.floor(Math.log(raw) / Math.LN10)), f = raw / p; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10) * p; }
+  function mini(spec) {
+    var box = document.createElement("div"), w = 440, h = 250, m = { l: 46, r: 10, t: 10, b: 26 }, mx = 0, i;
+    box.className = "panel";
+    box.innerHTML = "<h3>" + spec.title + '</h3><svg viewBox="0 0 440 250" role="img" aria-label="' + spec.title + '"></svg><div class="legend">' +
+      spec.series.map(function (s) { return '<span style="--c:' + s.color + '"><i></i>' + s.label + "</span>"; }).join("") + '</div><p class="note">' + spec.note + "</p>";
+    $("minis").appendChild(box);
+    spec.series.forEach(function (s) { s.vals.forEach(function (v) { if (v != null && v > mx) mx = v; }); });
+    var step = niceStep(mx), top = Math.ceil(mx * 1.05 / step) * step || 1;
+    function mx_(i) { return m.l + (w - m.l - m.r) * i / (N - 1); }
+    function my(v) { return m.t + (h - m.t - m.b) * (1 - v / top); }
+    var g = "", v;
+    for (v = 0; v <= top + 1e-9; v += step) g += '<line class="grid" x1="' + m.l + '" x2="' + (w - m.r) + '" y1="' + my(v) + '" y2="' + my(v) + '"/><text class="ax" x="' + (m.l - 6) + '" y="' + (my(v) + 4) + '" text-anchor="end">' + (step < 1 ? v.toFixed(1) : Math.round(v)) + "</text>";
+    if (spec.base) g += '<line class="base" x1="' + m.l + '" x2="' + (w - m.r) + '" y1="' + my(100) + '" y2="' + my(100) + '"/>';
+    for (i = 0; i < N; i++) { var d = new Date((D.first + V0 + i) * DAY); if (d.getUTCDate() === 1 && d.getUTCMonth() === 0) g += '<text class="ax" x="' + mx_(i) + '" y="' + (h - 8) + '" text-anchor="middle">' + d.getUTCFullYear() + "</text>"; }
+    spec.series.forEach(function (s, j) { g += '<path class="ln" id="' + spec.id + "p" + j + '" stroke="' + s.color + '"/>'; });
+    g += '<line id="' + spec.id + 'c" y1="' + m.t + '" y2="' + (h - m.b) + '" stroke="#14232e" stroke-opacity=".5"/>';
+    spec.series.forEach(function (s, j) { g += '<circle id="' + spec.id + "d" + j + '" r="4" fill="' + s.color + '" stroke="#fff" stroke-width="1.5"/>'; });
+    box.querySelector("svg").innerHTML = g;
+    return function (c) {
+      spec.series.forEach(function (s, j) {
+        var p = "", pen = false, k, val;
+        for (k = 0; k <= c; k++) { val = s.vals[k]; if (val == null) { pen = false; continue; } p += (pen ? "L" : "M") + mx_(k).toFixed(1) + " " + my(val).toFixed(1); pen = true; }
+        $(spec.id + "p" + j).setAttribute("d", p);
+        var cv = s.vals[c], dot = $(spec.id + "d" + j);
+        if (cv == null) dot.style.display = "none"; else { dot.style.display = ""; dot.setAttribute("cx", mx_(c)); dot.setAttribute("cy", my(cv)); }
+      });
+      $(spec.id + "c").setAttribute("x1", mx_(c)); $(spec.id + "c").setAttribute("x2", mx_(c));
+    };
+  }
+  function buildMinis() {
+    var specs = [], hor = series(3, "n_total");
+    if (hor.raw.some(function (v) { return v != null; })) {
+      specs.push({ id: "m1", title: "Strait of Hormuz and Bab el-Mandeb (index)", base: true, note: "Daily transits, 7-day average, 100 = January to October 2023. The Hormuz line shows the effect of the Iran war on a separate chokepoint.",
+        series: [{ label: "Strait of Hormuz", color: CTX[0].color, vals: hor.idx.slice(V0) }, { label: "Bab el-Mandeb", color: ROUTES[1].color, vals: S[1].idx.slice(V0) }] });
     }
-    h = '<thead><tr><th>Month</th>' + ROUTES.map(function (r) { return '<th>' + r.label + '</th>'; }).join("") + '</tr></thead><tbody>';
-    Object.keys(months).forEach(function (k) {
-      var row = months[k];
-      h += '<tr data-start="' + row.start + '"><td>' + new Date(row.start * DAY).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" }) + '</td>' +
-        row.v.map(function (p, j) {
-          if (!p[1]) return '<td class="num">-</td>';
-          var val = p[0] / p[1] / S[j].base * 100;
-          return '<td class="num" style="--c:' + ROUTES[j].color + '"><u style="width:' + Math.min(100, val / ymax * 100) + '%"></u><span>' + Math.round(val) + '</span></td>';
-        }).join("") + '</tr>';
-    });
-    $("monthly").innerHTML = h + '</tbody>';
-    $("events").innerHTML = '<thead><tr><th>Date</th><th>Type</th><th>Event</th><th>Source</th><th>Status</th></tr></thead><tbody>' +
-      EVENTS.map(function (e) {
-        return '<tr data-d="' + dn(e.d) + '"><td>' + fmt(dn(e.d)) + '</td><td class="' + TYPE[e.t].cls + '">' + TYPE[e.t].name + '</td><td>' + e.e + '</td><td><a href="' + e.u + '">' + e.s + '</a></td><td>' + e.c + '</td></tr>';
-      }).join("") + '</tbody>';
+    if (has(0, "capacity") && has(1, "capacity")) {
+      specs.push({ id: "m2", title: "Estimated trade volume (million tonnes a day)", note: "PortWatch estimate of cargo capacity passing each route, 7-day average. An estimate from ship sizes, not a customs figure.",
+        series: ROUTES.filter(function (r, k) { return has(k, "capacity"); }).map(function (r) { var k = ROUTES.indexOf(r); return { label: r.label, color: r.color, vals: sm(arr(k, "capacity")).map(function (v) { return v == null ? null : v / 1e6; }).slice(V0) }; }) });
+    }
+    if (has(1, "n_tanker") && has(1, "n_container")) {
+      var types = [["n_tanker", "Tankers", "#c2410c"], ["n_container", "Container ships", "#1d4e66"], ["n_dry_bulk", "Dry bulk", "#a16207"]].filter(function (t) { return has(1, t[0]); });
+      specs.push({ id: "m3", title: "Bab el-Mandeb by vessel type (index)", base: true, note: "Each ship type against its own January to October 2023 average at the strait. Shows which segments left first.",
+        series: types.map(function (t) { return { label: t[1], color: t[2], vals: series(1, t[0]).idx.slice(V0) }; }) });
+    }
+    minis = specs.map(mini);
+    if (!specs.length) $("ctxSec").hidden = true;
   }
 
-  function render() {
-    var S = D.series, day = D.first + V0 + cur;
-    ROUTES.forEach(function (r, k) {
-      var p = "", pen = false, x = 0, y = 0;
-      for (var i = 0; i <= cur; i++) {
-        var v = S[k].idx[V0 + i];
-        if (v == null) { pen = false; continue; }
-        p += (pen ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); pen = true;
+  /* ---------- tables ---------- */
+  function buildTables() {
+    var i, h, last = D.last, k;
+    // periods
+    var P = [["Baseline", "2023-01-01", "2023-10-31"], ["Gaza-linked campaign", "2023-11-19", "2025-10-09"], ["Gaza ceasefire", "2025-10-10", "2026-02-27"], ["Iran war", "2026-02-28", "2026-07-19"], ["Saudi-linked blockade", "2026-07-20", null]];
+    h = "<thead><tr><th>Period</th><th>Dates</th>" + ROUTES.map(function (r) { return "<th>" + r.label + " (ships a day)</th>"; }).join("") + "</tr></thead><tbody>";
+    P.forEach(function (p) {
+      var a = dn(p[1]), b = p[2] ? dn(p[2]) : last;
+      h += "<tr><td>" + p[0] + "</td><td>" + fmt(a) + " to " + fmt(b) + "</td>" + ROUTES.map(function (r, k) {
+        var m = mean(S[k].raw, a, b); return "<td>" + num(m, 1) + (p[0] === "Baseline" ? "" : " (" + pct(m / S[k].base * 100 - 100) + ")") + "</td>";
+      }).join("") + "</tr>";
+    });
+    $("periods").innerHTML = h + "</tbody>";
+    // latest week
+    h = "<thead><tr><th>Route</th><th>Last 7 days (ships a day)</th><th>Previous 90 days</th><th>Change</th></tr></thead><tbody>";
+    ALL.forEach(function (r, k) {
+      var a = arr(k, "n_total"); if (!a.some(function (v) { return v != null; })) return;
+      var w = mean(a, last - 6, last), p = mean(a, last - 96, last - 7);
+      h += "<tr><td>" + r.label + "</td><td>" + num(w, 1) + "</td><td>" + num(p, 1) + "</td><td>" + (w != null && p ? pct(w / p * 100 - 100) : "-") + "</td></tr>";
+    });
+    $("latest").innerHTML = h + "</tbody>";
+    // World Bank cross-check (WB order: Bab el-Mandeb, Suez, Cape)
+    var wbOrder = [[1, WB[0]], [0, WB[1]], [2, WB[2]]], a0 = dn("2023-11-17"), b0 = dn("2024-01-31");
+    h = "<thead><tr><th>Route</th><th>This page: 17 Nov 2023 to 31 Jan 2024 vs 2023 baseline</th><th>World Bank published, from 17 Nov 2023</th></tr></thead><tbody>";
+    wbOrder.forEach(function (o) {
+      var m = mean(S[o[0]].raw, a0, b0);
+      h += "<tr><td>" + ROUTES[o[0]].label + "</td><td>" + pct(m / S[o[0]].base * 100 - 100) + "</td><td>" + pct(o[1]) + "</td></tr>";
+    });
+    $("wb").innerHTML = h + '</tbody><caption style="caption-side:bottom;text-align:left;padding:6px 0;font-size:.84rem;color:#55656f">World Bank Data Lab, Chokepoints Monitor methodology notebook (total vessel calls). <a href="https://worldbank.github.io/alternative-data-for-crisis/notebooks/disruptions-business-trade/chokepoints-monitor.html">Source</a></caption>';
+    // monthly
+    var months = {}, m;
+    for (i = V0; i < D.L; i++) {
+      m = ym(D.first + i);
+      if (!months[m]) months[m] = { start: D.first + i, v: ROUTES.map(function () { return [0, 0]; }) };
+      S.forEach(function (s, kk) { if (s.raw[i] != null) { months[m].v[kk][0] += s.raw[i]; months[m].v[kk][1]++; } });
+    }
+    h = "<thead><tr><th>Month</th>" + ROUTES.map(function (r) { return "<th>" + r.label + "</th>"; }).join("") + "</tr></thead><tbody>";
+    Object.keys(months).forEach(function (key) {
+      var row = months[key];
+      h += '<tr data-start="' + row.start + '"><td>' + new Date(row.start * DAY).toLocaleDateString("en-GB", { month: "short", year: "numeric", timeZone: "UTC" }) + "</td>" + row.v.map(function (p, j) {
+        if (!p[1]) return '<td class="num">-</td>';
+        var val = p[0] / p[1] / S[j].base * 100;
+        return '<td class="num" style="--c:' + ROUTES[j].color + '"><u style="width:' + Math.min(100, val / ymax * 100) + '%"></u><span>' + Math.round(val) + "</span></td>";
+      }).join("") + "</tr>";
+    });
+    $("monthly").innerHTML = h + "</tbody>";
+    // events
+    $("events").innerHTML = "<thead><tr><th>Date</th><th>Type</th><th>Event</th><th>Source</th><th>Status</th></tr></thead><tbody>" + EVENTS.map(function (e) {
+      return '<tr data-d="' + dn(e.d) + '"><td>' + fmt(dn(e.d)) + '</td><td class="' + TYPE[e.t].cls + '">' + TYPE[e.t].name + "</td><td>" + e.e + '</td><td><a href="' + e.u + '">' + e.s + "</a></td><td>" + e.c + "</td></tr>";
+    }).join("") + "</tbody>";
+    // provenance
+    $("prov").innerHTML = "<thead><tr><th>Item</th><th>Provider</th><th>Detail</th></tr></thead><tbody>" +
+      '<tr><td>Daily transit calls and trade estimates</td><td><a href="https://portwatch.imf.org">IMF PortWatch</a></td><td>AIS signals from the UN Global Platform, daily per chokepoint, updated weekly (Tuesdays). Fields used: n_total, capacity, vessel-type counts.</td></tr>' +
+      '<tr><td>Cross-check figures</td><td><a href="https://worldbank.github.io/alternative-data-for-crisis/notebooks/disruptions-business-trade/chokepoints-monitor.html">World Bank Data Lab</a></td><td>Published percentage changes for the first months of the crisis, from the same PortWatch data.</td></tr>' +
+      '<tr><td>Events</td><td>Linked per row</td><td>UN Digital Library, AP, UPI, Al Jazeera, Seatrade, Gulf News, The National and others. Unattributed incidents and claims are labelled.</td></tr>' +
+      '<tr><td>Photo</td><td>NASA via Wikimedia Commons</td><td>International Space Station photo, public domain.</td></tr></tbody>';
+  }
+
+  /* ---------- flow map ---------- */
+  function initMap() {
+    var sp = $("rS"), cp = $("rC");
+    if (!sp || !sp.getTotalLength || !sp.getPointAtLength) return;
+    flow.p = [sp, cp]; flow.len = [sp.getTotalLength(), cp.getTotalLength()];
+    [["dotsS", 0], ["dotsC", 1]].forEach(function (g) {
+      for (var i = 0; i < 20; i++) {
+        var c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+        c.setAttribute("r", "3.6"); c.style.display = "none"; $(g[0]).appendChild(c); flow.d[g[1]].push(c);
       }
+    });
+  }
+  function flowLoop(t) {
+    if (flow.p) {
+      for (var r = 0; r < 2; r++) for (var j = 0; j < 20; j++) {
+        var c = flow.d[r][j];
+        if (j >= flow.n[r]) { c.style.display = "none"; continue; }
+        var ph = ((j / 20) + t / (r ? 36000 : 24000)) % 1, pt = flow.p[r].getPointAtLength(ph * flow.len[r]);
+        c.style.display = ""; c.setAttribute("cx", pt.x); c.setAttribute("cy", pt.y);
+      }
+    }
+    requestAnimationFrame(flowLoop);
+  }
+
+  /* ---------- render ---------- */
+  function render() {
+    var day = D.first + V0 + cur;
+    ROUTES.forEach(function (r, k) {
+      var p = "", pen = false, i, v;
+      for (i = 0; i <= cur; i++) { v = S[k].idx[V0 + i]; if (v == null) { pen = false; continue; } p += (pen ? "L" : "M") + X(i).toFixed(1) + " " + Y(v).toFixed(1); pen = true; }
       var el = $("ln" + k); el.setAttribute("d", p); el.style.display = shown[k] ? "" : "none";
       var cv = S[k].idx[V0 + cur], dot = $("cd" + k);
       if (cv == null) { dot.style.display = "none"; $("kv" + k).textContent = "-"; $("kd" + k).textContent = ""; }
@@ -338,31 +516,23 @@
     $("cl").setAttribute("x1", X(cur)); $("cl").setAttribute("x2", X(cur));
     $("date").textContent = fmt(day); $("scrub").value = cur;
     var latest = null;
-    EVENTS.forEach(function (e, k) {
-      var on = dn(e.d) <= day, g = $("ev" + k);
-      if (g) g.classList.toggle("on", on);
-      if (on) latest = e;
-    });
+    EVENTS.forEach(function (e, k) { var on = dn(e.d) <= day, g = $("ev" + k); if (g) g.classList.toggle("on", on); if (on) latest = e; });
     var cap = $("evcap");
-    if (latest) {
-      cap.style.borderLeftColor = TYPE[latest.t].col;
-      cap.innerHTML = '<b>' + fmt(dn(latest.d)) + ': ' + latest.e + '</b>Source: <a href="' + latest.u + '">' + latest.s + '</a> (' + latest.c + ')';
-    } else cap.textContent = "Before the first logged event.";
-    Array.prototype.forEach.call($("monthly").querySelectorAll("tbody tr"), function (tr) {
-      var s = +tr.dataset.start; tr.classList.toggle("future", s > day);
-      tr.classList.toggle("now", s <= day && day < s + 31 && ym(s) === ym(day));
-    });
-    Array.prototype.forEach.call($("events").querySelectorAll("tbody tr"), function (tr) {
-      tr.classList.toggle("future", +tr.dataset.d > day);
-      tr.classList.toggle("now", latest && +tr.dataset.d === dn(latest.d));
-    });
+    if (latest) { cap.style.borderLeftColor = TYPE[latest.t].col; cap.innerHTML = "<b>" + fmt(dn(latest.d)) + ": " + latest.e + '</b>Source: <a href="' + latest.u + '">' + latest.s + "</a> (" + latest.c + ")"; }
+    else cap.textContent = "Before the first logged event.";
+    minis.forEach(function (f) { f(cur); });
+    var bi = S[1].idx[V0 + cur], ci = S[2].idx[V0 + cur];
+    flow.n = [bi == null ? 0 : clamp(Math.round(bi / 12.5), 0, 20), ci == null ? 0 : clamp(Math.round(ci / 12.5), 0, 20)];
+    $("mapS").textContent = bi == null ? "" : "Suez route: " + Math.round(bi) + "% of 2023";
+    $("mapC").textContent = ci == null ? "" : "Cape route: " + Math.round(ci) + "% of 2023";
+    Array.prototype.forEach.call($("monthly").querySelectorAll("tbody tr"), function (tr) { var s = +tr.dataset.start; tr.classList.toggle("future", s > day); tr.classList.toggle("now", s <= day && ym(s) === ym(day)); });
+    Array.prototype.forEach.call($("events").querySelectorAll("tbody tr"), function (tr) { tr.classList.toggle("future", +tr.dataset.d > day); tr.classList.toggle("now", !!latest && +tr.dataset.d === dn(latest.d)); });
   }
-
   function setBtn() { $("play").textContent = playing ? "Pause" : (cur >= N - 1 ? "Replay" : "Play"); }
   function tick(t) {
     if (!playing) return;
     if (!lastT) lastT = t;
-    acc += (t - lastT) / 1000 * (N / 26) * speed; lastT = t;
+    acc += (t - lastT) / 1000 * (N / 30) * speed; lastT = t;
     var step = Math.floor(acc);
     if (step > 0) { acc -= step; cur = Math.min(N - 1, cur + step); render(); }
     if (cur >= N - 1) { playing = false; setBtn(); return; }
@@ -370,18 +540,18 @@
   }
   function play() { if (cur >= N - 1) cur = 0; playing = true; lastT = 0; acc = 0; setBtn(); requestAnimationFrame(tick); }
   function pause() { playing = false; setBtn(); }
-
   $("play").addEventListener("click", function () { playing ? pause() : play(); });
   $("restart").addEventListener("click", function () { cur = 0; render(); play(); });
   $("speed").addEventListener("change", function (e) { speed = +e.target.value; });
   $("scrub").addEventListener("input", function (e) { pause(); cur = +e.target.value; render(); });
 
-  loadLive().catch(function () { return loadSnapshot(); }).then(init).catch(function () {
+  loadLive().catch(function () { return loadSnapshot(); }).then(init).catch(function (err) {
     setStatus("err", "Data unavailable");
     var m = document.createElement("div");
     m.className = "msg panel";
-    m.innerHTML = "The live PortWatch server could not be reached and no saved copy was found. Try again later, or see the static charts in the <a href=\"red-sea.html\">project write-up</a>.";
+    m.innerHTML = 'The live PortWatch server could not be reached and no saved copy was found. Try again later, or see the static charts in the <a href="red-sea.html">project write-up</a>.';
     $("status").parentNode.appendChild(m);
+    if (window.console) console.error(err);
   });
 })();
 </script>
