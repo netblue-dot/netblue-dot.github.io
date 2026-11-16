@@ -35,6 +35,21 @@ Question: where are displaced people moving, and which country is affected most?
 Method: flows from Türkiye, Lebanon, Jordan, Iraq and Egypt into Syria are derived by applying UNHCR's returnee shares to 1.63 million returnees (30 April 2026). The map is a simplified vector drawing, so borders are indicative only.
 Limit: a dated snapshot of published figures, not a live API feed.
 
+## Gulf arms imports
+Question: which Gulf states import the most weapons, who supplies them, and how do legal and illicit transfer routes differ?
+
+- gulf-arms-imports.html: animated map of legal and reported illicit corridors, SIPRI charts, country table and sourced news cards
+- data/gulf_arms_imports.csv: SIPRI import shares, ranks and US supplier shares, with a source link per row
+- data/us_fms_2026_selected.csv: selected 2026 US State Department sale approvals with dates and values
+
+Live: https://netblue-dot.github.io/gulf-arms-imports.html
+
+Data: SIPRI Arms Transfers Database and fact sheets (2024, 2026), US State Department and DSCA notifications, CENTCOM, CAAT, plus news reports (Al Jazeera, The Hill, AFP, The National).
+
+Limits: SIPRI values measure military capability, not dollars. Sale approvals are notifications, not deliveries. Bahrain and Oman are not yet verified. Map routes are schematic and the news cards are a dated snapshot.
+
+Findings: Saudi Arabia held 6.8% of global arms imports in 2021-25 and Qatar 6.4%. The US supplies 77% of Saudi imports. 2026 approvals focus on air and missile defense.
+
 ## Notes
 - Every figure is attributed to its source on the page. Where sources disagree, the page says so.
 - Pages are single self-contained HTML files, hosted with GitHub Pages.
