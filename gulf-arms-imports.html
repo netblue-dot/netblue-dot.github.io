@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gulf Arms Imports: Visual Intelligence Dashboard</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+:root{--bg:#f4f2f8;--card:#fff;--tx:#1d1a24;--mu:#625c70;--ac:#5b3f8c;--lg:#0b7a8f;--il:#c0392b;--bd:#ddd8e6;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#110e18;--card:#1c1727;--tx:#efeaf7;--mu:#a9a1b8;--ac:#a98ae0;--lg:#3fd0e8;--il:#ff6b5b;--bd:#322b42}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,sans-serif}
+.w{max-width:1100px;margin:auto;padding:0 16px}
+header{background:linear-gradient(160deg,#3b2a5c,#120e1b);color:#fff;padding:36px 0 24px}
+h1{font:700 clamp(1.5rem,4.5vw,2.4rem)/1.15 Georgia,serif;margin:.2em 0}
+h2{font:600 .8rem system-ui;letter-spacing:.14em;text-transform:uppercase;color:var(--mu);margin:34px 0 10px}
+.g{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+.c{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:14px;min-width:0}
+.big{font:700 2.2rem system-ui;color:var(--ac)}.s{color:var(--mu);font-size:.8rem}
+.tk{background:#0b0912;color:#e8e2f5;overflow:hidden;white-space:nowrap;border-bottom:2px solid var(--il);font-size:.85rem;padding:7px 0}
+.tk div{display:inline-block;padding-left:100%;animation:m 90s linear infinite}
+@keyframes m{to{transform:translateX(-100%)}}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--il);margin-right:6px;animation:p 1.4s infinite}
+@keyframes p{50%{opacity:.2}}
+table{width:100%;border-collapse:collapse;font-size:.85rem}th,td{padding:7px;border-bottom:1px solid var(--bd);text-align:left}.sc{overflow-x:auto}
+#map{width:100%;height:500px;background:#0e1a24;border-radius:10px;display:block}
+.b{font:600 .8rem system-ui;border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:6px 12px;border-radius:20px;cursor:pointer;margin:0 6px 8px 0}.b.on{background:var(--ac);color:#fff}
+.n{display:block;text-decoration:none;color:var(--tx)}.n:hover{border-color:var(--ac)}
+.t{font:700 .65rem system-ui;letter-spacing:.08em;text-transform:uppercase;padding:2px 7px;border-radius:4px;color:#fff;margin-right:6px}
+.G{background:#2e6bd3}.T{background:#7a4fc0}.N{background:#b5651d}
+.lg{color:var(--lg)}.il{color:var(--il)}footer{margin:30px 0;color:var(--mu);font-size:.78rem}
+</style></head><body>
+<div class="tk"><div><span class="dot"></span>US State Dept: UAE APKWS guidance sections ($1bn) and Kuwait Patriot repair ($400m) approved, 5 Oct 2026 (AFP) &nbsp;•&nbsp; Jordan APKWS II notification, 2 Nov 2026 (State Dept) &nbsp;•&nbsp; US approved $16.5bn for UAE, Kuwait, Jordan under an emergency declaration, 19 Mar 2026 (Al Jazeera) &nbsp;•&nbsp; Qatar Patriot replenishment ($4.01bn), Kuwait IBCS ($2.5bn), 2 May 2026 (The Hill) &nbsp;•&nbsp; SIPRI: Saudi Arabia and Qatar among top-4 importers, 2021–25 (Mar 2026)</div></div>
+<header><div class="w"><div class="s" style="color:#cbbfe3">SIPRI-based · Gulf Cooperation Council · 2019–2026</div>
+<h1>Arms Imports in the Gulf</h1></div></header>
+<main class="w">
+
+<h2>Headline numbers</h2>
+<div class="g">
+<div class="c"><div class="big" data-n="6.8" data-s="%">0</div><div class="s">Saudi share of global imports 2021–25</div></div>
+<div class="c"><div class="big" data-n="6.4" data-s="%">0</div><div class="s">Qatar share 2021–25</div></div>
+<div class="c"><div class="big" data-n="77" data-s="%">0</div><div class="s">US share of Saudi imports</div></div>
+<div class="c"><div class="big" data-n="12" data-s="%">0</div><div class="s">Saudi share of all US arms exports</div></div></div>
+
+<h2>Live corridor map</h2>
+<div><button class="b on" id="bl">Legal transfers</button><button class="b on" id="bi">Reported illicit / disputed</button></div>
+<canvas id="map"></canvas>
+<div class="s"><span class="lg">■</span> authorized deliveries (schematic) &nbsp; <span class="il">■</span> alleged or documented illicit flows: Iran→Houthi seizures (CENTCOM, UN experts); UAE→RSF Sudan alleged, denied by UAE. Indicative routes only.</div>
+
+<h2>Charts</h2>
+<div class="g">
+<div class="c"><b>Share of global imports (%)</b><canvas id="c1"></canvas><div class="s">SIPRI, Mar 2024 (2019–23) and Mar 2026 (2021–25)</div></div>
+<div class="c"><b>Who supplies? US vs others (%, 2021–25)</b><canvas id="c2"></canvas><div class="s">SIPRI via Defaiya, Mar 2026</div></div>
+<div class="c"><b>2026 US-approved sales, selected ($bn)</b><canvas id="c3"></canvas><div class="s">State Dept notifications via Al Jazeera, The Hill, AFP</div></div></div>
+
+<h2>Country comparison</h2>
+<div class="c sc"><table><thead><tr><th>Country</th><th>Global share</th><th>Rank</th><th>US share</th><th>Other suppliers</th></tr></thead><tbody>
+<tr><td>Saudi Arabia</td><td>6.8%</td><td>3</td><td>77%</td><td>UK (£2.98bn licences 2024)</td></tr>
+<tr><td>Qatar</td><td>6.4%</td><td>4</td><td>48%</td><td>France, Italy, UK</td></tr>
+<tr><td>Kuwait</td><td>2.8%</td><td>9</td><td>62%</td><td>n/v</td></tr>
+<tr><td>UAE</td><td>2.7%</td><td>11</td><td>42%</td><td>n/v</td></tr>
+<tr><td>Bahrain, Oman</td><td colspan="4">n/v: not confirmed in sources reviewed</td></tr></tbody></table></div>
+
+<h2>Research questions</h2>
+<div class="g">
+<div class="c"><b>1. Which Gulf state imports the most?</b><div class="s">Saudi Arabia (6.8% of global imports, 2021–25), the region’s largest importer since 2011–15. Qatar is second after more than doubling its imports between 2016–20 and 2021–25.</div></div>
+<div class="c"><b>2. How have imports changed?</b><div class="s">Middle East imports fell 13% between 2016–20 and 2021–25, driven by lower Saudi, Emirati and Egyptian purchases, while Qatar surged. Saudi’s share slipped from 8.4% (2019–23) to 6.8%.</div></div>
+<div class="c"><b>3. Who are the suppliers?</b><div class="s">The USA dominates: 77% of Saudi, 62% of Kuwaiti, 48% of Qatari and 42% of Emirati imports. France, Italy and the UK fill most of the rest for Qatar and others.</div></div>
+<div class="c"><b>4. What events drive procurement?</b><div class="s">The 2026 Iran war, with Iranian drone and missile strikes on Gulf states, triggered emergency US sales for air and missile defense. Yemen’s war and Red Sea shipping risks sustain demand and illicit flows.</div></div></div>
+
+<h2>Strategic implications</h2>
+<div class="g">
+<div class="c"><b style="color:var(--ac)">Air defense is the priority</b><div class="s">2026 approvals concentrate on Patriot, radars and battle-command systems (Kuwait, Qatar), plus low-cost precision rockets (APKWS) for UAE and Qatar, reflecting a shift toward countering drones and missiles.</div></div>
+<div class="c"><b style="color:var(--ac)">Dependence on one supplier</b><div class="s">With over three-quarters of Saudi imports from the US, spare parts, munitions and repair services (for example Kuwait’s Patriot repair sale) rest on Washington’s licensing decisions.</div></div>
+<div class="c"><b style="color:var(--ac)">Speed over oversight</b><div class="s">The March sale was cleared on an emergency justification without congressional approval, showing how crises compress review and raise end-use monitoring questions.</div></div>
+<div class="c"><b style="color:var(--ac)">Diversion and illicit flows</b><div class="s">The 750+ ton interdiction bound for the Houthis (July 2025) shows the embargo is contested at sea. CAAT also flags diversion risk from Gulf re-transfers; the UAE denies the Sudan allegation.</div></div>
+<div class="c"><b style="color:var(--ac)">Diversification and autonomy</b><div class="s">Qatar’s mix of US, French and Italian systems cuts single-source risk but adds integration and sustainment cost; local industry and shared GCC air defense are the long-term hedge.</div></div>
+<div class="c"><b style="color:var(--ac)">Chokepoints stay central</b><div class="s">Hormuz and Bab el-Mandeb tie arms demand to energy security, so maritime defense and escort capacity stay procurement drivers.</div></div></div>
+
+<h2>Verified news &amp; official sources (snapshot, 16 Nov 2026)</h2>
+<div class="g">
+<a class="c n" href="https://www.state.gov/arms-sales-congressional-notifications" target="_blank" rel="noopener"><span class="t G">Gov</span><b>US State Dept: arms sales notifications</b><div class="s">Latest entries: Jordan APKWS II (2 Nov), UAE APKWS II and Kuwait Patriot repair (2 Oct), Mexico UH-60M (6 Nov).</div></a>
+<a class="c n" href="https://www.iranwatch.org/library/governments/united-states/executive-branch/department-defense/yemeni-partners-successfully-interdict-massive-iranian-weapons-shipment-bound" target="_blank" rel="noopener"><span class="t G">Gov</span><b>CENTCOM: Iranian arms shipment interdicted</b><div class="s">16 Jul 2025: Yemeni NRF seized 750+ tons of weapons bound for the Houthis (via Iran Watch archive).</div></a>
+<a class="c n" href="https://www.sipri.org/publications/2026/sipri-fact-sheets/trends-international-arms-transfers-2025" target="_blank" rel="noopener"><span class="t T">Think tank</span><b>SIPRI: Trends in Arms Transfers 2025</b><div class="s">Mar 2026: global transfers up 9.2% (2016–20 vs 2021–25); Saudi Arabia, Qatar, Kuwait in top 10 importers.</div></a>
+<a class="c n" href="https://www.sipri.org/commentary/topical-backgrounder/2025/recent-trends-international-arms-transfers-middle-east-and-north-africa" target="_blank" rel="noopener"><span class="t T">Think tank</span><b>SIPRI backgrounder: MENA arms transfers</b><div class="s">Focus on GCC importers: Qatar, Saudi Arabia, Kuwait, Bahrain, UAE.</div></a>
+<a class="c n" href="https://caat.org.uk/app/uploads/2026/03/CAAT-Arms-Exports-2024-digital-March.pdf" target="_blank" rel="noopener"><span class="t T">NGO</span><b>CAAT: UK arms exports in 2024</b><div class="s">Mar 2026: Saudi Arabia led UK single-licence value; diversion concerns over UAE supply to Sudan’s RSF.</div></a>
+<a class="c n" href="https://www.aljazeera.com/economy/2026/3/19/us-approves-16-5bn-arms-deal-to-gulf-states-amid-rising-iran-tensions" target="_blank" rel="noopener"><span class="t N">News</span><b>Al Jazeera: $16.5bn deal for UAE, Kuwait, Jordan</b><div class="s">19 Mar 2026: approved via emergency justification amid US–Iran tensions.</div></a>
+<a class="c n" href="https://thehill.com/homenews/administration/5860824-state-dept-arms-sales-gulf/" target="_blank" rel="noopener"><span class="t N">News</span><b>The Hill: $8bn+ sales to Gulf states</b><div class="s">2 May 2026: Qatar Patriot replenishment $4.01bn, Kuwait IBCS $2.5bn.</div></a>
+<a class="c n" href="https://www.24newshd.tv/05-Oct-2026/us-approves-dollar-1-billion-arms-sale-uae" target="_blank" rel="noopener"><span class="t N">News</span><b>AFP: $1bn arms sale to UAE</b><div class="s">5 Oct 2026: also $400m Patriot repair for Kuwait.</div></a>
+<a class="c n" href="https://www.thenationalnews.com/business/2026/03/08/us-tops-global-arms-supply-with-saudi-arabia-the-main-recipient-sipri-data-finds" target="_blank" rel="noopener"><span class="t N">News</span><b>The National: US tops supply, Saudi top recipient</b><div class="s">8 Mar 2026: SIPRI 2021–25 data.</div></a></div>
+<div class="s" style="margin-top:8px">Hosted pages cannot pull feeds from other sites, so this is a dated snapshot. Live sources: state.gov arms-sales page, dsca.mil Major Arms Sales, sipri.org, centcom.mil.</div>
+
+<footer>SIPRI figures are trend-indicator values (capability), not dollars. “n/v” = not verified. Sales approvals are notifications, not deliveries. Illicit-route geometry is schematic.</footer>
+</main>
+<script>
+(function(){
+var dk=matchMedia('(prefers-color-scheme: dark)').matches,tc=dk?'#c9c2d8':'#4a4458',gc=dk?'#322b42':'#e3dfeb';
+document.querySelectorAll('[data-n]').forEach(function(e){var n=+e.dataset.n,t0=performance.now();(function f(t){var k=Math.min(1,(t-t0)/1500);e.textContent=(n*k).toFixed(n%1?1:0)+e.dataset.s;if(k<1)requestAnimationFrame(f)})(t0)});
+if(window.Chart){Chart.defaults.color=tc;
+new Chart(c1,{type:'bar',data:{labels:['Saudi','Qatar','Kuwait','UAE'],datasets:[{label:'2019–23',data:[8.4,7.6,null,null],backgroundColor:'#8b7bb5'},{label:'2021–25',data:[6.8,6.4,2.8,2.7],backgroundColor:'#3fb6c9'}]},options:{scales:{y:{grid:{color:gc}},x:{grid:{display:false}}}}});
+new Chart(c2,{type:'bar',data:{labels:['Saudi','Kuwait','Qatar','UAE'],datasets:[{label:'USA',data:[77,62,48,42],backgroundColor:'#5b8def'},{label:'Others',data:[23,38,52,58],backgroundColor:'#e0a43b'}]},options:{indexAxis:'y',scales:{x:{stacked:true,max:100,grid:{color:gc}},y:{stacked:true,grid:{display:false}}}}});
+new Chart(c3,{type:'bar',data:{labels:['Kuwait radars (Mar)','Qatar Patriot (May)','Kuwait IBCS (May)','UAE APKWS (Oct)','Qatar APKWS (May)','Kuwait Patriot repair (Oct)','UAE APKWS (May)'],datasets:[{label:'$bn',data:[8,4.01,2.5,1,0.99,0.4,0.15],backgroundColor:'#c0617a'}]},options:{indexAxis:'y',plugins:{legend:{display:false}},scales:{x:{grid:{color:gc}},y:{grid:{display:false}}}}});}
+var cv=document.getElementById('map'),x=cv.getContext('2d'),W,H,L=22,R=66,T=38,B=8,show={l:1,i:1};
+function P(a){return[(a[0]-L)/(R-L)*W,(T-a[1])/(T-B)*H]}
+var N={Jeddah:[39.2,21.5],Kuwait:[48,29.4],Manama:[50.6,26.2],Doha:[51.5,25.3],AbuDhabi:[54.4,24.5],Muscat:[58.4,23.6],Hodeidah:[42.9,14.8],Berbera:[45,10.4],Bosaso:[49.2,11.3],Mahra:[51.8,16.2],BA:[56.3,27.2],Sudan:[24.9,12.1],Med:[23,35]};
+var lab={Jeddah:'Saudi (Jeddah)',Kuwait:'Kuwait',Manama:'Bahrain',Doha:'Qatar',AbuDhabi:'UAE',Muscat:'Oman',Hodeidah:'Hodeidah',Berbera:'Berbera',Bosaso:'Bosaso',Mahra:'al-Mahra',BA:'Bandar Abbas',Sudan:'Darfur',Med:'USA · France · UK · Italy'};
+var gulf=['Jeddah','Kuwait','Manama','Doha','AbuDhabi','Muscat'];
+var legal=gulf.map(function(g,i){return['Med',g,-.1+(i%2)*.05]});
+var ill=[['BA','Hodeidah'],['BA','Berbera'],['Berbera','Hodeidah'],['BA','Bosaso'],['Mahra','Hodeidah'],['AbuDhabi','Sudan']];
+function ctrl(a,b,k){return[(a[0]+b[0])/2-(b[1]-a[1])*k,(a[1]+b[1])/2+(b[0]-a[0])*k]}
+function Q(a,c,b,t){var u=1-t;return[u*u*a[0]+2*u*t*c[0]+t*t*b[0],u*u*a[1]+2*u*t*c[1]+t*t*b[1]]}
+function size(){var r=cv.getBoundingClientRect(),d=devicePixelRatio||1;W=r.width;H=r.height;cv.width=W*d;cv.height=H*d;x.setTransform(d,0,0,d,0,0)}
+size();addEventListener('resize',size);
+function route(d,k,col,dash,t,n){var a=P(N[d[0]]),b=P(N[d[1]]),c=ctrl(a,b,k);
+x.strokeStyle=col;x.globalAlpha=.3;x.lineWidth=1.3;x.setLineDash(dash);x.beginPath();x.moveTo(a[0],a[1]);x.quadraticCurveTo(c[0],c[1],b[0],b[1]);x.stroke();x.setLineDash([]);x.globalAlpha=1;x.fillStyle=col;
+for(var i=0;i<n;i++){var p=Q(a,c,b,(t+i/n)%1);x.beginPath();x.arc(p[0],p[1],2.8,0,7);x.fill()}}
+function draw(ts){var t=ts/6000;x.clearRect(0,0,W,H);
+x.strokeStyle='rgba(255,255,255,.06)';for(var lo=25;lo<=65;lo+=5){var p=P([lo,0]);x.beginPath();x.moveTo(p[0],0);x.lineTo(p[0],H);x.stroke()}for(var la=10;la<=35;la+=5){var q=P([0,la]);x.beginPath();x.moveTo(0,q[1]);x.lineTo(W,q[1]);x.stroke()}
+if(show.l)legal.forEach(function(r){route(r,r[2],'#3fd0e8',[],t,3)});
+if(show.i)ill.forEach(function(r){route(r,.15,'#ff6b5b',[5,4],t*1.3,2)});
+x.font='11px system-ui';for(var k in N){var p=P(N[k]),il=/BA|Berbera|Bosaso|Mahra|Hodeidah|Sudan/.test(k),g=gulf.indexOf(k)>-1;
+if(g){var r=4+((ts/60+k.length*7)%18);x.strokeStyle='rgba(63,208,232,'+(.5-r/40)+')';x.beginPath();x.arc(p[0],p[1],r,0,7);x.stroke()}
+x.fillStyle=il?'#ff9a8e':'#e8e2f5';x.beginPath();x.arc(p[0],p[1],3.5,0,7);x.fill();x.fillText(lab[k],p[0]+6,p[1]-6)}
+x.fillStyle='rgba(255,255,255,.5)';var h=P([56.3,26.3]),m=P([43.3,12.6]);x.fillText('Hormuz',h[0]+8,h[1]+14);x.fillText('Bab el-Mandeb',m[0]-30,m[1]+16);
+requestAnimationFrame(draw)}
+requestAnimationFrame(draw);
+bl.onclick=function(){show.l^=1;bl.classList.toggle('on')};bi.onclick=function(){show.i^=1;bi.classList.toggle('on')};
+})();
+</script></body></html>
