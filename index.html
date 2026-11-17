@@ -63,6 +63,7 @@ h2{font:800 28px var(--serif);margin:0 0 4px}
 .cb{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
 .go{margin-top:auto;padding-top:8px;font:400 12px var(--mono);color:var(--am);opacity:.55;transition:opacity .2s}
 .card:hover .go,.card.on .go{opacity:1}
+.card.soon{cursor:default}
 .card:hover,.card:focus-visible,.card.on{transform:translateY(-4px);border-color:var(--am);box-shadow:0 18px 40px -18px #000,0 0 0 1px #e0a43a33;outline:none}
 .card h3{font:600 19px/1.25 var(--serif);margin:0}
 .card .src{font:400 12px var(--mono);color:var(--mu)}
@@ -140,11 +141,11 @@ syr:{x:195,y:91,n:'Syria',d:'Long-running conflict and one of the largest displa
 irn:{x:420,y:130,n:'Iran',d:'Regional power at the centre of escalation dynamics and hybrid warfare.'},
 gulf:{x:340,y:230,n:'Gulf states',d:'Major arms importers and oil exporters with wide trading partner networks.'}};
 var P=[
-{t:'Red Sea and Suez shipping after the Houthi attacks',s:'Daily transit counts, IMF PortWatch',c:'#1e4f6b',k:['suez','bab','yem'],w:1},
+{t:'Red Sea and Suez shipping after the Houthi attacks',s:'Daily transit counts, IMF PortWatch',h:'red-sea.html',c:'#1e4f6b',k:['suez','bab','yem'],w:1},
 {t:'Conflict events by country and month',s:'ACLED',c:'#7e3017',k:['lev','syr','yem','irn']},
-{t:'US-Iran escalation timeline',s:'Own OSINT tracking',c:'#3b4c40',k:['irn','hor']},
-{t:'Arms imports in the Gulf',s:'SIPRI, US State Dept, CENTCOM',c:'#4a3a5e',k:['gulf','hor']},
-{t:'Displacement flows from Syria and Yemen',s:'UNHCR, IOM, OCHA',c:'#5e4e1c',k:['syr','yem']},
+{t:'US-Iran escalation timeline',s:'Own OSINT tracking',h:'us-iran-war.html',c:'#3b4c40',k:['irn','hor']},
+{t:'Arms imports in the Gulf',s:'SIPRI, US State Dept, CENTCOM',h:'gulf-arms-imports.html',c:'#4a3a5e',k:['gulf','hor']},
+{t:'Displacement flows from Syria and Yemen',s:'UNHCR, IOM, OCHA',h:'displacement-flows.html',c:'#5e4e1c',k:['syr','yem']},
 {t:'Gulf oil exports and trading partners',s:'UN Comtrade, EIA',c:'#26394b',k:['gulf','hor','bab'],w:1}];
 var g=document.getElementById('mks'),NS='http://www.w3.org/2000/svg',el={};
 Object.keys(M).forEach(function(id){var m=M[id],e=document.createElementNS(NS,'g');e.setAttribute('class','mk'+(m.t?' t':''));e.setAttribute('tabindex','0');e.setAttribute('role','button');e.setAttribute('aria-label',m.n);
@@ -167,8 +168,8 @@ var ART=[
  art('<rect x="16" y="34" width="8" height="60" rx="2" fill="#e0a43a"/>'+flows)
 ];
 var cs=document.getElementById('cards');
-P.forEach(function(p){var a=document.createElement('a');a.className='card'+(p.w?' wide':'');a.href='#';a.style.setProperty('--c',p.c);
-a.innerHTML='<div class="art">'+ART[P.indexOf(p)]+'</div><div class="cb"><h3>'+p.t+'</h3><span class="src">'+p.s+'</span><span class="go">Open project &#8599;</span></div>';
+P.forEach(function(p){var a=document.createElement('a');a.className='card'+(p.w?' wide':'');a.href=p.h||'#';if(!p.h){a.className+=' soon';a.setAttribute('aria-disabled','true');a.onclick=function(e){e.preventDefault()}}a.style.setProperty('--c',p.c);
+a.innerHTML='<div class="art">'+ART[P.indexOf(p)]+'</div><div class="cb"><h3>'+p.t+'</h3><span class="src">'+p.s+'</span><span class="go">'+(p.h?'Open project &#8599;':'In progress')+'</span></div>';
 function on(){lit(p.k,1);a.classList.add('on');rd.innerHTML='<div class="k">Project theatre</div><h3>'+p.t+'</h3><p>Linked markers: '+p.k.map(function(k){return M[k].n}).join(', ')+'.</p>'}
 function off(){lit(p.k,0);a.classList.remove('on')}
 a.onmouseenter=on;a.onfocus=on;a.onmouseleave=off;a.onblur=off;cs.appendChild(a)});
