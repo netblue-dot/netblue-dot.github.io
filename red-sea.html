@@ -2,239 +2,196 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Red Sea shipping after the Houthi attacks | Reetama Ghosh</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;800&family=Public+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Red Sea shipping and maritime security | Reetama Ghosh</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
 <style>
-  :root { --paper:#eef1f0; --ink:#14232e; --muted:#55656f; --sea:#1d4e66; --signal:#c2410c; --plum:#6b21a8; --line:#c9d2d3; --news:#ece3cd; }
-  * { box-sizing: border-box; }
-  body { margin:0; background:var(--paper); color:var(--ink); font-family:"Public Sans",system-ui,sans-serif; line-height:1.6; }
-  a { color:var(--sea); }
-  a:focus-visible { outline:3px solid var(--signal); outline-offset:3px; }
-  .wrap { max-width:1040px; margin:0 auto; padding:0 24px; }
-  h1,h2,h3 { font-family:Fraunces,Georgia,serif; line-height:1.15; }
-  h2 { font-size:1.7rem; margin:0 0 8px; }
-  section { padding:56px 0; border-top:1px solid var(--line); }
-  .lead { color:var(--muted); max-width:42em; margin:0 0 28px; }
-
-  .top { padding-top:24px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:12px; }
-  .top a { text-decoration:none; color:var(--muted); }
-  .top a:hover { color:var(--ink); text-decoration:underline; }
-
-  .hero { padding:56px 0 48px; }
-  h1 { font-size:clamp(2.2rem,5.5vw,3.9rem); font-weight:800; margin:0 0 20px; max-width:15em; letter-spacing:-.01em; }
-  .q { font-size:1.2rem; max-width:36em; margin:0 0 24px; }
-  .meta { display:flex; flex-wrap:wrap; gap:10px 28px; color:var(--muted); font-size:.92rem; margin:0; padding:0; list-style:none; }
-  .meta b { color:var(--ink); font-weight:600; }
-
-  /* route diagram */
-  .diagram { background:#fff; border:1px solid var(--line); padding:12px; }
-  .diagram svg { width:100%; height:auto; display:block; }
-  .cap { font-size:.88rem; color:var(--muted); margin:10px 2px 0; }
-  .phases { display:grid; grid-template-columns:repeat(3,1fr); gap:24px; margin-top:28px; }
-  .phases h3 { font-size:1.05rem; margin:0 0 6px; }
-  .phases p { margin:0; color:var(--muted); font-size:.95rem; }
-  .phases div { border-top:3px solid var(--sea); padding-top:10px; }
-  .phases div:nth-child(3) { border-color:var(--signal); }
-
-  /* chart */
-  .chart { background:#fff; border:1px solid var(--line); padding:12px; }
-  .chart img { width:100%; height:auto; display:block; }
-  .chart .missing { display:none; padding:56px 20px; text-align:center; color:var(--muted); border:2px dashed var(--line); }
-
-  /* timeline */
-  .legend { display:flex; flex-wrap:wrap; gap:18px; font-size:.9rem; margin:0 0 24px; padding:0; list-style:none; }
-  .legend i, .tl .dot { display:inline-block; width:12px; height:12px; }
-  .tl { list-style:none; margin:0; padding:0 0 0 28px; border-left:2px solid var(--line); }
-  .tl li { position:relative; padding:0 0 26px 18px; max-width:46em; }
-  .tl .dot { position:absolute; left:-37px; top:6px; background:var(--sea); border:3px solid var(--paper); box-sizing:content-box; }
-  .tl li[data-t="attack"] .dot { background:var(--signal); border-radius:0; transform:rotate(45deg); }
-  .tl li[data-t="policy"] .dot { background:var(--sea); border-radius:50%; }
-  .tl li[data-t="escalation"] .dot { background:var(--plum); border-radius:2px; }
-  .tl time { font-weight:600; font-size:.9rem; display:block; }
-  .tl p { margin:2px 0 0; }
-  .src { font-size:.85rem; display:block; margin-top:3px; }
-  .tl li[data-t="incident"] .dot { background:#7a8890; border-radius:50%; }
-  .legend .i { background:#7a8890; border-radius:50%; }
-  figure.photo { margin:28px 0 0; }
-  figure.photo img { width:100%; max-height:420px; object-fit:cover; display:block; border:1px solid var(--line); }
-  figure.photo figcaption { font-size:.88rem; color:var(--muted); margin-top:8px; max-width:48em; }
-  .tag { display:inline-block; font-size:.78rem; padding:1px 8px; border:1px solid var(--line); background:#fff; color:var(--muted); margin-left:6px; }
-  .legend .a { background:var(--signal); transform:rotate(45deg); }
-  .legend .p { background:var(--sea); border-radius:50%; }
-  .legend .e { background:var(--plum); border-radius:2px; }
-
-  /* newspaper cutouts */
-  .board { display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:26px; }
-  .clip { background:var(--news); color:#2a2418; padding:18px 18px 16px; box-shadow:2px 3px 0 rgba(20,35,46,.18); font-family:Georgia,"Times New Roman",serif;
-          background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.025) 0 1px,transparent 1px 4px); }
-  .clip:nth-child(1) { transform:rotate(-1.2deg); clip-path:polygon(0 2%,6% 0,14% 2%,24% 0,36% 2%,48% 0,60% 2%,72% 0,84% 2%,94% 0,100% 2%,100% 98%,92% 100%,80% 98%,66% 100%,52% 98%,40% 100%,26% 98%,12% 100%,0 98%); }
-  .clip:nth-child(2) { transform:rotate(.9deg); clip-path:polygon(0 0,100% 2%,98% 100%,70% 97%,40% 100%,0 98%); }
-  .clip:nth-child(3) { transform:rotate(-.6deg); clip-path:polygon(2% 0,100% 0,100% 97%,60% 100%,25% 98%,0 100%); }
-  .clip:nth-child(4) { transform:rotate(1.3deg); clip-path:polygon(0 3%,30% 0,70% 3%,100% 0,98% 100%,60% 97%,30% 100%,0 97%); }
-  .clip .mast { font-weight:700; font-size:.95rem; border-bottom:2px solid #2a2418; border-top:1px solid #2a2418; padding:3px 0; margin:0 0 10px; display:flex; justify-content:space-between; gap:8px; }
-  .clip .mast span:last-child { font-weight:400; font-size:.82rem; }
-  .clip h3 { font-size:1.12rem; margin:0 0 8px; font-family:Georgia,serif; }
-  .clip p { font-size:.93rem; margin:0 0 10px; line-height:1.5; }
-  .clip a { color:#7c2d12; font-size:.88rem; }
-  .note { font-size:.88rem; color:var(--muted); margin:22px 0 0; max-width:44em; }
-
-  .two { display:grid; grid-template-columns:1fr 1fr; gap:36px; }
-  .two h3 { font-size:1.1rem; margin:0 0 8px; }
-  .two ul { margin:0; padding-left:1.1em; color:var(--muted); }
-  .two li { margin-bottom:6px; }
-  footer { border-top:1px solid var(--line); padding:28px 0 56px; color:var(--muted); font-size:.95rem; }
-
-  @media (max-width:760px) { .phases,.two { grid-template-columns:1fr; } .top { font-size:.95rem; } }
+:root{color-scheme:dark;--bg:#09090a;--p:#131315;--p2:#1a1a1d;--ln:#2a2a2e;--tx:#e9e6df;--mu:#9a9aa1;--rd:#b8403a;--gd:#b99a5b;--tl:#6f9a92;--se:'Cormorant Garamond',Georgia,serif;--sa:'IBM Plex Sans',system-ui,sans-serif;--mo:'IBM Plex Mono',ui-monospace,monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:radial-gradient(800px 480px at 90% -10%,#3a141255,transparent 70%),var(--bg);color:var(--tx);font:400 16px/1.6 var(--sa)}
+a{color:var(--gd)}.w{max-width:1280px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
+.nav{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--ln);font:400 12px var(--mo);color:var(--mu)}
+.nav a{text-decoration:none}.live{color:var(--tl)}.live::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--tl);margin-right:8px;animation:bl 2s infinite}
+@keyframes bl{50%{opacity:.25}}
+h1{font:700 clamp(40px,6vw,84px)/.98 var(--se);letter-spacing:-.01em;margin:48px 0 18px;max-width:16ch}
+h2{font:700 clamp(28px,3.2vw,40px)/1.1 var(--se);margin:0 0 6px}
+.lede{font-size:18px;color:#c3c0b8;max-width:62ch;margin:0 0 20px}.sec{padding:56px 0 0}.sub{color:var(--mu);max-width:64ch;margin:0 0 22px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 28px;font-size:13px;color:var(--mu);padding-bottom:36px;border-bottom:1px solid var(--ln)}.meta b{color:var(--tx);font-weight:500;margin-right:6px}
+.kp{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--ln);border:1px solid var(--ln);margin-top:36px}
+.kp div{background:var(--p);padding:20px}.kp b{display:block;font:700 44px/1 var(--se)}.kp i{display:block;font-style:normal;font-size:13px;color:var(--mu);margin-top:8px}.kp em{display:block;font:400 11px var(--mo);color:var(--gd);font-style:normal;margin-top:8px}
+.dn{color:var(--rd)}.up{color:var(--gd)}
+.mp{display:grid;grid-template-columns:minmax(0,1.9fr) minmax(280px,1fr);border:1px solid var(--ln);background:var(--p)}
+.mv{position:relative;border-right:1px solid var(--ln);background:#0b1114}.mv svg{display:block;width:100%;height:auto}
+.ctl{padding:18px;display:flex;flex-direction:column;gap:14px}.ctl h3{font:700 22px var(--se);margin:0}
+.tg{display:flex;flex-wrap:wrap;gap:8px}.tg label{font:400 12px var(--mo);border:1px solid var(--ln);padding:5px 10px;cursor:pointer;color:var(--mu);user-select:none}.tg input{accent-color:var(--gd);margin-right:6px}.tg label:has(input:checked){color:var(--tx);border-color:var(--gd)}
+.rd{border-top:1px solid var(--ln);padding-top:14px;min-height:150px}.rd .k{font:400 11px var(--mo);color:var(--gd)}.rd h4{font:700 22px var(--se);margin:2px 0 6px}.rd p{margin:0;font-size:14px;color:#c3c0b8}
+.lg{font:400 11px var(--mo);color:var(--mu);display:grid;gap:4px}.lg span::before{content:"";display:inline-block;width:18px;height:0;border-top:2px solid;margin-right:8px;vertical-align:middle}
+.wt{fill:#0b1114}.ld{fill:#1b1c1f;stroke:#3a3b40;stroke-width:1}.bd{fill:none;stroke:#4a4b52;stroke-width:.8;stroke-dasharray:3 3}.lb{font:400 10px var(--mo);fill:#6d6e75;letter-spacing:.12em}.lw{font:italic 600 13px var(--se);fill:#5f7f8a;letter-spacing:.15em}
+.mk{cursor:pointer}.mk text{font:400 10px var(--mo);fill:var(--tx);paint-order:stroke;stroke:#0b1114;stroke-width:3px}.mk .pg{fill:none;stroke-width:1.3;transform-box:fill-box;transform-origin:center;animation:pg 2.8s ease-out infinite}
+@keyframes pg{0%{transform:scale(.4);opacity:.9}100%{transform:scale(3);opacity:0}}.mk.on circle:first-of-type{stroke:#fff;stroke-width:2}
+.sl{fill:none;stroke-width:1.6}.s1{stroke:var(--gd)}.s2{stroke:var(--rd);stroke-dasharray:2 6;stroke-linecap:round;animation:ds 1.6s linear infinite}@keyframes ds{to{stroke-dashoffset:-16}}
+.cg{display:grid;grid-template-columns:1fr 1fr;gap:12px}.cd{background:var(--p);border:1px solid var(--ln);padding:22px}.cd h3{font:700 22px var(--se);margin:0 0 4px}.cd small{display:block;color:var(--mu);font-size:12px;margin-bottom:16px}
+.gr{margin-bottom:16px}.gr>span{font-size:13px}.br{display:grid;grid-template-columns:70px 1fr 44px;align-items:center;gap:8px;font:400 11px var(--mo);color:var(--mu);margin-top:5px}
+.br u{display:block;height:9px;background:var(--ln);text-decoration:none}.br u i{display:block;height:100%;width:0;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}
+.dv{display:grid;grid-template-columns:96px 1fr 1fr;gap:8px;align-items:center;font:400 11px var(--mo);color:var(--mu);margin-bottom:10px}.dv u{display:block;height:11px;text-decoration:none;position:relative;background:#1f1f22}.dv u i{position:absolute;top:0;bottom:0;width:0;transition:width 1.4s cubic-bezier(.2,.7,.2,1)}.dv .l i{right:0;background:var(--rd)}.dv .r i{left:0;background:var(--gd)}.dv b{position:absolute;top:-3px;font-weight:400;color:var(--tx)}
+.ph{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.ph div{border-top:2px solid var(--gd);padding-top:12px}.ph div:last-child{border-color:var(--rd)}.ph h3{font:700 21px/1.2 var(--se);margin:0 0 6px}.ph p{font-size:14px;color:#c3c0b8;margin:0}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{text-align:left;padding:12px 14px;border-bottom:1px solid var(--ln);vertical-align:top}th{font:400 11px var(--mo);color:var(--mu)}.tw{overflow-x:auto;border:1px solid var(--ln);background:var(--p)}
+.st{font:400 12px var(--mo);white-space:nowrap}.st::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:currentColor;margin-right:8px}
+.tl{list-style:none;margin:0;padding:0 0 0 26px;border-left:1px solid var(--ln)}.tl li{position:relative;padding:0 0 26px 12px;cursor:pointer}.tl li::before{content:"";position:absolute;left:-32px;top:6px;width:11px;height:11px;border-radius:50%;background:var(--c);box-shadow:0 0 0 4px var(--bg)}
+.tl li:hover b,.tl li.on b{color:var(--gd)}.tl b{font:500 14px var(--sa)}.tl p{margin:2px 0 4px;color:#c3c0b8;max-width:70ch}.tl small{font:400 12px var(--mo);color:var(--mu)}
+.fl{display:flex;flex-wrap:wrap;gap:6px 18px;font:400 12px var(--mo);color:var(--mu);margin-bottom:22px}.fl span::before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--c);margin-right:7px}
+.sr{columns:2;gap:36px;font-size:14px;padding-left:18px}.sr li{margin-bottom:8px;break-inside:avoid}
+.ft{margin-top:56px;border-top:1px solid var(--ln);padding:20px 0 40px;font-size:12.5px;color:var(--mu)}
+@media(max-width:960px){.mp{grid-template-columns:1fr}.mv{border-right:0;border-bottom:1px solid var(--ln)}.ph,.kp{grid-template-columns:1fr 1fr}.cg{grid-template-columns:1fr}.sr{columns:1}}
+@media(max-width:540px){.ph,.kp{grid-template-columns:1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.ship{display:none}}
+:focus-visible{outline:2px solid var(--gd);outline-offset:2px}
 </style>
 </head>
 <body>
-<div class="wrap">
-
-<div class="top"><a href="index.html">Back to portfolio</a><span style="color:var(--muted)">Reetama Ghosh</span></div>
-
-<header class="hero">
-  <h1>Red Sea shipping after the Houthi attacks</h1>
-  <p class="q">How much did ship traffic through Suez and Bab el-Mandeb fall once the attacks began, how much moved to the Cape of Good Hope, and what changed in 2026?</p>
-  <ul class="meta">
-    <li><b>Data</b> IMF PortWatch, satellite AIS</li>
-    <li><b>Tools</b> Python, pandas, matplotlib</li>
-    <li><b>Events</b> sourced log, 2023 to 4 Nov 2026</li>
-    <li><b>Code</b> <a href="https://github.com/netblue-dot/netblue-dot.github.io">GitHub</a></li>
-  </ul>
+<div class="w">
+<nav class="nav"><a href="index.html">&larr; Reetama Ghosh, portfolio</a><span class="live">Maritime risk monitor &middot; <span id="ck"></span></span></nav>
+<header>
+<h1>Red Sea shipping and maritime security</h1>
+<p class="lede">How far have ship transits through Suez and Bab el-Mandeb recovered, how much traffic still sails around the Cape of Good Hope, and how do Houthi gains on the Yemeni coast change the risk to shipping and Saudi energy exports?</p>
+<div class="meta"><span><b>Data</b>IMF PortWatch (AIS), Lloyd&rsquo;s List Intelligence, JMIC</span><span><b>Sources</b>US MARAD, ACLED, CFR, Africa Center, Reuters via OilPrice, CBS News</span><span><b>Tools</b>Python, pandas, matplotlib</span><span><b>Updated</b>17 Nov 2026 (transit data to 8 Nov)</span></div>
+<div class="kp">
+<div><b data-v="43" data-d="0">0</b><i>Suez Canal transits a day, 4 weeks to 8 Nov</i><em class="dn">&#9660; 42% vs 74 a day in 2023</em></div>
+<div><b data-v="27.6" data-d="1">0</b><i>Bab el-Mandeb transits a day, last 90 days</i><em class="dn">&#9660; 63% vs 74.6 before the attacks</em></div>
+<div><b data-v="88.1" data-d="1">0</b><i>Cape of Good Hope transits a day, last 90 days</i><em class="up">&#9650; 80% vs 48.9 before the attacks</em></div>
+<div><b>SUBSTANTIAL</b><i>JMIC threat rating, southern Red Sea and Bab el-Mandeb</i><em>Houthi embargo on Saudi-linked ships since 20 Jul</em></div>
+</div>
 </header>
 
-<section>
-  <h2>Two routes, one chokepoint</h2>
-  <p class="lead">Ships between Asia and Europe pass Bab el-Mandeb and the Suez Canal, or sail around Africa. The attacks happen at the strait, not at the canal, so the strait decides which route ship owners choose.</p>
-  <div class="diagram">
-    <svg viewBox="0 0 700 380" role="img" aria-label="Schematic of the Suez route and the Cape of Good Hope route between Europe and Asia">
-      <rect width="700" height="380" fill="#f4f8f8"/>
-      <g fill="#d3dcdb" stroke="#b9c6c6" stroke-width="1.5">
-        <path d="M30 20 L360 20 L330 78 L260 70 L120 92 L30 64 Z"/>
-        <path d="M150 112 L330 104 L385 112 L398 175 L430 240 L392 262 L368 316 L300 352 L232 308 L196 214 L150 160 Z"/>
-        <path d="M452 112 L650 136 L664 270 L540 282 L476 226 L446 168 Z"/>
-      </g>
-      <g font-family="Public Sans,sans-serif" font-size="13" fill="#55656f">
-        <text x="150" y="52">EUROPE</text><text x="232" y="212">AFRICA</text><text x="528" y="212">ARABIA</text>
-        <text x="40" y="306">Atlantic</text><text x="560" y="344">Indian Ocean</text>
-      </g>
-      <path d="M335 62 L394 104 C408 150 426 200 436 236 L520 322" fill="none" stroke="#1d4e66" stroke-width="5" stroke-linecap="round"/>
-      <path d="M330 66 C 96 96 84 280 214 340 C 300 380 420 346 520 326" fill="none" stroke="#c2410c" stroke-width="5" stroke-dasharray="2 9" stroke-linecap="round"/>
-      <circle cx="436" cy="238" r="26" fill="none" stroke="#c2410c" stroke-width="2" stroke-dasharray="5 4"/>
-      <g font-family="Public Sans,sans-serif" font-size="13" font-weight="600">
-        <text x="404" y="96" fill="#1d4e66">Suez Canal</text>
-        <text x="452" y="262" fill="#c2410c">Bab el-Mandeb</text>
-        <text x="96" y="364" fill="#c2410c">Cape of Good Hope</text>
-        <text x="448" y="168" fill="#1d4e66">Red Sea</text>
-      </g>
-    </svg>
-  </div>
-  <p class="cap">Schematic, not to scale. Solid line: Suez route. Dotted line: Cape route. Dashed circle: where the attacks are concentrated.</p>
-
-  <div class="phases">
-    <div><h3>2023 to 2025: Gaza-linked campaign</h3><p>Attacks began on 19 November 2023 with the seizure of the Galaxy Leader. The UN Security Council demanded an end on 10 January 2024. After the Gaza ceasefire began on 10 October 2025, the Houthis signalled they had stopped attacking Israel and Red Sea shipping, though many shippers kept going around the Cape.</p></div>
-    <div><h3>February 2026: the Iran war</h3><p>The US and Israel struck Iran on 28 February 2026, and the Houthis warned of new Red Sea attacks. Hormuz has been effectively closed since, and Yanbu on the Red Sea became Saudi Arabia's main route for oil exports.</p></div>
-    <div><h3>From July 2026: Saudi-linked ships</h3><p>The Houthis announced a blockade of Saudi-linked shipping on 20 July. Traffic through the southern Red Sea has been lower since, and the port of Mokha has been closed to commercial traffic after repeated missile strikes, according to the JMIC naval information centre.</p></div>
-  </div>
-  <figure class="photo">
-    <img src="https://commons.wikimedia.org/wiki/Special:FilePath/Perim_and_entire_Shaikh_Said_Peninsula.jpg?width=1000" alt="Satellite-style photo from the International Space Station showing Perim Island and the Ras Menheli peninsula at the Bab el-Mandeb" onerror="this.parentNode.style.display='none'">
-    <figcaption>Perim Island and the Ras Menheli (Shaikh Said) peninsula at the Bab el-Mandeb, photographed from the International Space Station on 13 March 2010. Photo: NASA, public domain, via <a href="https://commons.wikimedia.org/wiki/File:Perim_and_entire_Shaikh_Said_Peninsula.jpg">Wikimedia Commons</a>. Control of this coastline is contested in the current Yemen fighting.</figcaption>
-  </figure>
+<section class="sec">
+<h2>Theatre map: routes, chokepoints and flashpoints</h2>
+<p class="sub">Schematic coastlines and borders drawn for orientation, not for navigation or legal boundary reference. Select a marker or a timeline entry to inspect it.</p>
+<div class="mp">
+<div class="mv"><svg id="map" viewBox="0 0 640 520" role="img" aria-label="Map of the Red Sea region with shipping routes, chokepoints and incidents"></svg></div>
+<div class="ctl">
+<h3>Layers</h3>
+<div class="tg" id="tg"></div>
+<div class="lg"><span style="color:var(--gd)">Suez route (live ship motion)</span><span style="color:var(--rd);border-top-style:dotted">Cape of Good Hope diversion</span></div>
+<div class="rd" id="rd" aria-live="polite"><div class="k">Overview</div><h4>Red Sea corridor</h4><p>Traffic between Asia and Europe passes Bab el-Mandeb and the Suez Canal, or sails around Africa. Houthi forces now hold more of the Yemeni coast beside the strait, and fighting is moving toward Aden.</p></div>
+</div></div>
 </section>
 
-<section>
-  <h2>Transit traffic against the 2023 baseline</h2>
-  <p class="lead">Daily transits through Suez, Bab el-Mandeb and the Cape of Good Hope, 7-day average, indexed so that January to October 2023 equals 100. Numbered markers match the event log below.</p>
-  <div class="chart">
-    <img src="images/events_on_transits.png" alt="Line chart of daily ship transits through Suez, Bab el-Mandeb and the Cape of Good Hope with numbered Houthi event markers"
-         onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
-    <div class="missing">Chart not added yet. Run red_sea_tracker.py and upload output/events_on_transits.png to an images folder in this repo.</div>
-  </div>
-  <p class="cap">Source: IMF PortWatch, based on satellite AIS data from the UN Global Platform. Counts are ships detected, not cargo tonnage.</p>
-</section>
-
-<section>
-  <h2>Event timeline</h2>
-  <p class="lead">Each entry links to its source. Incidents without a confirmed attacker, and government claims, are labelled as such.</p>
-  <ul class="legend">
-    <li><i class="a"></i> Ship attack</li><li><i class="p"></i> Declaration or policy</li><li><i class="e"></i> Escalation</li><li><i class="i"></i> Unattributed incident</li>
-  </ul>
-  <ol class="tl">
-    <li data-t="attack"><span class="dot"></span><time>19 Nov 2023</time><p>Houthis seize the Galaxy Leader and its crew. Start of the shipping campaign.</p><span class="src">Source: <a href="https://digitallibrary.un.org/record/4033392">UN Security Council resolution 2722</a></span></li>
-    <li data-t="policy"><span class="dot"></span><time>10 Jan 2024</time><p>UN Security Council adopts resolution 2722 (11 votes in favour, 4 abstentions), demanding the Houthis stop attacks on merchant ships.</p><span class="src">Source: <a href="https://digitallibrary.un.org/record/4033392">UN Digital Library</a></span></li>
-    <li data-t="policy"><span class="dot"></span><time>10 Oct 2025</time><p>Gaza ceasefire begins. By November the Houthis signal they have stopped attacks on Israel and Red Sea shipping.</p><span class="src">Source: <a href="https://www.timesofisrael.com/yemens-houthis-signal-theyve-stopped-attacks-on-israel-and-red-sea-shipping/amp/">Associated Press, via Times of Israel</a></span></li>
-    <li data-t="escalation"><span class="dot"></span><time>28 Feb 2026</time><p>US and Israeli strikes on Iran begin the Iran war. The Houthis warn of missile and drone attacks in the Red Sea.</p><span class="src">Source: <a href="https://www.businesstoday.in/world/middle-east/story/us-israel-strike-on-iran-houthis-warn-of-imminent-missile-and-drone-attacks-in-red-sea-corridor-518464-2026-02-28">BusinessToday</a></span></li>
-    <li data-t="policy"><span class="dot"></span><time>20 Jul 2026</time><p>Houthis announce a blockade of Saudi-linked shipping.</p><span class="src">Source: <a href="https://www.seatrade-maritime.com/security/unmanned-cargo-ship-destroyed-off-yemen">Seatrade Maritime</a></span></li>
-    <li data-t="attack"><span class="dot"></span><time>11 Aug 2026</time><p>Cargo ship Tihamah hit by missiles in the Bab al-Mandab Strait. The Yemeni government says six people died and blames the Houthis. The Houthis had not commented at the time.</p><span class="src">Source: <a href="https://www.upi.com/Top_News/World-News/2026/08/11/yemen-houthis-kill-6-in-attack/1181786477788/">UPI</a></span></li>
-    <li data-t="incident"><span class="dot"></span><time>17 Aug 2026</time><p>Unmanned cargo ship hit by several unknown projectiles about 40 nm southeast of Al Mokha and declared a constructive total loss.<span class="tag">not attributed</span></p><span class="src">Source: <a href="https://www.seatrade-maritime.com/security/unmanned-cargo-ship-destroyed-off-yemen">Seatrade Maritime, citing UKMTO</a></span></li>
-    <li data-t="attack"><span class="dot"></span><time>24 Aug 2026</time><p>Tanker struck about 63 nm west of Yanbu. The Houthis claim the strike on Bahri's Amzan. Bahri confirms an incident and says the crew are safe.</p><span class="src">Source: <a href="https://www.aljazeera.com/news/2026/8/24/yemens-houthis-report-attack-on-saudi-ship">Al Jazeera</a></span></li>
-    <li data-t="incident"><span class="dot"></span><time>7 Oct 2026</time><p>Armed small craft fires on the container ship CUL Klang near Mokha. No injuries. No group claimed it, and a British defence official said UKMTO judged it neither piracy nor Houthi-related.<span class="tag">not attributed</span></p><span class="src">Source: <a href="https://mereja.com/index/837501">Kuehne+Nagel shipping news; Mereja</a></span></li>
-    <li data-t="escalation"><span class="dot"></span><time>1 Nov 2026</time><p>Saudi-led coalition announces an operation against resources the Houthis use for attacks.</p><span class="src">Source: <a href="https://gulfnews.com/world/gulf/saudi/saudi-led-coalition-launches-military-operation-targeting-houthi-resources-1.500731798">Gulf News</a></span></li>
-    <li data-t="escalation"><span class="dot"></span><time>3 Nov 2026</time><p>Yemen's government claims 21 IRGC and Hezbollah agents help direct Houthi operations.<span class="tag">government claim</span></p><span class="src">Source: <a href="https://www.thenationalnews.com/news/mena/2026/11/03/hidden-hands-behind-the-houthis-yemen-claims-21-irgc-and-hezbollah-agents-are-supporting-rebels/">The National</a></span></li>
-  </ol>
-</section>
-
-<section>
-  <h2>Press cutouts</h2>
-  <p class="lead">Four reports I relied on, summarised in my own words with a link to the original.</p>
-  <div class="board">
-    <article class="clip">
-      <div class="mast"><span>UPI</span><span>11 Aug 2026</span></div>
-      <h3>Six dead after missile strike on cargo ship</h3>
-      <p>The Yemeni government said Houthi missiles hit a food-carrying ship in the Bab al-Mandab Strait. A second missile reportedly killed two rescuers.</p>
-      <a href="https://www.upi.com/Top_News/World-News/2026/08/11/yemen-houthis-kill-6-in-attack/1181786477788/">Read the original</a>
-    </article>
-    <article class="clip">
-      <div class="mast"><span>Al Jazeera</span><span>24 Aug 2026</span></div>
-      <h3>Saudi tanker targeted off Yanbu</h3>
-      <p>The Houthis claimed a ballistic missile strike on a Bahri tanker. Bahri confirmed an incident and said all crew were safe.</p>
-      <a href="https://www.aljazeera.com/news/2026/8/24/yemens-houthis-report-attack-on-saudi-ship">Read the original</a>
-    </article>
-    <article class="clip">
-      <div class="mast"><span>Gulf News</span><span>1 Nov 2026</span></div>
-      <h3>Coalition acts against Houthi supply lines</h3>
-      <p>The Saudi-led coalition said it struck resources the Houthis use for attacks, citing threats to civilians and to shipping in the southern Red Sea.</p>
-      <a href="https://gulfnews.com/world/gulf/saudi/saudi-led-coalition-launches-military-operation-targeting-houthi-resources-1.500731798">Read the original</a>
-    </article>
-    <article class="clip">
-      <div class="mast"><span>The National</span><span>3 Nov 2026</span></div>
-      <h3>Yemen alleges foreign planners behind Houthis</h3>
-      <p>The government says 21 IRGC and Hezbollah agents are involved. This is an allegation, and the report also notes a Houthi push toward the Bab al-Mandeb coast since September.</p>
-      <a href="https://www.thenationalnews.com/news/mena/2026/11/03/hidden-hands-behind-the-houthis-yemen-claims-21-irgc-and-hezbollah-agents-are-supporting-rebels/">Read the original</a>
-    </article>
-  </div>
-  <p class="note">Headlines on the cutouts are my own descriptions, not the outlets' wording. The newspaper styling is decorative.</p>
-</section>
-
-<section>
-  <div class="two">
-    <div>
-      <h3>Method</h3>
-      <ul>
-        <li>Daily transit calls from IMF PortWatch for three routes.</li>
-        <li>7-day rolling average, indexed to the January to October 2023 mean.</li>
-        <li>Event log kept in data/events.csv, with source and confidence for each row.</li>
-      </ul>
-    </div>
-    <div>
-      <h3>Limits</h3>
-      <ul>
-        <li>AIS counts ships detected, not cargo value or tonnage.</li>
-        <li>Rerouting has other causes, including insurance costs and the wider Iran war.</li>
-        <li>Several 2026 incidents have no confirmed attacker. They are shown as unattributed, not as Houthi attacks.</li>
-        <li>The event log is not complete. UKMTO and JMIC advisories are the primary record of incidents.</li>
-        <li>The baseline choice changes the percentages.</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<footer>
-  Data: <a href="https://portwatch.imf.org">IMF PortWatch</a> | Code: <a href="https://github.com/netblue-dot/netblue-dot.github.io">GitHub repository</a> | Last updated 4 November 2026. Photo: NASA via Wikimedia Commons (public domain)
-</footer>
-
+<section class="sec">
+<h2>Where the ships went</h2>
+<p class="sub">Average daily transits of cargo ships and tankers. Figures are IMF PortWatch AIS counts as reproduced by the sources listed below; check the live series at portwatch.imf.org before citing.</p>
+<div class="cg">
+<div class="cd"><h3>Average daily transits by chokepoint</h3><small>Before Nov 2023 attacks, 2024 and last 90 days (to Oct/Nov 2026)</small><div id="ch"></div></div>
+<div class="cd"><h3>Change by vessel type</h3><small>Last 90 days vs 2023. Left: Bab el-Mandeb. Right: Cape of Good Hope.</small><div id="vt"></div></div>
 </div>
+</section>
+
+<section class="sec">
+<h2>Four phases of the crisis</h2>
+<p class="sub">The driver has shifted from Gaza to the Iran war and the Yemeni civil war.</p>
+<div class="ph">
+<div><h3>2023 to 2025: Gaza-linked campaign</h3><p>Attacks began on 19 November 2023. Major carriers moved to the Cape route. UN Security Council resolution 2722 demanded an end on 10 January 2024.</p></div>
+<div><h3>Feb 2026: the Iran war</h3><p>US and Israeli strikes on Iran began on 28 February. The Red Sea, especially Yanbu, became Saudi Arabia&rsquo;s main export route as Hormuz was disrupted.</p></div>
+<div><h3>Jul to Aug 2026: Saudi-linked blockade</h3><p>The Houthis announced a blockade of Saudi-linked ships on 20 July. ACLED describes calibrated coercion; it records no corroborated maritime attack since 24 August.</p></div>
+<div><h3>Nov 2026: the coast shifts</h3><p>Government-allied forces pulled back from the Bab el-Mandeb coast and Houthi fighters were reported about 100 km from Aden, while carriers keep returning to Suez.</p></div>
+</div>
+</section>
+
+<section class="sec">
+<h2>Risk indicators</h2>
+<p class="sub">Status labels are my own assessment of the cited reporting, not an official rating.</p>
+<div class="tw"><table><thead><tr><th>Indicator</th><th>Status</th><th>Evidence</th></tr></thead><tbody>
+<tr><td>Houthi control of the strait coast</td><td class="st" style="color:var(--rd)">Rising</td><td>US MARAD says the Houthis seized more islands and coast since August. Reuters reports government forces left Dhubab and nearby positions.</td></tr>
+<tr><td>Attacks on merchant ships</td><td class="st" style="color:var(--gd)">Contained, persistent</td><td>ACLED: no corroborated maritime attacks since 24 Aug. Africa Center counts 12 attacks or attempts since July.</td></tr>
+<tr><td>Saudi energy exports</td><td class="st" style="color:var(--rd)">Elevated</td><td>Yanbu crude bound for Asia passes the strait. Houthi missile and drone attacks on Saudi territory continued into mid-November.</td></tr>
+<tr><td>Carrier return to Suez</td><td class="st" style="color:var(--tl)">Gradual</td><td>Suez transits were 305 in the week of 19&ndash;25 Oct, 35% above the October 2025 weekly average but 36% below pre-crisis tonnage. Hapag-Lloyd is restoring its IOS service.</td></tr>
+<tr><td>Official advisories</td><td class="st" style="color:var(--gd)">In force</td><td>MARAD advisory 2026-013 runs 23 Sep 2026 to 22 Mar 2027 and tells US-flagged ships to stay far from Yemen&rsquo;s coast.</td></tr>
+</tbody></table></div>
+</section>
+
+<section class="sec">
+<h2>Event timeline</h2>
+<p class="sub">Each entry links to its source. Select an entry to locate it on the map where a position is known.</p>
+<div class="fl"><span style="--c:var(--rd)">Ship attack</span><span style="--c:var(--gd)">Declaration or policy</span><span style="--c:#d8d4cc">Escalation</span><span style="--c:var(--tl)">Traffic recovery</span></div>
+<ol class="tl" id="tl"></ol>
+</section>
+
+<section class="sec">
+<h2>Sources</h2>
+<ol class="sr" id="sr"></ol>
+</section>
+<div class="ft">Analysis for research purposes. Positions of incidents are approximate. Transit figures come from AIS tracking and exclude ships with transponders off, so counts understate true traffic. Reporting on Yemen changes quickly; this page reflects sources read on 17 Nov 2026.</div>
+</div>
+
+<script>
+var X=function(l){return (l-28)*20},Y=function(a){return (34-a)*20};
+function pl(s){return s.split(';').map(function(p){p=p.split(' ');return X(+p[0]).toFixed(1)+','+Y(+p[1]).toFixed(1)}).join(' ')}
+var AF="28 31;29.9 31.2;31 31.6;32.3 31.25;32.35 30.5;32.55 29.97;32.65 29.5;33.2 28.3;33.8 27.3;33.95 26.75;34.3 26.1;34.9 25.05;35.8 23.9;36.9 22;37.2 19.6;37.35 19.1;37.7 18.3;39.45 15.6;40.2 14.9;41.5 14;42.7 13;43.2 12.7;43.15 11.9;43.5 11.35;45 10.45;49.2 11.3;51.3 11.8;51.4 10.4;50.8 9;50.8 8;28 8";
+var AS="32.55 29.97;32.3 31.25;34.3 31.35;35 32.8;35.5 33.9;36 34;60 34;60 25.3;57.2 25.8;56.3 27.2;54.7 26.5;52.6 27.4;50.8 28.9;49.5 30.2;48.5 30;48 29.5;50.1 26.4;50.6 25.9;51.2 24.6;51.6 25.4;52.2 24.2;54.4 24.4;55.3 25.3;56 25.8;56.4 26.3;56.4 25.1;56.7 24.4;58.6 23.6;59.8 22.5;58.7 20.4;54.1 16.95;51.2 15.2;49.1 14.55;45 12.8;43.4 12.65;43.25 13.3;42.95 14.8;42.8 16.4;42.55 16.9;39.15 21.5;38.05 24.1;36.45 26.2;35.7 27.35;35 28.5;34.95 29.5;34.5 28.5;34.25 27.73;33.55 28.2;33.1 29.05;32.65 29.7";
+var BD=["28 22;36.9 22","42.8 16.4;44 17.4;46.3 17.3;47.5 16.9;48.8 18.2;52 19;52.2 15.8","37.5 18;36.5 16.5;36.5 14.5;38 14.4;40 14.3;40.7 14.1;41.6 13.2;42.4 12.45;43.1 12.7"];
+var SZ="32.3 31.3;32.55 29.97;33.4 28.4;34.4 27;36.4 24.5;38 20.6;40.8 16;42.6 13.9;43.3 12.6;46 12.2;50 12.6;54 13.6;60 15";
+var CP1="32 32.4;29.5 32.8;28.2 32.9",CP2="52.5 12.9;54.3 10;54.3 8.2";
+var TXT=[["EGYPT",30.4,26],["SUDAN",31.5,19],["ERITREA",37.9,16.1],["ETHIOPIA",39.5,10.5],["SOMALIA",46.5,9],["SAUDI ARABIA",42,23],["YEMEN",46.8,15.6],["OMAN",56,19],["IRAN",54,31],["IRAQ",43.5,32]];
+var MK=[
+{id:'bab',n:'Bab el-Mandeb',x:43.3,y:12.6,c:'ch',d:'Southern gateway to the Red Sea, about 30 km wide at its narrowest. Transits are down about 63% on pre-attack levels. Houthi gains on the Yemeni coast raise the threat to ships and to the Gulf of Aden transit corridor.'},
+{id:'suez',n:'Suez Canal',x:32.5,y:30,c:'ch',d:'About 43 cargo ships and tankers a day in the four weeks to 8 Nov, against 74 in 2023. Attacks occurred at the strait, not the canal, but the strait decides route choice.'},
+{id:'yanbu',n:'Yanbu',x:38.05,y:24.1,c:'po',d:'Saudi Red Sea export hub and the kingdom\u2019s main crude outlet since the Iran war began. Crude for Asia must pass Bab el-Mandeb.'},
+{id:'jed',n:'Jeddah',x:39.15,y:21.5,c:'po',d:'Saudi Arabia\u2019s largest Red Sea container port.'},
+{id:'psd',n:'Port Sudan',x:37.2,y:19.6,c:'po',d:'Sudan\u2019s main Red Sea port.'},
+{id:'dji',n:'Djibouti',x:43.15,y:11.6,c:'po',d:'Port beside the strait hosting several foreign naval bases.'},
+{id:'hod',n:'Hodeidah',x:42.95,y:14.8,c:'po',d:'Yemeni Red Sea port in the Houthi-held coastal strip.'},
+{id:'aden',n:'Aden',x:45,y:12.8,c:'po',d:'Seat of the Yemeni government. Houthi fighters were reported about 100 km away in mid-November.'}];
+var EV=[
+{t:'19 Nov 2023',k:'a',x:42.5,y:15,s:'Houthis seize the Galaxy Leader and its crew, starting the shipping campaign. Position approximate.',l:'CFR, Conflict in Yemen and the Red Sea',u:'https://www.cfr.org/global-conflict-tracker/conflict/war-yemen'},
+{t:'10 Jan 2024',k:'p',s:'UN Security Council resolution 2722 demands that the Houthis stop attacks on merchant ships.',l:'UN Security Council'},
+{t:'10 Oct 2025',k:'p',s:'Gaza ceasefire begins. The Houthis later signal that they have stopped attacks on Israel and Red Sea shipping.',l:'Associated Press'},
+{t:'28 Feb 2026',k:'e',s:'US and Israeli strikes on Iran begin the Iran war. The Red Sea becomes Saudi Arabia\u2019s main crude export hub.',l:'OilPrice, citing Reuters',u:'https://oilprice.com/Energy/Energy-General/Houthi-Advance-Puts-Saudi-Crude-Exports-at-Risk.amp.html'},
+{t:'20 Jul 2026',k:'p',s:'Houthis announce a blockade of Saudi-linked shipping and say other ships may transit if their governments stay out.',l:'ACLED',u:'https://acleddata.com/report/houthi-gains-around-bab-al-mandab-raise-risks-red-sea-shipping-and-global-oil-markets'},
+{t:'24 Aug 2026',k:'a',x:37.7,y:24,s:'Tankers AMZAN and DAISY are reportedly struck by Houthi missiles off Yanbu. ACLED records no corroborated maritime attacks after this date.',l:'US MARAD advisory 2026-013',u:'https://www.maritime.dot.gov/msci/2026-013-red-sea-bab-el-mandeb-strait-gulf-aden-arabian-sea-and-somali-basin-houthi-attacks'},
+{t:'Aug 2026',k:'p',s:'Saudi Arabia launches the Multinational Maritime Security Alliance in response to the Houthi threat.',l:'Africa Center for Strategic Studies',u:'https://africacenter.org/spotlight/2026-houthi-red-sea-threats/'},
+{t:'22 Sep 2026',k:'r',s:'COSCO makes its first southbound Suez transit since the crisis. Maersk and Hapag-Lloyd moved four more services to Suez in the same week.',l:'Orbis, Suez Canal',u:'https://learnorbis.com/world/chokepoints/suez-canal'},
+{t:'23 Sep 2026',k:'p',s:'US MARAD advisory takes effect, running to 22 Mar 2027, warning of Houthi attacks and attempts to divert ships.',l:'US MARAD',u:'https://www.maritime.dot.gov/msci/2026-013-red-sea-bab-el-mandeb-strait-gulf-aden-arabian-sea-and-somali-basin-houthi-attacks'},
+{t:'15\u201316 Nov 2026',k:'e',x:43.6,y:13.1,s:'Government-allied forces withdraw from Dhubab and other positions near Bab el-Mandeb; Houthi fighters reach Khor Omairh, about 100 km west of Aden. Position approximate.',l:'CBS News live updates',u:'https://cbsnews.com/live-updates/iran-war-us-nuclear-oil-strait-of-hormuz'},
+{t:'16 Nov 2026',k:'r',s:'Hapag-Lloyd says its Germany\u2013India IOS service will again use the Red Sea; Maersk had begun returning before the Iran war.',l:'dpa via Logistik Heute',u:'https://logistik-heute.de/en/news/red-sea-hapag-lloyd-and-maersk-expand-shipping-traffic-293671.html'}];
+var KC={a:'#b8403a',p:'#b99a5b',e:'#d8d4cc',r:'#6f9a92'},KN={a:'Ship attack',p:'Declaration or policy',e:'Escalation',r:'Traffic recovery'};
+var SRC=[['IMF PortWatch daily chokepoint data','https://portwatch.imf.org'],['Lloyd\u2019s List Intelligence, Red Sea Brief 29 Oct 2026','https://www.lloydslistintelligence.com/resources/blog/red-sea-brief---29-october-2026'],['Orbis, Suez Canal: map, traffic and revenue','https://learnorbis.com/world/chokepoints/suez-canal'],['FinzData, Strait of Hormuz traffic and global shipping data','https://finzdata.com/research/strait-of-hormuz-traffic-global-shipping-data-2026'],['Red Sea Meridian, Corridor Watch','https://redseameridian.com/corridor-watch'],['US MARAD advisory 2026-013','https://www.maritime.dot.gov/msci/2026-013-red-sea-bab-el-mandeb-strait-gulf-aden-arabian-sea-and-somali-basin-houthi-attacks'],['ACLED, Houthi gains around Bab al-Mandab','https://acleddata.com/report/houthi-gains-around-bab-al-mandab-raise-risks-red-sea-shipping-and-global-oil-markets'],['Africa Center for Strategic Studies, Houthi leverage over the Red Sea','https://africacenter.org/spotlight/2026-houthi-red-sea-threats/'],['Council on Foreign Relations, Conflict in Yemen and the Red Sea','https://www.cfr.org/global-conflict-tracker/conflict/war-yemen'],['OilPrice, Houthi advance puts Saudi crude exports at risk','https://oilprice.com/Energy/Energy-General/Houthi-Advance-Puts-Saudi-Crude-Exports-at-Risk.amp.html'],['CBS News, Iran war live updates, 16 Nov 2026','https://cbsnews.com/live-updates/iran-war-us-nuclear-oil-strait-of-hormuz'],['Jerusalem Post, Houthis gain ground near Red Sea shipping route','https://www.jpost.com/middle-east/article-915059'],['Logistik Heute (dpa), Hapag-Lloyd and Maersk expand Red Sea traffic','https://logistik-heute.de/en/news/red-sea-hapag-lloyd-and-maersk-expand-shipping-traffic-293671.html']];
+var NS='http://www.w3.org/2000/svg',svg=document.getElementById('map'),rd=document.getElementById('rd');
+var h='<rect class="wt" width="640" height="520"/><g stroke="#16222a" stroke-width="1">';
+for(var i=0;i<=32;i+=4)h+='<path d="M'+i*20+' 0V520"/>';for(var j=0;j<=26;j+=4)h+='<path d="M0 '+j*20+'H640"/>';
+h+='</g><polygon class="ld" points="'+pl(AF)+'"/><polygon class="ld" points="'+pl(AS)+'"/>';
+BD.forEach(function(b){h+='<polyline class="bd" points="'+pl(b)+'"/>'});
+TXT.forEach(function(t){h+='<text class="lb" x="'+X(t[1])+'" y="'+Y(t[2])+'" text-anchor="middle">'+t[0]+'</text>'});
+h+='<text class="lw" x="'+X(37.4)+'" y="'+Y(21.3)+'">Red Sea</text><text class="lw" x="'+X(47)+'" y="'+Y(11.5)+'">Gulf of Aden</text><text class="lw" x="'+X(55)+'" y="'+Y(12)+'">Arabian Sea</text><text class="lw" x="'+X(51.5)+'" y="'+Y(27.4)+'">Gulf</text><text class="lw" x="'+X(30)+'" y="'+Y(33.2)+'">Mediterranean</text>';
+h+='<g id="g-hou"><polygon points="'+pl('42.8 16.3;43.8 17.2;46 17.3;46.4 15.7;45 14.3;43.7 13.4;42.95 14.4')+'" fill="#b8403a" fill-opacity=".14" stroke="#b8403a" stroke-opacity=".5" stroke-dasharray="4 4"/><text class="lb" x="'+X(44.6)+'" y="'+Y(16.2)+'" text-anchor="middle" style="fill:#b8403a">HOUTHI-HELD AREA (INDICATIVE)</text></g>';
+h+='<g id="g-rt"><path class="sl s2" d="M'+pl(CP1).replace(/ /g,'L')+'"/><path class="sl s2" d="M'+pl(CP2).replace(/ /g,'L')+'"/><text class="lb" x="'+X(28.4)+'" y="'+Y(33.5)+'" style="fill:#b8403a">TO CAPE VIA ATLANTIC</text><text class="lb" x="'+X(54.6)+'" y="'+Y(8.6)+'" style="fill:#b8403a">TO CAPE</text><path id="sz" class="sl s1" d="M'+pl(SZ).replace(/ /g,'L')+'"/>';
+[0,3.5,7,10.5].forEach(function(b){h+='<circle class="ship" r="2.6" fill="#e9e6df"><animateMotion dur="16s" begin="-'+b+'s" repeatCount="indefinite"><mpath href="#sz"/></animateMotion></circle>'});
+h+='</g><g id="g-ch"></g><g id="g-po"></g><g id="g-ev"></g>';
+svg.innerHTML=h;
+var G={},sel=null;
+function mk(layer,o,col,r){var g=document.createElementNS(NS,'g');g.setAttribute('class','mk');g.setAttribute('tabindex','0');g.setAttribute('role','button');g.setAttribute('aria-label',o.n||o.t);
+g.innerHTML='<circle class="pg" cx="'+X(o.x)+'" cy="'+Y(o.y)+'" r="'+r+'" stroke="'+col+'" style="display:'+(layer==='po'?'none':'')+'"/><circle cx="'+X(o.x)+'" cy="'+Y(o.y)+'" r="'+(r-2)+'" fill="'+col+'"/>'+(o.n?'<text x="'+(X(o.x)+10)+'" y="'+(Y(o.y)+3)+'">'+o.n+'</text>':'');
+g.onclick=function(){pick(o,g)};g.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();pick(o,g)}};document.getElementById('g-'+layer).appendChild(g);return g}
+function pick(o,g){if(sel)sel.classList.remove('on');sel=g;if(g)g.classList.add('on');
+rd.innerHTML='<div class="k">'+(o.k?KN[o.k]+' \u00b7 '+o.t:o.c==='ch'?'Chokepoint':'Port')+'</div><h4>'+(o.n||o.l)+'</h4><p>'+(o.d||o.s)+'</p>'}
+MK.forEach(function(m){G[m.id]=mk(m.c,m,m.c==='ch'?'#b99a5b':'#9a9aa1',m.c==='ch'?9:6)});
+var tl=document.getElementById('tl');
+EV.forEach(function(e){var g=null;if(e.x)g=mk('ev',{x:e.x,y:e.y,t:e.t,k:e.k,l:e.l,s:e.s,n:''},KC[e.k],8);
+var li=document.createElement('li');li.style.setProperty('--c',KC[e.k]);li.tabIndex=0;
+li.innerHTML='<b>'+e.t+'</b><p>'+e.s+'</p><small>Source: '+(e.u?'<a href="'+e.u+'" target="_blank" rel="noopener">'+e.l+'</a>':e.l)+'</small>';
+li.onclick=function(ev){if(ev.target.tagName==='A')return;document.querySelectorAll('.tl li').forEach(function(x){x.classList.remove('on')});li.classList.add('on');pick({k:e.k,t:e.t,l:e.l,s:e.s},g);document.getElementById('map').scrollIntoView({behavior:'smooth',block:'center'})};
+tl.appendChild(li)});
+var tg=document.getElementById('tg');
+[['rt','Routes'],['ch','Chokepoints'],['po','Ports'],['ev','Incidents'],['hou','Houthi area']].forEach(function(l){var lb=document.createElement('label'),on=l[0]!=='po';
+lb.innerHTML='<input type="checkbox"'+(on?' checked':'')+'>'+l[1];var el=document.getElementById('g-'+l[0]);el.style.display=on?'':'none';
+lb.firstChild.onchange=function(){el.style.display=this.checked?'':'none'};tg.appendChild(lb)});
+var CH=[['Bab el-Mandeb',[74.6,32.5,27.6]],['Suez Canal',[73.6,39.6,41.5]],['Cape of Good Hope',[48.9,87,88.1]]],cols=['#6d6e75','#b99a5b','#b8403a'],cn=['Pre-attack','2024','Last 90d'],c=document.getElementById('ch');
+CH.forEach(function(g){var s='<div class="gr"><span>'+g[0]+'</span>';g[1].forEach(function(v,i){s+='<div class="br"><span>'+cn[i]+'</span><u><i data-w="'+v+'" style="background:'+cols[i]+'"></i></u><span>'+v+'</span></div>'});c.innerHTML+=s+'</div>'});
+var VT=[['Tankers',-67,110],['Container',-73,181],['Dry bulk',-57,43],['General cargo',-33,87]],v=document.getElementById('vt');
+VT.forEach(function(r){v.innerHTML+='<div class="dv"><span>'+r[0]+'</span><u class="l"><i data-w="'+Math.abs(r[1])/2+'"></i><b style="left:6px">'+r[1]+'%</b></u><u class="r"><i data-w="'+r[2]/2+'"></i><b style="right:6px">+'+r[2]+'%</b></u></div>'});
+document.getElementById('sr').innerHTML=SRC.map(function(s){return '<li><a href="'+s[1]+'" target="_blank" rel="noopener">'+s[0]+'</a></li>'}).join('');
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.querySelectorAll('[data-w]').forEach(function(i){i.style.width=i.dataset.w+'%'});io.unobserve(e.target)}})},{threshold:.3});
+document.querySelectorAll('.cd').forEach(function(x){io.observe(x)});
+document.querySelectorAll('[data-v]').forEach(function(b){var n=+b.dataset.v,d=+b.dataset.d,t0=null;function f(t){t0=t0||t;var p=Math.min((t-t0)/1200,1);b.textContent=(n*(1-Math.pow(1-p,3))).toFixed(d);if(p<1)requestAnimationFrame(f)}requestAnimationFrame(f)});
+function ck(){document.getElementById('ck').textContent=new Date().toISOString().slice(0,16).replace('T',' ')+' UTC'}ck();setInterval(ck,30000);
+</script>
 </body>
 </html>
