@@ -1,1 +1,11 @@
-{}
+{
+  "brent": {
+    "value": 92.94,
+    "prefix": "$",
+    "suffix": "/bbl",
+    "source": "US EIA, Europe Brent spot price",
+    "observed": "2026-11-17",
+    "updated": "2026-11-19 05:13 UTC",
+    "status": "delayed dataset"
+  }
+}
