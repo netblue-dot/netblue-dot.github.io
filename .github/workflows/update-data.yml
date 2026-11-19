@@ -1,6 +1,7 @@
 name: Update data
 on:
-  schedule: [{cron: "0 */6 * * *"}]
+  schedule:
+    - cron: "0 */6 * * *"
   workflow_dispatch:
 permissions:
   contents: write
@@ -10,7 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
-        with: {python-version: "3.12"}
+        with:
+          python-version: "3.12"
       - run: python scripts/update_data.py
         env:
           EIA_API_KEY: ${{ secrets.EIA_API_KEY }}
