@@ -1,182 +1,178 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Reetama Ghosh | Geopolitical Risk &amp; OSINT Analyst</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,800&family=IBM+Plex+Sans:wght@400;500&family=IBM+Plex+Mono:wght@400&display=swap">
+<html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Reetama Ghosh | Geopolitical Intelligence Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
 <style>
-:root{color-scheme:dark;--bg:#0b1118;--panel:#111a24;--line:#243344;--tx:#dfe6ee;--mu:#8a9aad;--am:#e0a43a;--cr:#e0634a;--te:#4aa3a0;--serif:'Fraunces',Georgia,serif;--sans:'IBM Plex Sans',system-ui,sans-serif;--mono:'IBM Plex Mono',ui-monospace,monospace;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-html{scroll-padding-top:env(safe-area-inset-top,0px)}
-*,*::before,*::after{box-sizing:inherit}
-body{margin:0;background:radial-gradient(900px 520px at 85% -8%,#17344f66,transparent 70%),radial-gradient(700px 400px at 0% 30%,#3a1d1533,transparent 70%),var(--bg);color:var(--tx);font:400 16px/1.6 var(--sans)}
-.wrap{max-width:1240px;margin:0 auto;padding:0 clamp(16px,4vw,48px)}
-.bar{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:14px 0;border-bottom:1px solid var(--line);font:400 12px var(--mono);color:var(--mu)}
-.bar b{color:var(--te);font-weight:400}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--te);margin-right:8px;animation:blink 2s infinite}
-@keyframes blink{50%{opacity:.25}}
-.hero{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(24px,4vw,56px);padding:48px 0 32px;align-items:start}
-h1{font:800 clamp(40px,5.4vw,72px)/1.02 var(--serif);letter-spacing:-.025em;margin:0 0 10px}
-.role{font:600 clamp(20px,2.3vw,28px)/1.2 var(--serif);color:var(--tx);margin:0 0 14px}
-.sub{font:600 15px var(--serif);color:var(--am);margin:0 0 20px}
-.intro{color:#b9c5d3;max-width:56ch;margin:0 0 24px;font-size:16.5px}
-.chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 24px;padding:0;list-style:none}
-.chips li{border:1px solid var(--line);background:var(--panel);padding:4px 12px;border-radius:3px;font:400 13px var(--mono);color:var(--tx)}
-.hl{display:grid;gap:12px;margin:0;padding:0;list-style:none}
-.hl li{border-left:2px solid var(--am);padding:2px 0 2px 14px;font-size:15px;color:#b9c5d3}
-.hl strong{display:block;color:var(--tx);font-weight:500}
-.map{background:var(--panel);border:1px solid var(--line);border-radius:6px;overflow:hidden}
-.mh{display:flex;justify-content:space-between;padding:10px 14px;border-bottom:1px solid var(--line);font:400 12px var(--mono);color:var(--mu);gap:8px;flex-wrap:wrap}
-svg{display:block;width:100%;height:auto}
-.land{fill:#16222f;stroke:#33485e;stroke-width:1}
-.grid path{stroke:#1b2938;stroke-width:1}
-.lbl{font:400 10px var(--mono);fill:#6d8097}
-.mk{cursor:pointer}
-.mk .core{fill:var(--cr)}
-.mk.t .core{fill:var(--am)}
-.mk .ring{fill:none;stroke:var(--cr);stroke-width:1.4;transform-box:fill-box;transform-origin:center;animation:ping 2.6s ease-out infinite}
-.mk.t .ring{stroke:var(--am)}
-.mk:nth-of-type(2n) .ring{animation-delay:.9s}.mk:nth-of-type(3n) .ring{animation-delay:1.7s}
-@keyframes ping{0%{transform:scale(.4);opacity:.9}100%{transform:scale(3);opacity:0}}
-.mk text{font:400 10px var(--mono);fill:var(--tx)}
-.mk.on .core{stroke:#fff;stroke-width:2}
-.lane{fill:none;stroke:var(--am);stroke-width:1.2;stroke-dasharray:4 6;animation:dash 1.4s linear infinite}
-@keyframes dash{to{stroke-dashoffset:-20}}
-.read{padding:14px;border-top:1px solid var(--line);min-height:92px}
-.read h3{font:600 17px var(--serif);margin:0 0 4px}
-.read p{margin:0;font-size:14px;color:var(--mu)}
-.read .k{font:400 12px var(--mono);color:var(--am)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:8px 0 0}
-.stats div{background:var(--panel);padding:16px 18px}
-.stats b{display:block;font:800 30px/1.1 var(--serif)}
-.stats span{font-size:13px;color:var(--mu)}
-.tick{border-block:1px solid var(--line);margin:32px 0;overflow:hidden;white-space:nowrap;background:#0d151e}
-.tick div{display:inline-block;padding:10px 0;font:400 13px var(--mono);color:var(--mu);animation:scroll 60s linear infinite}
-.tick:hover div{animation-play-state:paused}
-.tick i{font-style:normal;color:var(--am);margin:0 10px 0 28px}
-@keyframes scroll{to{transform:translateX(-50%)}}
-h2{font:800 28px var(--serif);margin:0 0 4px}
-.lede{color:var(--mu);margin:0 0 20px}
-.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding-bottom:48px}
-.card{position:relative;display:flex;flex-direction:column;border:1px solid var(--line);border-radius:6px;text-decoration:none;color:var(--tx);overflow:hidden;background:var(--panel);transition:transform .25s,border-color .25s,box-shadow .25s}
-.cb{padding:16px 18px 18px;display:flex;flex-direction:column;gap:6px;flex:1}
-.go{margin-top:auto;padding-top:8px;font:400 12px var(--mono);color:var(--am);opacity:.55;transition:opacity .2s}
-.card:hover .go,.card.on .go{opacity:1}
-.card.soon{cursor:default}
-.card:hover,.card:focus-visible,.card.on{transform:translateY(-4px);border-color:var(--am);box-shadow:0 18px 40px -18px #000,0 0 0 1px #e0a43a33;outline:none}
-.card h3{font:600 19px/1.25 var(--serif);margin:0}
-.card .src{font:400 12px var(--mono);color:var(--mu)}
-.card.wide{grid-column:span 2}
-.art{height:150px;background:radial-gradient(120% 140% at 85% 0%,color-mix(in srgb,var(--c) 85%,#fff 8%),#0b1118 90%);border-bottom:1px solid var(--line);overflow:hidden}
-.card.wide .art{height:200px}
-.art svg{width:100%;height:100%;display:block;transition:transform .5s}
-.card:hover .art svg,.card.on .art svg{transform:scale(1.05)}
-.foot{border-top:1px solid var(--line);padding:20px 0 32px;font:400 12px var(--mono);color:var(--mu)}
-@media(max-width:900px){.hero{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}}
-@media(max-width:560px){.cards{grid-template-columns:1fr}.card.wide{grid-column:auto}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
-:focus-visible{outline:2px solid var(--am);outline-offset:2px}
-</style>
-</head>
+:root{--bg:#04060a;--panel:rgba(14,19,30,.78);--line:rgba(212,167,76,.28);--gold:#e0b25a;--red:#e0382c;--text:#ece9e2;--mute:#a4abb8;--serif:'Playfair Display',Georgia,serif;--sans:'Inter',system-ui,sans-serif;--mono:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font:14px/1.5 var(--sans);min-height:100vh;overflow-x:hidden}
+a{color:inherit;text-decoration:none}:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+/* globe backdrop */
+.globe{position:fixed;inset:0;pointer-events:none;z-index:0;background:
+radial-gradient(ellipse 60% 70% at 78% 12%,rgba(30,70,140,.45),transparent 65%),
+radial-gradient(circle at 74% 14%,rgba(224,178,90,.18),transparent 22%),
+radial-gradient(ellipse 80% 40% at 50% 100%,rgba(20,50,100,.25),transparent 70%)}
+.globe svg{position:absolute;right:0;top:0;width:62%;height:48%;opacity:.9}
+aside{position:fixed;inset:0 auto 0 0;width:142px;background:rgba(3,5,9,.94);border-right:1px solid rgba(255,255,255,.06);display:flex;flex-direction:column;z-index:20}
+.logo{text-align:center;padding:34px 0 26px}.logo b{font:500 40px var(--serif);color:#d9d6cf;display:block;letter-spacing:-2px}
+.logo span{display:block;margin-top:10px;letter-spacing:.32em;font-size:10.5px;color:#cfcac0;line-height:1.7}
+nav a{display:flex;align-items:center;gap:12px;padding:15px 20px;color:var(--mute);font-size:12.5px;border-left:3px solid transparent;transition:.3s}
+nav a i{font-style:normal;font-size:15px;width:18px;text-align:center}
+nav a:hover,nav a.on{color:var(--text);background:linear-gradient(90deg,rgba(224,178,90,.2),transparent);border-left-color:var(--gold)}
+nav a.on i,nav a:hover i{color:var(--gold)}
+.compass{margin:auto 0 18px;text-align:center;color:var(--gold)}
+.tag{padding:0 20px 90px;font:italic 15px/1.45 var(--serif);color:#8c93a1}
+main{position:relative;z-index:1;margin-left:142px;padding:22px 34px 30px}
+.view{display:none;animation:in .5s ease}.view.on{display:block}@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.eyebrow{font:500 11.5px var(--sans);letter-spacing:.38em;color:#d6d2c8;display:flex;align-items:center;gap:14px;flex:1}.eyebrow:after{content:"";height:1px;background:var(--line);flex:0 1 220px}
+.feed{font-size:12px;color:#d6d2c8;display:flex;gap:14px;align-items:center}.feed i{width:9px;height:9px;border-radius:50%;background:#35c46a;box-shadow:0 0 8px #35c46a;display:inline-block;margin-right:6px}
+h1{font:600 clamp(36px,4.7vw,66px)/1.08 var(--serif);margin:26px 0 14px;text-shadow:0 2px 20px #000}h1 em{color:var(--gold);font-style:normal}
+.sub{font-size:17px;color:#ddd9d0}.sub s{text-decoration:none;margin:0 14px;color:var(--mute)}
+.chips{display:flex;gap:12px;flex-wrap:wrap;margin:22px 0}
+.chip{padding:9px 20px 9px 14px;border:1px solid var(--line);border-radius:99px;background:rgba(10,14,22,.8);font-size:12.5px;display:flex;gap:10px;align-items:center}.chip b{color:var(--gold);font-weight:400;font-size:15px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;backdrop-filter:blur(10px);transition:.35s}
+.panel:hover{border-color:rgba(224,178,90,.6);box-shadow:0 0 26px rgba(224,178,90,.14)}
+.stats{display:grid;grid-template-columns:repeat(5,1fr) 1.9fr;gap:10px;margin:6px 0 14px}
+.stat{padding:14px 16px;display:flex;gap:12px;align-items:center;min-height:84px}.stat .ic{font-size:26px;color:var(--gold)}.stat:first-child .ic{color:var(--red)}
+.stat strong{font:600 24px/1.1 var(--sans);display:block}.stat small{color:var(--mute);font-size:11.5px}.stat .ch{font-size:11px;margin-left:8px;color:var(--red)}
+.stat .meta{font:9.5px/1.4 var(--mono);color:#7f8796;margin-top:4px}.stat.off strong{font-size:14px;color:var(--mute);font-weight:500}
+.latest{padding:12px 16px;display:flex;gap:14px;align-items:center;justify-content:space-between;grid-column:span 1}.latest small{color:var(--red);font:600 9.5px var(--sans);letter-spacing:.1em;display:block;margin-bottom:4px}
+.latest p{font-size:12.5px;line-height:1.35}.latest a{font-size:11px;text-decoration:underline;display:inline-block;margin-top:6px}
+.latest .th{width:100px;height:68px;border-radius:6px;background:linear-gradient(135deg,#3a3f4b,#14181f);flex:none}
+.ticker{display:flex;align-items:center;gap:12px;padding:7px 12px;border-radius:99px}
+.live{background:var(--red);font:600 11px var(--sans);padding:4px 14px;border-radius:99px;letter-spacing:.08em;display:flex;gap:6px;align-items:center}.live:before{content:"";width:6px;height:6px;border-radius:50%;background:#fff}
+.track{flex:1;overflow:hidden;white-space:nowrap;mask:linear-gradient(90deg,transparent,#000 3%,#000 97%,transparent)}
+.run{display:inline-block;animation:scroll 80s linear infinite;padding-left:20px}.track:hover .run,.paused .run{animation-play-state:paused}
+.run a{font-size:12.5px;padding:0 22px;border-right:1px solid var(--line)}.run a:hover{color:var(--gold)}.run time{color:var(--mute);font:10px var(--mono);margin-left:8px}
+@keyframes scroll{to{transform:translateX(-100%)}}
+.ctl button{background:none;border:0;color:#d6d2c8;cursor:pointer;font-size:15px;padding:2px 7px}
+.regions{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0 8px}
+.region{position:relative;overflow:hidden;min-height:268px;padding:24px 26px}
+.region .map{position:absolute;inset:0;width:100%;height:100%}
+.region>.txt{position:relative;z-index:2;max-width:290px;text-shadow:0 2px 14px #000}
+.kick{color:var(--gold);font:500 11px var(--sans);letter-spacing:.2em;display:flex;align-items:center;gap:10px}.kick:before{content:"";width:22px;height:2px;background:var(--gold)}
+.region h2{font:600 clamp(32px,3.4vw,46px)/1.1 var(--serif);margin:8px 0 6px}.region h3{font:500 19px/1.3 var(--serif);margin-bottom:12px}
+.region p{color:#d0ccc2;font-size:13px}
+.btn{display:inline-block;margin-top:16px;padding:8px 20px;border:1px solid var(--gold);color:var(--gold);border-radius:99px;font-size:13px;background:rgba(0,0,0,.45);transition:.3s}.btn:hover{background:var(--gold);color:#000}
+.legend{position:absolute;right:20px;bottom:18px;z-index:2;font-size:10.5px;display:grid;gap:7px;color:#ddd}.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}
+.dots{fill:url(#dp);stroke:rgba(224,178,90,.55);stroke-width:1;filter:drop-shadow(0 0 5px rgba(224,178,90,.35))}
+.cn{fill:rgba(224,56,44,.5);stroke:#ff6a58;stroke-width:1.2;filter:drop-shadow(0 0 8px rgba(224,56,44,.8))}
+.route{fill:none;stroke:#4aa8ff;stroke-width:1;stroke-dasharray:4 4;animation:dash 7s linear infinite}.route.g{stroke:var(--gold)}@keyframes dash{to{stroke-dashoffset:-80}}
+.mk{cursor:pointer}.mk .d{fill:#ff4a38}.mk .p{fill:none;stroke:#ff4a38;transform-box:fill-box;transform-origin:center;animation:pulse 2.6s ease-out infinite}.mk text{fill:#eee;font:9px var(--mono)}.mk.sel .d{fill:var(--gold)}
+@keyframes pulse{from{opacity:.9;transform:scale(.5)}to{opacity:0;transform:scale(2.6)}}
+.sec{display:flex;justify-content:space-between;align-items:center;margin:20px 0 12px;font:500 12px var(--sans);letter-spacing:.32em;color:#e8e4da}
+.sec span:before{content:"";display:inline-block;width:20px;height:2px;background:var(--gold);margin-right:12px;vertical-align:middle}.sec a{letter-spacing:0;font-size:12px;color:var(--gold)}
+.cards{display:grid;grid-template-columns:repeat(6,1fr);gap:10px}
+.cards.big{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px}
+.card{overflow:hidden;position:relative;display:flex;flex-direction:column}.card:hover{transform:translateY(-4px)}
+.ph{height:96px;position:relative;background:var(--bg);background-size:cover;overflow:hidden}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.ph:after{content:"";position:absolute;inset:0;background:linear-gradient(transparent 30%,rgba(5,8,13,.95))}
+.card .row{padding:0 12px 12px;display:flex;justify-content:space-between;gap:8px;align-items:flex-end;margin-top:-34px;position:relative;z-index:2}
+.card h5{font:500 14.5px/1.3 var(--serif)}.card .arr{flex:none;width:24px;height:24px;border:1px solid var(--gold);border-radius:50%;color:var(--gold);display:grid;place-items:center;font-size:12px}.card .arr.off{border-color:#6b7280;color:#6b7280}
+.card .det{padding:4px 14px 14px;font-size:12.5px;color:var(--mute)}.card dt{color:var(--gold);font:10.5px var(--mono);margin-top:8px}.card dd{margin:0}
+.bars{display:flex;gap:4px;align-items:flex-end;height:46px;margin:10px 0 0}.bars span{flex:1;background:linear-gradient(var(--gold),rgba(224,178,90,.2));height:var(--h);border-radius:2px 2px 0 0;transform-origin:bottom;animation:grow 1.2s ease both}@keyframes grow{from{transform:scaleY(0)}}
+.foot{margin-top:18px;text-align:center;font:500 10.5px var(--sans);letter-spacing:.4em;color:#8c93a1;display:flex;align-items:center;gap:20px}.foot:before,.foot:after{content:"";flex:1;height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent)}
+.note{font:11px/1.6 var(--mono);color:#7f8796;margin-top:12px}
+.back{margin:0 0 6px}.pill{font:10px var(--mono);padding:2px 8px;border:1px solid var(--line);border-radius:4px;color:var(--mute)}
+.vh{font:600 clamp(30px,4vw,52px)/1.1 var(--serif);margin:14px 0 8px}.vh em{color:var(--gold);font-style:normal}
+#sel{padding:12px 16px;margin:10px 0;color:var(--mute)}
+@media(max-width:1250px){.stats{grid-template-columns:repeat(3,1fr)}.cards{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:820px){aside{position:sticky;width:auto;height:auto;flex-direction:row;overflow-x:auto}.logo,.tag,.compass{display:none}nav{display:flex}nav a{padding:12px 14px;white-space:nowrap;border-left:0;border-bottom:3px solid transparent}nav a.on{border-bottom-color:var(--gold)}main{margin:0;padding:18px 14px}.stats{grid-template-columns:1fr 1fr}.latest{grid-column:span 2}.regions{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.sub s{display:none}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
+</style></head>
 <body>
-<div class="wrap">
-<div class="bar"><span><span class="dot"></span><b>Reetama Ghosh</b> &nbsp;Middle East intelligence dashboard</span><span id="clock">UTC</span></div>
-
-<header class="hero">
-<div>
-<h1>Reetama Ghosh</h1>
-<p class="role">Geopolitical Risk &amp; OSINT Analyst</p>
-<p class="sub">Middle Eastern geopolitics, regional security, conflict intelligence and strategic affairs</p>
-<p class="intro">Geopolitical Risk &amp; OSINT Analyst with an M.A. in International Relations and Strategic Studies from the University of Mumbai. My research focuses on Middle Eastern geopolitics, regional power dynamics, maritime security, hybrid warfare and conflict analysis. With experience in GSOC intelligence research, policy writing, OSINT monitoring and data-driven risk assessments, I transform complex geopolitical developments into actionable intelligence and strategic insights.</p>
-<ul class="chips" aria-label="Tools"><li>Python</li><li>SQL</li><li>Power BI</li><li>OSINT</li></ul>
-<ul class="hl">
-<li><strong>Foresight Research</strong>Professional experience in GSOC intelligence research and risk assessment.</li>
-<li><strong>Policy research</strong>Policy writing and strategic analysis on regional security.</li>
-<li><strong>Automated OSINT threat tracking</strong>Monitoring pipelines built with Python and SQL, reported through Power BI.</li>
-<li><strong>Independent geopolitics podcast</strong>Long-form analysis of regional and strategic developments.</li>
-</ul>
-</div>
-
-<section class="map" aria-label="Middle East schematic map">
-<div class="mh"><span>Schematic theatre map</span><span>Select a marker</span></div>
-<svg viewBox="0 0 600 420" role="img" aria-label="Schematic map of the Middle East with flashpoints and maritime chokepoints">
-<g class="grid"><path d="M0 80H600M0 160H600M0 240H600M0 320H600M100 0V420M200 0V420M300 0V420M400 0V420M500 0V420"/></g>
-<path class="land" d="M0 160L112 150L128 185L170 260L225 340L255 392L248 420L0 420Z"/>
-<path class="land" d="M110 60L330 40L600 40L600 150L520 190L470 215L440 205L425 185L395 165L330 125L290 95L240 85L200 100L150 150L140 140L125 120L110 100Z"/>
-<path class="land" d="M150 160L205 260L250 330L285 372L310 374L360 347L420 322L482 272L466 226L440 214L425 190L395 170L330 132L290 100L240 92L200 106Z"/>
-<path class="lane" d="M60 118L130 130L112 156L170 270L274 382L360 400L520 330L469 201L440 232"/>
-<text class="lbl" x="22" y="92">MEDITERRANEAN</text><text class="lbl" x="205" y="270">ARABIAN PENINSULA</text><text class="lbl" x="300" y="410">ARABIAN SEA</text><text class="lbl" x="118" y="298">RED SEA</text>
-<g id="mks"></g>
-</svg>
-<div class="read" id="read" aria-live="polite"><h3>Theatre overview</h3><p>Flashpoints (red) and maritime chokepoints (amber) are marked on a schematic map. Select a marker or hover a project below to link them. Indicators are illustrative, not live event data.</p></div>
+<div class="globe" aria-hidden="true"><svg viewBox="0 0 800 300"><defs><pattern id="gd" width="7" height="7" patternUnits="userSpaceOnUse"><circle cx="2" cy="2" r="1" fill="#e0b25a" opacity=".55"/></pattern></defs>
+<path d="M150 80 L260 50 L330 90 L300 150 L220 160 Z" fill="url(#gd)"/><path d="M380 110 L470 100 L500 150 L440 190 L390 170 Z" fill="url(#gd)"/>
+<path d="M560 60 L690 55 L720 120 L650 150 L580 120 Z" fill="rgba(224,56,44,.4)" stroke="#ff6a58" opacity=".8"/><path d="M180 200 Q420 -20 700 100" fill="none" stroke="rgba(255,255,255,.25)"/></svg></div>
+<aside>
+ <div class="logo"><b>RG</b><span>REETAMA<br>GHOSH</span></div>
+ <nav id="nav" aria-label="Primary"><a href="#home"><i>⌂</i>Home</a><a href="#middle-east"><i>◍</i>Middle East</a><a href="#indo-pacific"><i>⊕</i>Indo-Pacific</a><a href="#about"><i>♟</i>About</a><a href="#research"><i>▥</i>Research</a><a href="#insights"><i>▤</i>Insights</a><a href="#contact"><i>✉</i>Contact</a></nav>
+ <div class="compass"><svg width="64" height="64" viewBox="0 0 64 64" fill="none" stroke="currentColor"><circle cx="32" cy="32" r="22" opacity=".35"/><path d="M32 6 L37 27 L58 32 L37 37 L32 58 L27 37 L6 32 L27 27 Z" fill="rgba(224,178,90,.25)"/></svg></div>
+ <div class="tag">Research.<br>Analyse.<br>Anticipate.</div>
+</aside>
+<main>
+<section id="view-home" class="view on">
+ <div class="top"><div class="eyebrow">GEOPOLITICAL INTELLIGENCE PORTFOLIO</div><div class="feed"><span><i id="fdot"></i><span id="ftxt">Feed status</span></span><span id="clock"></span></div></div>
+ <h1>Mapping Regional Power.<br><em>Understanding Global Change.</em></h1>
+ <p class="sub" id="about">Geopolitical Risk &amp; OSINT Analyst<s>|</s>M.A. International Relations and Strategic Studies</p>
+ <div class="chips"><span class="chip"><b>▲</b>Middle East Geopolitics</span><span class="chip"><b>⚓</b>Maritime Security</span><span class="chip"><b>⛨</b>Strategic Intelligence</span><span class="chip"><b>◎</b>Conflict Analysis</span></div>
+ <div class="stats" id="stats" aria-live="polite"></div>
+ <div class="panel ticker"><span class="live">LIVE</span><div class="track"><div class="run" id="run">Loading headlines…</div></div><span class="ctl"><button id="pp" aria-label="Pause headlines">❚❚</button><button id="pv" aria-label="Scroll back">‹</button><button id="nx" aria-label="Scroll forward">›</button></span></div>
+ <div class="regions" id="research">
+  <article class="panel region">
+   <svg class="map" viewBox="0 0 640 270" preserveAspectRatio="xMaxYMid slice" aria-hidden="true"><defs><pattern id="dp" width="5" height="5" patternUnits="userSpaceOnUse"><rect width="5" height="5" fill="#2a2418"/><circle cx="2" cy="2" r="1" fill="#e0b25a" opacity=".5"/></pattern></defs>
+    <path class="dots" d="M250 40 L330 30 L400 55 L470 45 L560 80 L575 150 L520 170 L470 150 L440 200 L400 235 L360 215 L330 225 L295 255 L275 230 L255 170 L225 120 L215 75 Z"/>
+    <path class="dots" d="M200 120 L240 130 L255 190 L225 215 L195 170 Z"/>
+    <path class="route g" d="M235 100 L255 190 L300 250 L440 205 L470 150"/>
+    <g fill="#ff4a38"><circle cx="290" cy="85" r="3"/><circle cx="320" cy="100" r="3"/><circle cx="420" cy="90" r="3"/><circle cx="360" cy="150" r="3"/><circle cx="300" cy="250" r="3"/><circle cx="460" cy="140" r="3"/><circle cx="250" cy="130" r="3"/></g>
+    <circle class="mk p" cx="300" cy="250" r="6" style="fill:none;stroke:#ff4a38;animation:pulse 2.6s infinite;transform-box:fill-box;transform-origin:center"/><circle cx="320" cy="100" r="6" style="fill:none;stroke:#ff4a38;animation:pulse 2.6s 1s infinite;transform-box:fill-box;transform-origin:center"/></svg>
+   <div class="txt"><div class="kick">REGION 01</div><h2>Middle East</h2><h3>Conflict, Security and Strategic Dynamics</h3><p>From the Red Sea to the Gulf, comprehensive analysis of a volatile and strategically vital region.</p><a class="btn" href="#middle-east">Explore 6 Projects →</a></div>
+   <div class="legend"><span><i style="background:#e0382c"></i>High Risk</span><span><i style="background:#f0731f"></i>Elevated</span><span><i style="background:#e0b25a"></i>Moderate</span><span><i style="background:#3fbf6a"></i>Low</span></div>
+  </article>
+  <article class="panel region">
+   <svg class="map" viewBox="0 0 640 270" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+    <path class="cn" d="M290 40 L380 30 L450 55 L470 105 L430 140 L380 150 L330 135 L300 95 Z"/>
+    <path class="dots" d="M470 80 L500 70 L520 120 L490 160 L475 130 Z"/><path class="dots" d="M420 160 L480 170 L500 215 L450 240 L410 205 Z"/><path class="dots" d="M520 185 L585 195 L600 230 L540 240 Z"/><path class="dots" d="M330 150 L390 165 L380 205 L335 190 Z"/>
+    <path class="route" d="M330 205 Q420 250 500 190"/><path class="route" d="M440 210 Q480 150 495 95"/><path class="route" d="M440 215 Q540 240 590 215"/><path class="route" d="M330 205 Q400 120 430 100"/>
+    <g fill="#4aa8ff"><circle cx="500" cy="190" r="3"/><circle cx="495" cy="95" r="3"/><circle cx="590" cy="215" r="3"/><circle cx="335" cy="195" r="3"/></g><g fill="#ff4a38"><circle cx="385" cy="95" r="3.5"/><circle cx="440" cy="215" r="3.5"/></g></svg>
+   <div class="txt"><div class="kick">REGION 02</div><h2>Indo-Pacific</h2><h3>China’s Rise and Regional Order</h3><p>Strategic competition, maritime security and the evolving balance of power in the Indo-Pacific.</p><a class="btn" href="#indo-pacific">Explore Insights →</a></div>
+   <div class="legend"><span><i style="background:#e0382c"></i>Strategic Focus</span><span><i style="background:#4aa8ff"></i>Key Partner</span><span style="color:#4aa8ff">– – Trade Route</span></div>
+  </article>
+ </div>
+ <p class="note">Maps are schematic. Figures and headlines load from data/portfolio/stats.json and data/portfolio/news.json, each with source, observation date and update time.</p>
+ <div class="foot">DEEPER INSIGHTS. A MORE INFORMED TOMORROW.</div>
 </section>
-</header>
 
-<div class="stats">
-<div><b data-n="6">0</b><span>Research projects</span></div>
-<div><b data-n="3">0</b><span>Maritime chokepoints tracked</span></div>
-<div><b data-n="4">0</b><span>Core tools: Python, SQL, Power BI, OSINT</span></div>
-<div><b data-n="1">0</b><span>Independent geopolitics podcast</span></div>
-</div>
-
-<div class="tick" aria-label="Monitoring themes"><div id="tk"></div></div>
-
-<section>
-<h2>Research projects</h2>
-<p class="lede">Public data turned into maps and dashboards, one question per project. Hover a card to see its theatre on the map, click to open it.</p>
-<div class="cards" id="cards"></div>
-</section>
-<div class="foot">Schematic map for orientation only. Project data sources are listed on each card.</div>
-</div>
-
+<section id="view-middle-east" class="view"><a class="back btn" href="#home">← Home</a><div class="kick">REGION 01</div><div class="vh">Middle East <em>Research Dashboard</em></div>
+ <div class="panel" style="padding:12px"><svg id="mmap" viewBox="0 0 600 340" style="width:100%;max-height:360px" role="img" aria-label="Schematic Middle East map"></svg></div>
+ <div class="panel" id="sel">Select a marker to see its linked projects.</div>
+ <div class="sec"><span>SIX RESEARCH PROJECTS</span></div><div class="cards big" id="mecards"></div></section>
+<section id="view-indo-pacific" class="view"><a class="back btn" href="#home">← Home</a><div class="kick">REGION 02</div><div class="vh">Indo-Pacific <em>Insights</em></div><p class="sub">China’s Rise and Regional Order</p>
+ <div class="cards big" style="margin-top:20px"><article class="panel card"><div class="det"><h5 style="font:500 18px var(--serif);color:var(--text)">Indo-Pacific research</h5><p style="margin:8px 0">South China Sea, the Quad and maritime security analysis will appear here.</p><span class="pill">In preparation</span></div></article></div></section>
+<section id="view-contact" class="view"><a class="back btn" href="#home">← Home</a><div class="vh">Contact</div><p class="sub" id="contactline">Add your contact details in the CONTACT constant.</p></section>
+</main>
 <script>
-var M={
-suez:{x:112,y:156,t:1,n:'Suez Canal',d:'Chokepoint linking the Mediterranean and Red Sea. Transit volumes are a core indicator of trade risk.'},
-bab:{x:274,y:382,t:1,n:'Bab-el-Mandeb',d:'Southern Red Sea gateway. Focus of Houthi attacks on commercial shipping.'},
-hor:{x:469,y:201,t:1,n:'Strait of Hormuz',d:'Main exit for Gulf oil exports. Central to energy security and US-Iran escalation.'},
-lev:{x:142,y:137,n:'Levant',d:'Active conflict theatre. Tracked through conflict event data and open-source reporting.'},
-yem:{x:315,y:344,n:'Yemen',d:'Conflict and displacement theatre with direct links to Red Sea maritime risk.'},
-syr:{x:195,y:91,n:'Syria',d:'Long-running conflict and one of the largest displacement flows in the region.'},
-irn:{x:420,y:130,n:'Iran',d:'Regional power at the centre of escalation dynamics and hybrid warfare.'},
-gulf:{x:340,y:230,n:'Gulf states',d:'Major arms importers and oil exporters with wide trading partner networks.'}};
-var P=[
-{t:'Red Sea and Suez shipping after the Houthi attacks',s:'IMF PortWatch, Lloyd\u2019s List, US MARAD, ACLED',h:'red-sea.html',c:'#1e4f6b',k:['suez','bab','yem'],w:1},
-{t:'Conflict events by country and month',s:'ACLED',c:'#7e3017',k:['lev','syr','yem','irn']},
-{t:'US-Iran escalation timeline',s:'Own OSINT tracking',h:'us-iran-war.html',c:'#3b4c40',k:['irn','hor']},
-{t:'Arms imports in the Gulf',s:'SIPRI, US State Dept, CENTCOM',h:'gulf-arms-imports.html',c:'#4a3a5e',k:['gulf','hor']},
-{t:'Displacement flows from Syria and Yemen',s:'UNHCR, IOM, OCHA',h:'displacement-flows.html',c:'#5e4e1c',k:['syr','yem']},
-{t:'Gulf oil exports and trading partners',s:'UN Comtrade, EIA',c:'#26394b',k:['gulf','hor','bab'],w:1}];
-var g=document.getElementById('mks'),NS='http://www.w3.org/2000/svg',el={};
-Object.keys(M).forEach(function(id){var m=M[id],e=document.createElementNS(NS,'g');e.setAttribute('class','mk'+(m.t?' t':''));e.setAttribute('tabindex','0');e.setAttribute('role','button');e.setAttribute('aria-label',m.n);
-e.innerHTML='<circle class="ring" cx="'+m.x+'" cy="'+m.y+'" r="8"/><circle class="core" cx="'+m.x+'" cy="'+m.y+'" r="4.5"/><text x="'+(m.x+10)+'" y="'+(m.y+4)+'">'+m.n+'</text>';
-e.onclick=function(){show(id)};e.onkeydown=function(ev){if(ev.key==='Enter'||ev.key===' '){ev.preventDefault();show(id)}};g.appendChild(e);el[id]=e});
-var rd=document.getElementById('read');
-function show(id){var m=M[id];rd.innerHTML='<div class="k">'+(m.t?'Maritime chokepoint':'Flashpoint')+'</div><h3>'+m.n+'</h3><p>'+m.d+'</p>'}
-function lit(keys,on){Object.keys(el).forEach(function(k){el[k].classList.toggle('on',on&&keys.indexOf(k)>-1)})}
-function art(s){return '<svg viewBox="0 0 300 130" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><g stroke="#fff" stroke-opacity=".08"><path d="M0 32H300M0 65H300M0 98H300"/></g>'+s+'</svg>'}
-var bars=[30,38,26,50,44,70,62,88,76,54,66,92].map(function(v,i){return '<rect x="'+(16+i*23)+'" y="'+(120-v)+'" width="14" height="'+v+'" rx="1" fill="'+(v>60?'#e0634a':'#fff')+'" fill-opacity="'+(v>60?'.9':'.35')+'"/>'}).join('');
-var nodes=[[30,92],[80,84],[125,70],[170,58],[215,40],[262,24]].map(function(n,i){return '<path d="M'+n[0]+' 104V'+n[1]+'" stroke="#fff" stroke-opacity=".25"/><circle cx="'+n[0]+'" cy="'+n[1]+'" r="'+(3+i)+'" fill="'+(i>3?'#e0634a':'#e0a43a')+'"/>'}).join('');
-var arms=[230,190,150,120,84].map(function(w,i){return '<rect x="16" y="'+(16+i*21)+'" width="'+w+'" height="11" rx="1" fill="'+(i?'#fff':'#e0a43a')+'" fill-opacity="'+(i?'.4':'.95')+'"/>'}).join('');
-var flows=[[20,14,'#e0a43a'],[50,10,'#fff'],[80,8,'#fff'],[108,5,'#fff']].map(function(f){return '<path d="M24 62C150 62 150 '+f[0]+' 270 '+f[0]+'" fill="none" stroke="'+f[2]+'" stroke-opacity=".4" stroke-width="'+f[1]+'"/><circle cx="276" cy="'+f[0]+'" r="4" fill="'+f[2]+'"/>'}).join('');
-var ART=[
- art('<path d="M0 40L50 36L90 42L120 38L150 90L180 98L215 84L250 92L300 80V130H0Z" fill="#e0a43a" fill-opacity=".16"/><path d="M0 40L50 36L90 42L120 38L150 90L180 98L215 84L250 92L300 80" fill="none" stroke="#e0a43a" stroke-width="2.5"/><path d="M150 0V130" stroke="#e0634a" stroke-dasharray="3 4"/><circle cx="150" cy="90" r="5" fill="#e0634a"/>'),
- art(bars),
- art('<path d="M16 104H284" stroke="#fff" stroke-opacity=".3"/>'+nodes),
- art(arms),
- art('<g fill="none" stroke-width="1.6"><path d="M30 45C120 45 170 20 270 20" stroke="#e0a43a"/><path d="M30 45C120 45 170 50 270 50" stroke="#e0a43a" stroke-opacity=".6"/><path d="M30 90C120 90 170 80 270 80" stroke="#fff" stroke-opacity=".6"/><path d="M30 90C120 90 170 110 270 110" stroke="#fff" stroke-opacity=".4"/></g><circle cx="30" cy="45" r="9" fill="#e0a43a"/><circle cx="30" cy="90" r="9" fill="#fff" fill-opacity=".8"/><g fill="#fff" fill-opacity=".8"><circle cx="270" cy="20" r="4"/><circle cx="270" cy="50" r="4"/><circle cx="270" cy="80" r="4"/><circle cx="270" cy="110" r="4"/></g>'),
- art('<rect x="16" y="34" width="8" height="60" rx="2" fill="#e0a43a"/>'+flows)
-];
-var cs=document.getElementById('cards');
-P.forEach(function(p){var a=document.createElement('a');a.className='card'+(p.w?' wide':'');a.href=p.h||'#';if(!p.h){a.className+=' soon';a.setAttribute('aria-disabled','true');a.onclick=function(e){e.preventDefault()}}a.style.setProperty('--c',p.c);
-a.innerHTML='<div class="art">'+ART[P.indexOf(p)]+'</div><div class="cb"><h3>'+p.t+'</h3><span class="src">'+p.s+'</span><span class="go">'+(p.h?'Open project &#8599;':'In progress')+'</span></div>';
-function on(){lit(p.k,1);a.classList.add('on');rd.innerHTML='<div class="k">Project theatre</div><h3>'+p.t+'</h3><p>Linked markers: '+p.k.map(function(k){return M[k].n}).join(', ')+'.</p>'}
-function off(){lit(p.k,0);a.classList.remove('on')}
-a.onmouseenter=on;a.onfocus=on;a.onmouseleave=off;a.onblur=off;cs.appendChild(a)});
-var T=['Red Sea and Bab-el-Mandeb transit risk','Strait of Hormuz energy security','US-Iran escalation tracking','Hybrid warfare and maritime security','Conflict events and displacement','Gulf arms transfers and power dynamics','Automated OSINT threat tracking'];
-var h=T.map(function(x){return '<i>&#9670;</i>'+x}).join('');document.getElementById('tk').innerHTML=h+h;
-function clk(){document.getElementById('clock').textContent=new Date().toISOString().slice(0,19).replace('T',' ')+' UTC'}clk();setInterval(clk,1000);
-document.querySelectorAll('[data-n]').forEach(function(b){var n=+b.dataset.n,i=0,t=setInterval(function(){i++;b.textContent=i;if(i>=n)clearInterval(t)},180)});
-</script>
-</body>
-</html>
+/* CONFIG: set url to each existing project URL; optional img = images/portfolio-photo path */
+const PROJECTS=[
+{title:"Red Sea & Maritime Security Intelligence",short:"Red Sea & Maritime Security Intelligence",url:"red-sea.html",img:"images/portfolio-p1.jpg",bg:"linear-gradient(#27507a,#0e1e33 60%,#3b2a1c)",sources:"IMF PortWatch, Lloyd's List, US MARAD, ACLED",obj:"Measure how Houthi attacks reshaped Red Sea and Suez shipping.",method:"Time-series analysis of transits against attack events.",marks:["suez","bab","yemen"],bars:[80,76,78,45,34,38,42,36]},
+{title:"Middle East Conflict Event Analysis",short:"Middle East Conflict Event Analysis",url:"",wip:1,img:"images/portfolio-p2.jpg",bg:"linear-gradient(#8a7456,#3c3225)",sources:"ACLED",obj:"Track conflict events by country and month.",method:"Event aggregation and trend comparison.",marks:["syria","iran","yemen"],bars:[30,36,28,50,44,70,60,82]},
+{title:"US–Iran Strategic Escalation Tracker",short:"US–Iran Strategic Escalation Tracker",url:"us-iran-war.html",img:"images/portfolio-p3.jpg",bg:"linear-gradient(90deg,#1c3566,#111a30 50%,#1a4a35)",sources:"Own OSINT tracking",obj:"Chart the escalation timeline between the US and Iran.",method:"Manual and automated OSINT event coding.",marks:["iran","hormuz"],bars:[10,18,30,42,55,70,85,95]},
+{title:"Gulf Defence & Arms Transfer Analysis",short:"Gulf Defence & Arms Transfer Analysis",url:"gulf-arms-imports.html",img:"images/portfolio-p4.jpg",bg:"linear-gradient(#5b86b8,#1b2a40)",sources:"SIPRI, US State Dept, CENTCOM",obj:"Compare arms imports across Gulf states.",method:"SIPRI trend-indicator values and official notifications.",marks:["gulf"],bars:[95,80,66,52,40,30,22,15]},
+{title:"Displacement Flows from Syria and Yemen",short:"Displacement Flows from Syria and Yemen",url:"displacement-flows.html",img:"images/portfolio-p5.jpg",bg:"linear-gradient(#6f8aa6,#2b3a4a 60%,#5a4b3a)",sources:"UNHCR, IOM, OCHA",obj:"Map displacement flows from Syria and Yemen.",method:"Flow aggregation by origin and destination.",marks:["syria","yemen"],bars:[40,60,52,70,64,48,56,44]},
+{title:"Gulf Energy Security & Trade Intelligence",short:"Gulf Energy Security & Trade Intelligence",url:"",wip:1,img:"images/portfolio-p6.jpg",bg:"linear-gradient(#e0902a,#6a3a1a 55%,#1a1008)",sources:"UN Comtrade, EIA",obj:"Show Gulf oil exports and trading partners.",method:"Export-flow analysis by partner.",marks:["hormuz","gulf"],bars:[88,72,64,52,44,36,30,24]}];
+const MARKERS={suez:{n:"Suez Canal",x:130,y:90,t:"chokepoint"},bab:{n:"Bab-el-Mandeb",x:215,y:260,t:"chokepoint"},hormuz:{n:"Strait of Hormuz",x:470,y:190,t:"chokepoint"},syria:{n:"Syria",x:190,y:50,t:"flashpoint"},iran:{n:"Iran",x:440,y:90,t:"flashpoint"},yemen:{n:"Yemen",x:300,y:270,t:"flashpoint"},gulf:{n:"Gulf states",x:380,y:180,t:"region"}};
+const CONTACT="";
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const tick=()=>{const d=new Date();$('#clock').textContent=d.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'})+'  |  '+d.toISOString().slice(11,16)+' UTC'};tick();setInterval(tick,30000);
+function card(p,full){
+ const url=p.url?`href="${esc(p.url)}"`:'';const tag=p.url?'a':'div';
+ const det=full?`<div class="det"><dl><dt>OBJECTIVE</dt><dd>${esc(p.obj)}</dd><dt>METHODOLOGY</dt><dd>${esc(p.method)}</dd><dt>DATA SOURCES</dt><dd>${esc(p.sources)}</dd></dl><div class="bars" aria-hidden="true">${p.bars.map((h,i)=>`<span style="--h:${h}%;animation-delay:${i*60}ms"></span>`).join('')}</div></div>`:'';
+ return `<${tag} class="panel card" ${url} data-m="${p.marks.join(',')}" ${p.url?'':'title="In progress"'}><div class="ph" style="background:${p.bg}"><img src="${esc(p.img)}" alt="" loading="lazy" onerror="this.remove()"></div><div class="row"><h5>${esc(p.short)}</h5>${p.url?'<span class="arr">→</span>':'<span class="pill">In progress</span>'}</div>${det}</${tag}>`}
+$('#mecards').innerHTML=PROJECTS.map(p=>card(p,true)).join('');
+if(CONTACT)$('#contactline').textContent=CONTACT;
+const svg=$('#mmap');svg.innerHTML='<path d="M60 40 L250 20 L520 60 L560 170 L460 250 L330 300 L220 290 L150 180 Z" fill="#1a2437" stroke="#2c3b57"/><path d="M130 90 L215 260 L330 300 L470 190" fill="none" stroke="#e0b25a" stroke-dasharray="5 5" style="animation:dash 6s linear infinite"/>'+Object.entries(MARKERS).map(([k,m])=>`<g class="mk" tabindex="0" role="button" data-k="${k}" aria-label="${m.n}"><circle class="p" cx="${m.x}" cy="${m.y}" r="8"/><circle class="d" cx="${m.x}" cy="${m.y}" r="5"/><text x="${m.x+10}" y="${m.y+4}">${m.n}</text></g>`).join('');
+function pick(k){svg.querySelectorAll('.mk').forEach(g=>g.classList.toggle('sel',g.dataset.k===k));const l=PROJECTS.filter(p=>p.marks.includes(k)).map(p=>p.title);$('#sel').innerHTML=`<b>${esc(MARKERS[k].n)}</b> (${MARKERS[k].t}). Linked: ${esc(l.join('; ')||'none')}. <span class="pill">Schematic, not live data</span>`;document.querySelectorAll('#mecards .card').forEach(c=>c.style.opacity=c.dataset.m.split(',').includes(k)?1:.4)}
+svg.addEventListener('click',e=>{const g=e.target.closest('.mk');if(g)pick(g.dataset.k)});svg.addEventListener('keydown',e=>{if(e.key==='Enter'){const g=e.target.closest('.mk');if(g)pick(g.dataset.k)}});
+async function load(u){const c=new AbortController(),t=setTimeout(()=>c.abort(),8000);try{const r=await fetch(u,{signal:c.signal,cache:'no-cache'});if(!r.ok)throw 0;return await r.json()}finally{clearTimeout(t)}}
+const STATS=[["conflict_events","Conflict Events","⚡"],["displaced","Displaced People","👥"],["maritime_incidents","Maritime Incidents","🚢"],["brent","Brent Oil Price","🛢"],["trade","Regional Trade","📊"]];
+function fmt(s,v){const a=Math.abs(v);let o=a>=1e9?(v/1e9).toFixed(1)+'B':a>=1e6?(v/1e6).toFixed(1)+'M':a>=1e5?Math.round(v).toLocaleString():(+v.toFixed(1)).toLocaleString();return (s.prefix||'')+o+(s.suffix||'')}
+let latestHTML='<small>● LATEST UPDATE</small><p>Headline feed not connected.</p>';
+(async()=>{const box=$('#stats');let d={},ok=false;try{d=await load('data/portfolio/stats.json');ok=true}catch(e){console.warn(e)}
+ const n=[];let items=[];try{items=await load('data/portfolio/news.json')}catch(e){}
+ box.innerHTML=STATS.map(([k,l,ic])=>{const s=d[k];if(!s||typeof s.value!=='number')return `<div class="panel stat off"><span class="ic">${ic}</span><div><strong>No verified data</strong><small>${l}</small><div class="meta">Feed not connected</div></div></div>`;
+  return `<div class="panel stat"><span class="ic">${ic}</span><div><strong data-k="${k}">${reduce?fmt(s,s.value):'0'}</strong><small>${l}</small>${s.change?`<span class="ch">${esc(s.change)}</span>`:''}<div class="meta">${esc(s.source)} · obs ${esc(s.observed)} · upd ${esc(s.updated)} · ${esc(s.status||'dataset')}</div></div></div>`}).join('')+
+  `<div class="panel latest"><div><small>● LATEST UPDATE</small><p>${items[0]?esc(items[0].title):'Headline feed not connected.'}</p>${items[0]?`<a href="${esc(items[0].url)}" target="_blank" rel="noopener">Read More →</a>`:''}</div><div class="th"></div></div>`;
+ if(!reduce)box.querySelectorAll('strong[data-k]').forEach(el=>{const s=d[el.dataset.k],t0=performance.now();(function f(t){const k=Math.min(1,(t-t0)/1200);el.textContent=fmt(s,s.value*(1-Math.pow(1-k,3)));if(k<1)requestAnimationFrame(f)})(t0)});
+ $('#fdot').style.background=ok?'#35c46a':'#e0a02c';$('#ftxt').textContent=ok?'Intelligence Feed connected':'Feed not connected';
+ const run=$('#run');if(Array.isArray(items)&&items.length)run.innerHTML=items.slice(0,30).map(i=>`<a href="${esc(i.url)}" target="_blank" rel="noopener">${esc(i.title)}<time>${esc(i.source)} · ${esc(i.date)}</time></a>`).join('');else{run.style.animation='none';run.textContent='Headline feed not connected. Add data/portfolio/news.json.'}})();
+$('#pp').onclick=function(){const t=$('.track');const p=t.classList.toggle('paused');this.textContent=p?'▶':'❚❚';this.setAttribute('aria-label',p?'Resume headlines':'Pause headlines')};
+$('#pv').onclick=()=>$('.track').scrollBy({left:-300,behavior:'smooth'});$('#nx').onclick=()=>$('.track').scrollBy({left:300,behavior:'smooth'});
+const VIEWS={home:1,'middle-east':1,'indo-pacific':1,contact:1};
+function route(){const h=(location.hash||'#home').slice(1),v=VIEWS[h]?h:'home';document.querySelectorAll('.view').forEach(s=>s.classList.toggle('on',s.id==='view-'+v));document.querySelectorAll('#nav a').forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+(VIEWS[h]?h:'home')));
+ if(!VIEWS[h]&&h!=='home'){const t=document.getElementById(h);if(t)t.scrollIntoView({behavior:reduce?'auto':'smooth'})}else scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+</script></body></html>
