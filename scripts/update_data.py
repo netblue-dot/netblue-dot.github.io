@@ -1,7 +1,7 @@
 """Refreshes data/portfolio/stats.json (Brent, EIA) and data/portfolio/news.json (UN News RSS).
 Keys come from environment variables (GitHub Actions secrets). Nothing is invented:
 if a source fails, its entry is left out and the site shows 'No verified data'."""
-import json, os, urllib.request, urllib.parse, datetime as dt, xml.etree.ElementTree as ET
+import gzip, json, os, urllib.request, urllib.parse, datetime as dt, xml.etree.ElementTree as ET
 
 BROWSER = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
            "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
@@ -12,7 +12,10 @@ def get(url, timeout=20):
         "Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
         "Accept-Language": "en"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
-        return r.read()
+        data = r.read()
+    if data[:2] == b"\x1f\x8b":
+        data = gzip.decompress(data)
+    return data
 
 now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 stats = {}
