@@ -3,8 +3,14 @@ Keys come from environment variables (GitHub Actions secrets). Nothing is invent
 if a source fails, its entry is left out and the site shows 'No verified data'."""
 import json, os, urllib.request, urllib.parse, datetime as dt, xml.etree.ElementTree as ET
 
+BROWSER = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+           "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
+
 def get(url, timeout=20):
-    req = urllib.request.Request(url, headers={"User-Agent": "portfolio-data-bot"})
+    req = urllib.request.Request(url, headers={
+        "User-Agent": BROWSER,
+        "Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+        "Accept-Language": "en"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         return r.read()
 
@@ -26,8 +32,10 @@ if key:
         print("Brent failed:", e)
 
 news = []
+raw = b""
 try:
-    root = ET.fromstring(get("https://news.un.org/feed/subscribe/en/news/region/middle-east/feed/rss.xml"))
+    raw = get("https://news.un.org/feed/subscribe/en/news/region/middle-east/feed/rss.xml")
+    root = ET.fromstring(raw.lstrip(b"\xef\xbb\xbf").strip())
     for it in root.iter("item"):
         d = it.findtext("pubDate", "")
         try: d = dt.datetime.strptime(d[:25], "%a, %d %b %Y %H:%M:%S").strftime("%Y-%m-%d")
@@ -37,6 +45,7 @@ try:
         if len(news) >= 15: break
 except Exception as e:
     print("News failed:", e)
+    print("First bytes received:", raw[:200])
 
 os.makedirs("data/portfolio", exist_ok=True)
 json.dump(stats, open("data/portfolio/stats.json", "w"), indent=2)
