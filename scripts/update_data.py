@@ -1,15 +1,15 @@
-"""Refreshes data/portfolio/stats.json (Brent, EIA) and data/portfolio/news.json (UN News RSS).
-Keys come from environment variables (GitHub Actions secrets). Nothing is invented:
-if a source fails, its entry is left out and the site shows 'No verified data'."""
+"""Refreshes data/portfolio/stats.json and news.json.
+Sources: US EIA (Brent), UNHCR (displacement), World Bank (trade), UN News (headlines).
+Nothing is invented: if a source fails, its entry is left out and the site shows 'No verified data'."""
 import gzip, json, os, urllib.request, urllib.parse, datetime as dt, xml.etree.ElementTree as ET
 
 BROWSER = ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
            "(KHTML, like Gecko) Chrome/124.0 Safari/537.36")
 
-def get(url, timeout=20):
+def get(url, timeout=25):
     req = urllib.request.Request(url, headers={
         "User-Agent": BROWSER,
-        "Accept": "application/rss+xml, application/xml;q=0.9, */*;q=0.8",
+        "Accept": "application/json, application/rss+xml, application/xml;q=0.9, */*;q=0.8",
         "Accept-Language": "en"})
     with urllib.request.urlopen(req, timeout=timeout) as r:
         data = r.read()
@@ -17,9 +17,14 @@ def get(url, timeout=20):
         data = gzip.decompress(data)
     return data
 
+def num(v):
+    try: return float(v)
+    except (TypeError, ValueError): return 0.0
+
 now = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d %H:%M UTC")
 stats = {}
 
+# 1. Brent crude (US EIA)
 key = os.environ.get("EIA_API_KEY")
 if key:
     try:
@@ -34,6 +39,40 @@ if key:
     except Exception as e:
         print("Brent failed:", e)
 
+# 2. Displaced people originating from Syria and Yemen (UNHCR)
+try:
+    for year in (2025, 2024, 2023):
+        q = urllib.parse.urlencode([("cf_type", "ISO"), ("coo", "SYR,YEM"),
+                                    ("coo_all", "true"), ("year[]", str(year))])
+        items = json.loads(get("https://api.unhcr.org/population/v1/population/?" + q)).get("items", [])
+        if items:
+            total = sum(num(i.get(k)) for i in items
+                        for k in ("refugees", "asylum_seekers", "idps", "oip"))
+            if total > 0:
+                stats["displaced"] = {"value": total,
+                    "source": "UNHCR, refugees, asylum-seekers, IDPs and others needing protection, originating from Syria and Yemen",
+                    "observed": "end of %d" % year, "updated": now, "status": "annual dataset"}
+                break
+    if "displaced" not in stats:
+        print("Displaced: no data returned")
+except Exception as e:
+    print("Displaced failed:", e)
+
+# 3. Regional trade (World Bank: trade as % of GDP, Middle East & North Africa)
+for code in ("MEA", "MNA"):
+    try:
+        url = ("https://api.worldbank.org/v2/country/%s/indicator/NE.TRD.GNFS.ZS"
+               "?format=json&mrnev=1&per_page=1" % code)
+        row = json.loads(get(url))[1][0]
+        if row.get("value") is not None:
+            stats["trade"] = {"value": float(row["value"]), "suffix": "% of GDP",
+                "source": "World Bank, trade in goods and services, Middle East & North Africa",
+                "observed": str(row["date"]), "updated": now, "status": "annual dataset"}
+            break
+    except Exception as e:
+        print("Trade failed (%s):" % code, e)
+
+# 4. Headlines (UN News, Middle East)
 news = []
 raw = b""
 try:
