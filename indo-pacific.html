@@ -48,18 +48,22 @@ tr.n{animation:in .5s}@keyframes in{from{opacity:0;transform:translateY(6px)}}
 .det{margin-top:10px;font-size:13px;min-height:20px}.det a,.note a,.cap a,.tw a{color:var(--blue)}
 a.kpi{text-decoration:none;color:inherit;display:block;transition:.2s}a.kpi:hover{border-color:var(--gold);transform:translateY(-3px)}
 .bar{cursor:pointer}.bar:hover i{filter:brightness(1.35)}.q{cursor:pointer}
+#nw{position:fixed;inset:0;background:rgba(5,7,11,.97);overflow:auto;display:none;z-index:10;padding-top:env(safe-area-inset-top,0px)}#nw.on{display:block}
+.nr{border-bottom:1px solid #222733;padding:14px 0}.nr b{display:block;font:600 17px "Playfair Display",Georgia,serif;margin-bottom:4px}.nr span{font-size:12px;color:var(--mut)}.nr a{color:var(--blue)}
 @media(max-width:640px){h1{font-size:40px}.map{opacity:.35;width:80%}}
 @media(prefers-reduced-motion:reduce){.q{animation:none;position:static;display:block;margin:6px}}
 </style></head><body><div class="wrap">
-<div class="hero">
-<svg class="map" viewBox="0 0 500 330" aria-hidden="true"><polygon points="20,40 140,10 240,60 270,140 230,190 120,170 30,110" fill="#a02a25" stroke="#ff6a5c" stroke-width="2"/><circle cx="130" cy="95" r="5" fill="var(--red)"/>
-<g fill="#2a2210" stroke="#8a6d2b"><polygon points="290,70 320,60 345,130 310,170"/><polygon points="70,200 150,215 140,250 60,260"/><polygon points="190,230 270,240 300,300 220,320 180,270"/><polygon points="340,260 420,270 400,310 350,300"/></g>
-<g fill="none" stroke="var(--blue)" stroke-dasharray="5 4"><path d="M60,260 Q220,330 410,280"/><path d="M60,260 Q110,140 200,90"/><path d="M215,280 Q300,270 330,250"/></g>
-<circle cx="215" cy="285" r="5" fill="var(--red)"/><circle cx="60" cy="260" r="5" fill="var(--blue)"/><circle cx="330" cy="250" r="5" fill="var(--blue)"/><circle cx="305" cy="75" r="5" fill="var(--blue)"/></svg>
-<div class="tag">REGION 02</div><h1>Indo-Pacific</h1><div class="sub">China’s Rise and Regional Order</div>
-<p>Strategic competition, maritime security and the evolving balance of power in the Indo-Pacific.</p>
-<button class="btn" id="open">Explore Insights →</button></div></div>
+<div class="hero" id="mal"><div class="tag">STRAIT OF MALACCA · LIVE SCHEMATIC</div><h1 style="font-size:42px">Ships crossing the Malacca Strait</h1><div class="sub">The world’s largest oil transit chokepoint</div>
+<svg id="ms" viewBox="0 0 600 260" style="width:100%;height:auto;background:#0b0f17;border-radius:12px;margin-top:16px;cursor:pointer" role="img" aria-label="Animated schematic of ships crossing the Strait of Malacca. Click for verified news.">
+<g fill="#2a2210" stroke="#8a6d2b"><polygon points="0,0 600,0 600,170 540,170 420,130 300,95 150,50 0,20"/><polygon points="0,110 150,135 300,175 420,215 520,260 0,260"/></g>
+<g fill="#9aa0ab" font-size="11" font-family="Inter,sans-serif"><text x="230" y="40">MALAY PENINSULA</text><text x="120" y="215">SUMATRA</text><text x="8" y="96">Andaman Sea</text><text x="594" y="240" text-anchor="end">South China Sea</text><text x="468" y="160" fill="#ece8df">Singapore</text></g>
+<g id="sh"></g>
+<circle cx="548" cy="182" r="4" fill="#e8493c"><animate attributeName="r" values="4;18" dur="2s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0" dur="2s" repeatCount="indefinite"/></circle></svg>
+<div class="kpis" style="margin-top:12px"><a class="kpi" href="https://www.kpler.com/zh/blog/from-hormuz-to-malacca-the-next-chokepoint-risk" target="_blank" rel="noopener"><b id="cnt">0</b><span>Estimated transits today. Kpler average is about 440 a day ↗</span></a><a class="kpi" href="https://www.thejakartapost.com/world/2026/04/24/hormuz-crisis-throws-spotlight-on-the-malacca-strait" target="_blank" rel="noopener"><b>102,500</b><span>Ships in 2025, up from about 94,300 in 2024 ↗</span></a><a class="kpi" href="https://engineeringnews.co.za/article/hormuz-crisis-throws-spotlight-on-worlds-largest-chokepoint-the-malacca-strait-2026-04-23" target="_blank" rel="noopener"><b>23.2M</b><span>Barrels of oil a day, H1 2025, 29% of maritime flows ↗</span></a><a class="kpi" href="https://engineeringnews.co.za/article/hormuz-crisis-throws-spotlight-on-worlds-largest-chokepoint-the-malacca-strait-2026-04-23" target="_blank" rel="noopener"><b>2.7 km</b><span>Width at the narrowest point, Phillips Channel ↗</span></a></div>
+<div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px"><button class="btn" id="vn">Verified news →</button><button class="btn" id="open" style="border-color:#5a4a22">Explore Insights →</button></div>
+<div class="cap">Schematic. Ship positions are simulated and are not AIS data. The counter estimates today’s transits from the Kpler daily average. Gold: tankers. Blue: container ships. Grey: bulk carriers. White: gas carriers. Click the map for verified news.</div></div></div>
 
+<div id="nw"><button class="btn x" id="nx2">Close ✕</button><div class="wrap"><h2 style="font-size:30px">Strait of Malacca: verified news</h2><p class="note">Each item links to the original report. Items come from search results, so open the link to confirm details.</p><div id="nl"></div></div></div>
 <div id="ov"><button class="btn x" id="close">Close ✕</button><div class="wrap">
 <h2 style="font-size:32px">Indo-Pacific Insights</h2>
 <p class="note">Window: Nov 2025 to Nov 2026. Figures come from the sources listed below. Charts animate for display only. Values stay fixed to the cited data. Every item links to its source. ✓ marks a page I re-opened and checked on 20 Nov 2026. Other items come from search results, so open the link to confirm. Click any bar, slice or point for its source.</p>
@@ -170,4 +174,19 @@ document.querySelectorAll("#lt button").forEach(b=>b.onclick=()=>{b.classList.to
 $("open").onclick=()=>{$("ov").classList.add("on");fly();kp();bars();pie("US vs China military, 2024");tbl();extra()};
 ["click","mouseover"].forEach(ev=>$("ov").addEventListener(ev,e=>{const t=e.target.closest&&e.target.closest("[data-t]");if(!t)return;const bx=t.closest(".box"),d=bx&&bx.querySelector(".det");if(d)d.innerHTML=t.dataset.t+` <a href="${t.dataset.u}" target="_blank" rel="noopener">Open source ↗</a>`}));
 $("close").onclick=()=>{$("ov").classList.remove("on");timers.forEach(clearInterval);timers=[]};
+const SH=["#d9a93f","#4aa3ff","#9aa0ab","#ece8df"],SN=["Tanker","Container ship","Bulk carrier","Gas carrier"];
+(function(){const E="M-10,47 L150,84 L300,127 L420,164 L560,200",W="M560,218 L420,182 L300,145 L150,102 L-10,65";let h="";
+for(let i=0;i<16;i++){const e=i%2==0,k=i>>1,dur=e?28:30,t=k%4;h+=`<g><title>${SN[t]}, ${e?"eastbound":"westbound"} (simulated)</title><polygon points="-7,-3 6,-3 10,0 6,3 -7,3" fill="${SH[t]}"/><animateMotion dur="${dur}s" begin="-${(k*dur/8).toFixed(1)}s" repeatCount="indefinite" rotate="auto" path="${e?E:W}"/></g>`}
+$("sh").innerHTML=h;
+const upd=()=>{const d=new Date(),s=d.getUTCHours()*3600+d.getUTCMinutes()*60+d.getUTCSeconds();$("cnt").textContent=Math.floor(440*s/86400).toLocaleString()};upd();setInterval(upd,2000)})();
+const N=[["2026-08-25","Indonesia, Malaysia and Singapore reaffirm open straits as Hormuz disruption raises attention","S&P Global","https://www.spglobal.com/energy/en/news-research/latest-news/crude-oil/082526-indonesia-malaysia-singapore-reaffirm-open-malacca-singapore-straits-amid-risks"],
+["2026-04-24","Hormuz crisis puts Malacca in focus. 102,500 ships transited in 2025","The Jakarta Post","https://www.thejakartapost.com/world/2026/04/24/hormuz-crisis-throws-spotlight-on-the-malacca-strait"],
+["2026-04-23","Malacca carried 23.2 million barrels a day in H1 2025, ahead of Hormuz","Engineering News (Reuters)","https://engineeringnews.co.za/article/hormuz-crisis-throws-spotlight-on-worlds-largest-chokepoint-the-malacca-strait-2026-04-23"],
+["2026-04-23","Malaysia flags illegal ship-to-ship oil transfers in the strait","Malay Mail","https://www.malaymail.com/amp/news/malaysia/2026/04/23/could-the-strait-of-malacca-be-next-what-hormuzs-closure-means-for-the-worlds-busiest-chokepoint/217417"],
+["2026-04-21","Singapore says transit rights through international straits are not negotiable","S&P Global","https://www.spglobal.com/energy/en/news-research/latest-news/refined-products/042126-singapore-says-ships-transit-rights-through-international-straits-not-negotiable"],
+["2026 (H1)","Hormuz conflict had limited effect on Malacca traffic. Iran-flagged transits fell 89% in May","Kuehne+Nagel","https://mykn.kuehne-nagel.com/news/article/littoral-states-to-keep-malacca-and-singapore"],
+["2026 (Apr)","Kpler: about 440 commercial vessels cross the strait each day","Kpler","https://www.kpler.com/zh/blog/from-hormuz-to-malacca-the-next-chokepoint-risk"],
+["2026","Littoral states pledge to keep the straits “free, open and safe”","Arab News","https://www.arabnews.com/node/2655902/world"]];
+$("nl").innerHTML=N.map(n=>`<div class="nr"><b>${n[1]}</b><span>${n[0]} · ${n[2]} · </span>${LK(n[3],0,"Read original")}</div>`).join("");
+$("ms").onclick=$("vn").onclick=()=>$("nw").classList.add("on");$("nx2").onclick=()=>$("nw").classList.remove("on");
 </script></body></html>
