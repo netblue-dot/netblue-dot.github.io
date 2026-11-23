@@ -5,14 +5,14 @@
     "suffix": "/bbl",
     "source": "US EIA, Europe Brent spot price",
     "observed": "2026-11-17",
-    "updated": "2026-11-22 18:30 UTC",
+    "updated": "2026-11-23 00:38 UTC",
     "status": "delayed dataset"
   },
   "displaced": {
     "value": 39104920.0,
     "source": "UNHCR, refugees, asylum-seekers, IDPs and others needing protection, originating from Syria and Yemen",
     "observed": "end of 2025",
-    "updated": "2026-11-22 18:30 UTC",
+    "updated": "2026-11-23 00:38 UTC",
     "status": "annual dataset"
   },
   "trade": {
@@ -20,7 +20,7 @@
     "suffix": "% of GDP",
     "source": "World Bank, trade in goods and services, Middle East & North Africa",
     "observed": "2025",
-    "updated": "2026-11-22 18:30 UTC",
+    "updated": "2026-11-23 00:38 UTC",
     "status": "annual dataset"
   }
 }
