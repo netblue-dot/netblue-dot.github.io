@@ -22,5 +22,12 @@
     "observed": "2025",
     "updated": "2026-11-24 00:41 UTC",
     "status": "annual dataset"
+  },
+  "maritime_incidents": {
+    "value": 51,
+    "source": "ICC IMB Piracy Reporting Centre, global piracy and armed robbery incidents against ships",
+    "observed": "Jan–Sep 2026",
+    "updated": "2026-11-24 10:00 UTC",
+    "status": "quarterly dataset"
   }
 }
