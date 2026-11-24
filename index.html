@@ -79,6 +79,13 @@ h1{font:600 clamp(36px,4.7vw,66px)/1.08 var(--serif);margin:26px 0 14px;text-sha
 .back{margin:0 0 6px}.pill{font:10px var(--mono);padding:2px 8px;border:1px solid var(--line);border-radius:4px;color:var(--mute)}
 .vh{font:600 clamp(30px,4vw,52px)/1.1 var(--serif);margin:14px 0 8px}.vh em{color:var(--gold);font-style:normal}
 #sel{padding:12px 16px;margin:10px 0;color:var(--mute)}
+/* contact page */
+.cbox{max-width:520px;padding:26px;margin-top:20px}
+.crow{display:flex;gap:16px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}
+.crow .ic{font-size:22px;color:var(--gold);width:28px;text-align:center}
+.crow small{display:block;font:10.5px var(--mono);letter-spacing:.2em;color:var(--mute);margin-bottom:3px}
+.crow strong{font:500 20px var(--serif)}
+.crow a{font-size:16px}.crow a:hover{color:var(--gold)}
 @media(max-width:1250px){.stats{grid-template-columns:repeat(3,1fr)}.cards{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:820px){aside{position:sticky;width:auto;height:auto;flex-direction:row;overflow-x:auto}.logo,.tag,.compass{display:none}nav{display:flex}nav a{padding:12px 14px;white-space:nowrap;border-left:0;border-bottom:3px solid transparent}nav a.on{border-bottom-color:var(--gold)}main{margin:0;padding:18px 14px}.stats{grid-template-columns:1fr 1fr}.latest{grid-column:span 2}.regions{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.sub s{display:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
@@ -132,7 +139,12 @@ h1{font:600 clamp(36px,4.7vw,66px)/1.08 var(--serif);margin:26px 0 14px;text-sha
  <div class="sec"><span>SIX RESEARCH PROJECTS</span></div><div class="cards big" id="mecards"></div></section>
 <section id="view-indo-pacific" class="view"><a class="back btn" href="#home">← Home</a><div class="kick">REGION 02</div><div class="vh">Indo-Pacific <em>Insights</em></div><p class="sub">China’s Rise and Regional Order</p>
  <div class="cards big" style="margin-top:20px"><a class="panel card" href="indo-pacific.html"><div class="ph" style="background:linear-gradient(#7a2a25,#1a0f10)"></div><div class="row"><h5>Indo-Pacific Insights Dashboard</h5><span class="arr">→</span></div><div class="det"><p>Quad engagement, China defence and trade data, with a source link on every figure.</p></div></a></div></section>
-<section id="view-contact" class="view"><a class="back btn" href="#home">← Home</a><div class="vh">Contact</div><p class="sub" id="contactline">Add your contact details in the CONTACT constant.</p></section>
+<section id="view-contact" class="view"><a class="back btn" href="#home">← Home</a><div class="kick">GET IN TOUCH</div><div class="vh">Contact <em>Details</em></div>
+ <div class="panel cbox">
+  <div class="crow"><span class="ic">♟</span><div><small>NAME</small><strong>Reetama Ghosh</strong><div style="color:var(--mute);font-size:12.5px">Geopolitical Risk &amp; OSINT Analyst</div></div></div>
+  <div class="crow"><span class="ic">✉</span><div><small>EMAIL</small><a href="mailto:reetamaghosh466@gmail.com">reetamaghosh466@gmail.com</a></div></div>
+  <a class="btn" href="mailto:reetamaghosh466@gmail.com?subject=Portfolio%20enquiry">Send an email →</a>
+ </div></section>
 </main>
 <script>
 /* CONFIG: set url to each existing project URL; optional img = images/portfolio-photo path */
@@ -144,7 +156,6 @@ const PROJECTS=[
 {title:"Displacement Flows from Syria and Yemen",short:"Displacement Flows from Syria and Yemen",url:"displacement-flows.html",img:"images/portfolio-p5.jpg",bg:"linear-gradient(#6f8aa6,#2b3a4a 60%,#5a4b3a)",sources:"UNHCR, IOM, OCHA",obj:"Map displacement flows from Syria and Yemen.",method:"Flow aggregation by origin and destination.",marks:["syria","yemen"],bars:[40,60,52,70,64,48,56,44]},
 {title:"Gulf Energy Security & Trade Intelligence",short:"Gulf Energy Security & Trade Intelligence",url:"",wip:1,img:"images/portfolio-p6.jpg",bg:"linear-gradient(#e0902a,#6a3a1a 55%,#1a1008)",sources:"UN Comtrade, EIA",obj:"Show Gulf oil exports and trading partners.",method:"Export-flow analysis by partner.",marks:["hormuz","gulf"],bars:[88,72,64,52,44,36,30,24]}];
 const MARKERS={suez:{n:"Suez Canal",x:130,y:90,t:"chokepoint"},bab:{n:"Bab-el-Mandeb",x:215,y:260,t:"chokepoint"},hormuz:{n:"Strait of Hormuz",x:470,y:190,t:"chokepoint"},syria:{n:"Syria",x:190,y:50,t:"flashpoint"},iran:{n:"Iran",x:440,y:90,t:"flashpoint"},yemen:{n:"Yemen",x:300,y:270,t:"flashpoint"},gulf:{n:"Gulf states",x:380,y:180,t:"region"}};
-const CONTACT="";
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
 const tick=()=>{const d=new Date();$('#clock').textContent=d.toLocaleDateString('en-GB',{weekday:'short',day:'2-digit',month:'short',year:'numeric',timeZone:'UTC'})+'  |  '+d.toISOString().slice(11,16)+' UTC'};tick();setInterval(tick,30000);
@@ -153,7 +164,6 @@ function card(p,full){
  const det=full?`<div class="det"><dl><dt>OBJECTIVE</dt><dd>${esc(p.obj)}</dd><dt>METHODOLOGY</dt><dd>${esc(p.method)}</dd><dt>DATA SOURCES</dt><dd>${esc(p.sources)}</dd></dl><div class="bars" aria-hidden="true">${p.bars.map((h,i)=>`<span style="--h:${h}%;animation-delay:${i*60}ms"></span>`).join('')}</div></div>`:'';
  return `<${tag} class="panel card" ${url} data-m="${p.marks.join(',')}" ${p.url?'':'title="In progress"'}><div class="ph" style="background:${p.bg}"><img src="${esc(p.img)}" alt="" loading="lazy" onerror="this.remove()"></div><div class="row"><h5>${esc(p.short)}</h5>${p.url?'<span class="arr">→</span>':'<span class="pill">In progress</span>'}</div>${det}</${tag}>`}
 $('#mecards').innerHTML=PROJECTS.map(p=>card(p,true)).join('');
-if(CONTACT)$('#contactline').textContent=CONTACT;
 const svg=$('#mmap');svg.innerHTML='<path d="M60 40 L250 20 L520 60 L560 170 L460 250 L330 300 L220 290 L150 180 Z" fill="#1a2437" stroke="#2c3b57"/><path d="M130 90 L215 260 L330 300 L470 190" fill="none" stroke="#e0b25a" stroke-dasharray="5 5" style="animation:dash 6s linear infinite"/>'+Object.entries(MARKERS).map(([k,m])=>`<g class="mk" tabindex="0" role="button" data-k="${k}" aria-label="${m.n}"><circle class="p" cx="${m.x}" cy="${m.y}" r="8"/><circle class="d" cx="${m.x}" cy="${m.y}" r="5"/><text x="${m.x+10}" y="${m.y+4}">${m.n}</text></g>`).join('');
 function pick(k){svg.querySelectorAll('.mk').forEach(g=>g.classList.toggle('sel',g.dataset.k===k));const l=PROJECTS.filter(p=>p.marks.includes(k)).map(p=>p.title);$('#sel').innerHTML=`<b>${esc(MARKERS[k].n)}</b> (${MARKERS[k].t}). Linked: ${esc(l.join('; ')||'none')}. <span class="pill">Schematic, not live data</span>`;document.querySelectorAll('#mecards .card').forEach(c=>c.style.opacity=c.dataset.m.split(',').includes(k)?1:.4)}
 svg.addEventListener('click',e=>{const g=e.target.closest('.mk');if(g)pick(g.dataset.k)});svg.addEventListener('keydown',e=>{if(e.key==='Enter'){const g=e.target.closest('.mk');if(g)pick(g.dataset.k)}});
