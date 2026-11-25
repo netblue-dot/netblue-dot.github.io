@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Indo-Pacific Risk Index</title>
+<style>
+:root{color-scheme:dark;--bg:#080c14;--pn:#0d1320;--ln:#1d2638;--tx:#d9dee8;--mu:#8a94a8;--gd:#e3b341;--tw:#e3b341;--sc:#4aa3ff;--kr:#e5736b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 Inter,system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 16px 48px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
+.tabs a{padding:9px 18px;border:1px solid var(--ln);border-radius:999px;color:var(--gd);text-decoration:none;font-size:14px}
+.tabs a.on{border-color:var(--gd);background:#161207}
+h1{font:600 30px Georgia,serif;color:var(--gd);margin:0 0 4px}
+.sub{color:var(--mu);margin:0 0 20px}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px}
+.card{background:var(--pn);border:1px solid var(--ln);border-radius:14px;padding:14px 16px;cursor:pointer;transition:.25s}
+.card:hover{transform:translateY(-2px)}.card.on{border-color:var(--c);box-shadow:0 0 0 1px var(--c) inset}
+.card b{font:600 34px Georgia,serif;color:var(--c)}.card span{display:block;color:var(--mu);font-size:13px}
+.lvl{font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+.grid{display:grid;grid-template-columns:1.1fr 1fr;gap:12px;margin-bottom:12px}
+.box{background:var(--pn);border:1px solid var(--ln);border-radius:14px;padding:14px;min-width:0}
+.box h3{margin:0 0 8px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gd)}
+svg{display:block;width:100%;height:auto}
+.land{fill:#2a2418;stroke:#6b5a24;stroke-width:.8}.sea{fill:#0a1020}
+.lbl{fill:#9aa4b8;font-size:10px}.lane{stroke-dasharray:6 5;animation:fl 1.2s linear infinite;fill:none}
+@keyframes fl{to{stroke-dashoffset:-22}}
+.pulse{animation:pl 2s ease-out infinite;transform-box:fill-box;transform-origin:center}
+@keyframes pl{0%{transform:scale(.6);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.zone{cursor:pointer}.pt{cursor:pointer}
+.bar{margin:9px 0}.bar div:first-child{display:flex;justify-content:space-between;font-size:13px;color:var(--mu)}
+.trk{height:8px;background:#141b2b;border-radius:6px;overflow:hidden;margin-top:4px}
+.fill{height:100%;width:0;border-radius:6px;background:var(--c);transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.stats div{border:1px solid var(--ln);border-radius:10px;padding:8px 10px;font-size:12.5px;color:var(--mu)}
+.stats b{display:block;font:600 22px Georgia,serif;color:var(--c)}
+#det{min-height:84px;border-left:3px solid var(--c);padding:6px 12px;margin-top:8px;color:var(--tx);font-size:14px}
+.flt{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.flt button{background:none;border:1px solid var(--ln);color:var(--mu);border-radius:999px;padding:5px 14px;cursor:pointer;font:inherit;font-size:13px}
+.flt button.on{color:var(--gd);border-color:var(--gd)}
+.item{border:1px solid var(--ln);border-radius:12px;padding:11px 14px;margin-bottom:8px;animation:in .5s both}
+.item.hl{border-color:var(--gd);background:#141007}
+@keyframes in{from{opacity:0;transform:translateY(8px)}}
+.item small{color:var(--mu)}.tag{display:inline-block;font-size:11px;padding:1px 8px;border-radius:999px;border:1px solid var(--ln);margin-right:6px}
+.item a{color:var(--gd);text-decoration:none}
+.note{color:var(--mu);font-size:12.5px;margin-top:16px}
+.rv{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.2,.8,.2,1),transform .7s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+.sg{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.pg,.sk{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.src,.pub,.sk div{border:1px solid var(--ln);border-radius:12px;padding:13px;background:#0a101c}
+.src h4{margin:0 0 6px;font-size:14px}.src .meta{display:flex;justify-content:space-between;font-size:12px;color:var(--mu);margin:6px 0}
+.rel{height:6px;background:#141b2b;border-radius:6px;overflow:hidden;margin-top:8px}.rel i{display:block;height:100%;width:0;background:linear-gradient(90deg,#8a6d1e,var(--gd));transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.pub{transition:border-color .25s,transform .25s}.pub:hover{border-color:var(--gd);transform:translateY(-3px)}.pub.big{grid-column:1/-1;border-color:#4a3d14;background:linear-gradient(135deg,#15110a,#0a101c)}
+.pub small{color:var(--gd);letter-spacing:.1em;text-transform:uppercase;font-size:11px}.pub h4{margin:4px 0;font:600 18px Georgia,serif}.pub p{margin:0 0 10px;color:var(--mu);font-size:13.5px}
+.btn{display:inline-block;border:1px solid var(--gd);color:var(--gd);border-radius:999px;padding:3px 14px;font-size:12.5px;text-decoration:none}.btn.off{border-color:var(--ln);color:var(--mu)}
+.sk div{transition:border-color .25s,box-shadow .25s}.sk div:hover{border-color:var(--gd);box-shadow:0 0 18px #e3b34122}
+.ft{margin-top:18px;padding:16px;border-top:1px solid var(--gd);text-align:center}
+@media(max-width:820px){.cards,.grid{grid-template-columns:1fr}.sg,.pg,.sk{grid-template-columns:1fr 1fr}}@media(max-width:520px){.sg,.pg,.sk{grid-template-columns:1fr}}
+</style></head><body><div class="wrap">
+<div class="tabs"><a href="index.html">Strait of Malacca</a><a href="index.html#insights">Explore Insights</a><a class="on" href="#">Indo-Pacific Risk Index</a></div>
+<h1>Indo-Pacific Risk Index</h1>
+<p class="sub">Taiwan Strait, South China Sea, Korean Peninsula. Data to 25 November 2026. Click a zone, marker or point.</p>
+<div class="cards" id="cards"></div>
+<div class="grid">
+<div class="box"><h3>Theatre map</h3>
+<svg id="map" viewBox="0 0 560 560"></svg></div>
+<div class="box" id="side"></div></div>
+<div class="box" style="margin-bottom:12px"><h3>Verified incident timeline, Jun to Nov 2026</h3>
+<svg id="tl" viewBox="0 0 1000 250"></svg><div id="det"></div></div>
+<div class="box"><h3>Verified sources</h3><div class="flt" id="flt"></div><div id="feed"></div></div>
+<div class="box rv" style="margin-top:12px"><h3>Source registry</h3><div class="sg" id="sg"></div><p class="note">Reliability is an analyst score for source type and track record. Last update is the date of the latest item cited from that source.</p></div>
+<div class="box rv" style="margin-top:12px"><h3>Research and publications</h3><div class="pg" id="pg"></div></div>
+<div class="box rv" style="margin-top:12px"><h3>Skills panel</h3><div class="sk" id="sk"></div></div>
+<div class="ft rv">All assessments utilize publicly available information from verified government, military, think tank, and media sources.</div>
+<p class="note">Method. Events and figures come from the linked government, think tank and news sources. Map outlines are simplified from approximate coordinates and are not survey grade. Component scores (0 to 100) are analyst judgments, not source data. The composite is their mean. Government items are official statements or daily reports published by the agency, relayed by the outlet linked.</p>
+</div>
+<script>
+const Z={tw:{n:"Taiwan Strait",c:"#e3b341",ll:[119.6,24.3],s:{m:72,g:80,d:60,e:70},
+st:[["4","PLA aircraft, 8 Nov (MND)"],["49","Peak sorties, 3 Nov, 2026 high"],["244","Chinese vessels near Taiwan in Oct"],["6","PLAN ships, 8 Nov"]]},
+sc:{n:"South China Sea",c:"#4aa3ff",ll:[114.5,13],s:{m:65,g:85,d:70,e:78},
+st:[["5","Verified clashes, Jun to Sep"],["60 nm","Block distance, 25 Sep"],["24+ nm","China’s claimed control zone"],["26","Chinese vessels, 9 to 15 Jun"]]},
+kr:{n:"Korean Peninsula",c:"#e5736b",ll:[127.2,38],s:{m:85,g:60,d:65,e:74},
+st:[["17","Ballistic events in 2026 (Yonhap, 29 Oct)"],["4","Launches in a month to 4 Nov"],["900 km","Longest flight this year"],["700 km","IRBM drill, 3 Oct"]]}};
+const K={m:"Military activity",g:"Gray zone and coast guard",d:"Diplomatic stress",e:"Escalation risk"};
+const comp=z=>Math.round(Object.values(Z[z].s).reduce((a,b)=>a+b,0)/4);
+const lvl=v=>v>=80?"Severe":v>=70?"High":v>=55?"Elevated":"Moderate";
+const E=[ // date,zone,type,sev,title,detail,source,url
+["2026-06-17","sc","think","3","Collision near Second Thomas Shoal","A Chinese vessel and a Philippine supply ship collided. Each side blamed the other.","CFR Global Conflict Tracker","https://www.cfr.org/global-conflict-tracker/conflict/territorial-disputes-south-china-sea"],
+["2026-07-20","sc","news","4","Sailor struck near Second Thomas Shoal","The Philippine military said China Coast Guard personnel hit a Filipino sailor with a baton.","Arab News, AFP","https://www.arabnews.com/node/2651987/world"],
+["2026-07-23","sc","news","3","Water cannon at Scarborough Shoal","Manila said the China Coast Guard fired a water cannon at a fisheries vessel. A second day followed.","Al Jazeera, AFP","https://www.aljazeera.com/amp/news/2026/7/24/philippines-accuses-china-of-using-water-cannon-on-vessels-for-second-day"],
+["2026-09-18","sc","news","4","Philippine boat rammed on refuelling mission","Manila said the China Coast Guard rammed a Philippine boat.","Reuters timeline","https://www.internazionale.it/ultime-notizie-reuters/2026/11/15/rift-deepens-between-the-philippines-china-over-south-china-sea"],
+["2026-09-20","kr","news","3","North Korea fires ballistic missile and projectile","Seoul held an emergency security council meeting and urged a halt to UN-banned launches.","Associated Press","https://www.ajc.com/news/2026/09/south-korea-says-north-korea-launched-a-ballistic-missile-and-another-projectile-toward-the-sea/"],
+["2026-09-25","sc","gov","4","China blocks Second Thomas resupply","The Philippine Coast Guard said Chinese coast guard and navy ships obstructed a sustainment mission.","Philippine Coast Guard, via Philstar","https://interaksyon.philstar.com/?p=319737"],
+["2026-09-25","sc","news","4","Block occurred 60 nm from the shoal","Chinese cutters and warships stopped the mission far from the feature.","USNI News","https://news.usni.org/2026/09/25/chinese-cutters-warships-block-philippine-resupply-mission-to-second-thomas-shoal?source=pmbug.com"],
+["2026-09-28","sc","news","3","China extends claimed control beyond 24 nm","Chinese state media said control around Scarborough and Second Thomas exceeds 24 nm. Boarding drills followed.","USNI News","https://news.usni.org/?p=125527"],
+["2026-10-03","kr","gov","4","Hypersonic IRBM drill","South Korea’s military said the missile flew more than 700 km toward the east coast sea.","Reuters via Business Standard","https://www.business-standard.com/world-news/north-korea-says-it-conducted-intermediate-range-strategic-missile-drill-126100400044_1.html"],
+["2026-10-12","kr","news","3","Multiple ballistic missiles toward the sea","South Korea’s Joint Chiefs called it a show of force after Seoul tested a hypersonic weapon.","Al Jazeera","https://www.aljazeera.com/news/2026/10/12/north-korea-fires-multiple-ballistic-missiles-towards-the-sea"],
+["2026-10-19","tw","gov","2","5 aircraft, 6 PLAN, 9 official ships","Taiwan’s defence ministry said 3 of 5 sorties crossed the median line.","Taiwan MND, via ANI","https://www.newkerala.com/news/a/taiwan-detects-pla-aircraft-plan-vessels-operating-around-540.htm"],
+["2026-10-29","kr","news","4","Ten missiles toward the Sea of Japan","Yonhap counted the 17th ballistic event of 2026.","Latin Times, citing Yonhap","https://www.latintimes.com/north-korea-fires-missiles-sea-japan-600679"],
+["2026-10-31","kr","news","3","Tactical ballistic missile dispersal warhead test","North Korean state media reported the test on 1 November.","SBS News","https://news.sbs.co.kr/english/endPagePrintPopup.do?news_id=N1008830195"],
+["2026-11-03","tw","news","4","49 PLA sorties, highest single day this year","Analysts at INDSR described a quiet exercise with no declared drills.","SCMP and Taipei Times","https://www.scmp.com/news/china/military/article/3373249/taiwan-flags-massive-pla-naval-mobilisation-spike-air-sorties"],
+["2026-11-03","tw","gov","3","Coast guard harassment off eastern coast","Taiwan accused the China Coast Guard of asserting fictional jurisdiction. Its coast guard shadowed the Chinese ships.","Taipei Times","https://www.taipeitimes.com/News/taiwan/archives/2026/11/04/2003867122"],
+["2026-11-04","kr","gov","4","Fourth launch in a month","South Korea’s Joint Chiefs reported multiple missiles toward the East Sea.","Reuters via The Star","https://www.thestar.com.my/news/world/2026/11/04/north-korea-fires-multiple-missiles-in-fourth-weapons-launch-in-a-month-seoul-says"],
+["2026-11-08","tw","gov","2","4 aircraft, 6 PLAN, 2 official ships","Taiwan’s defence ministry said 2 sorties entered the southwest ADIZ.","Taiwan MND, via ANI","https://www.newkerala.com/news/a/taiwan-detects-pla-aircraft-plan-vessels-operating-near-841.htm"],
+["2026-06-03","sc","think","2","Analysis: why the sea will not stabilise in 2026","Asialink reports a stalled diplomatic track and a tighter Chinese barrier at Scarborough.","Asialink, Univ. of Melbourne","https://asialink.unimelb.edu.au/diplomacy/insights/between-talks-and-tensions-why-south-china-sea-wont-stabilise-2026/"],
+["2026-11-01","kr","think","2","Arms Control Association: both Koreas test missiles","Tensions follow DMZ landmine blasts that injured South Korean soldiers.","Arms Control Association","https://www.armscontrol.org/node/15539"],
+["2026-10-14","tw","gov","3","Liaoning carrier group south of Okinawa","Japan’s Joint Staff said the carrier flew aircraft inside Japan’s EEZ. Fighters scrambled.","Japan MOD Joint Staff","https://www.mod.go.jp/js/pdf/2026/p20261019_01e.pdf"],
+["2026-11-12","tw","gov","2","PLAN vessels near Japan’s southwest islands","The Joint Staff reported Chinese navy ships on 12 November. Japanese assets monitored them.","Japan MOD Joint Staff","https://www.mod.go.jp/js/pdf/2026/p20261117_03e.pdf"],
+["2026-11-02","tw","news","3","Japan scrambles 94 times in October","The highest monthly figure in nearly five years, per preliminary Joint Staff data.","SCMP","https://www.scmp.com/news/china/military/article/3374567/japan-faces-near-5-year-high-fighter-jet-scrambles-china-ramps-pacific-patrols"],
+["2026-08-26","sc","gov","2","Australia, Philippines, US maritime activity","Australia’s Defence said it showed collective resolve and called the 2016 arbitral award final.","Australian Defence","https://www.defence.gov.au/news-events/releases/2026-08-26/australia-philippines-united-states-demonstrate-collective-resolve-through-maritime-cooperative-activity"]];
+let cur="tw",ty="all";const $=id=>document.getElementById(id);
+const P=([lo,la])=>[((lo-105)/40*560).toFixed(1),((43-la)/40*560).toFixed(1)];
+const poly=a=>a.map(p=>P(p).join(",")).join(" ");
+const L=[[[105,42],[124,40],[122.5,40.4],[121,39],[122,37],[120,36],[119,35],[121.5,32],[122,30],[120,27],[118,24.5],[114,22],[110,21],[108,21.5],[106,19],[108,15],[109,12],[107,10],[105,8.5]],
+[[124.5,38],[125,39.5],[124,40],[126,41],[129.5,42.3],[130.5,42.5],[129,40],[128,38.5],[129.4,37],[129.3,35.2],[127,34.5],[126.3,35],[126.5,37.5]],
+[[121.5,25.2],[122,25],[121.5,23.5],[120.9,22],[120.2,22.8],[120.1,23.8],[121,25.2]],
+[[120.5,18.5],[122.2,18.4],[122.3,16.3],[121.7,14.5],[123.5,13.8],[124,12.8],[122.5,13.5],[120.7,14],[120,16]],
+[[122,12],[125.5,11],[126.5,9],[126,6.5],[124,6.5],[122,7.5],[123,9.5]],
+[[117.2,8.4],[119.5,11.3],[119.7,11],[118.3,9]],
+[[113,3],[115,5],[116.8,7],[119.2,5.2],[118,3]],
+[[130,31],[131.5,33],[132,34],[134,34.5],[135.5,34.7],[137,34.6],[139,35],[140.8,35.7],[141,38],[142,40],[141.5,41.3],[140,40],[139.5,38],[137,37],[136,36],[133,35.5],[131,34.5],[130,33]]];
+const M=[["Scarborough Shoal",117.76,15.15,"sc"],["Second Thomas Shoal",115.85,9.7,"sc"],["Pratas",116.7,20.7,"tw"],["Median line",119.6,24.3,"tw"],["DMZ",127.2,38,"kr"],["Hainan",110,19.5,"sc"]];
+function drawMap(){let s='<rect class="sea" width="560" height="560" rx="10"/>';
+L.forEach(a=>s+=`<polygon class="land" points="${poly(a)}"/>`);
+const lane=(a,b,c)=>{const[x1,y1]=P(a),[x2,y2]=P(b);return`<line class="lane" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${c}" stroke-width="1.6"/>`};
+s+=lane([119.2,26.5],[119.9,22.3],Z.tw.c)+lane([110,19.5],[117.76,15.15],Z.sc.c)+lane([112,12],[115.85,9.7],Z.sc.c)+lane([125.2,38.3],[129.5,38.6],Z.kr.c);
+for(const k in Z){const[x,y]=P(Z[k].ll),r=k=="sc"?62:k=="tw"?30:34,on=k==cur;
+s+=`<g class="zone" data-z="${k}"><circle cx="${x}" cy="${y}" r="${r}" fill="${Z[k].c}" fill-opacity="${on?.2:.07}" stroke="${Z[k].c}" stroke-width="${on?2:1}" stroke-dasharray="4 4"/><text x="${x}" y="${+y+r+14}" text-anchor="middle" class="lbl" style="fill:${Z[k].c};font-size:12px">${Z[k].n}</text></g>`}
+M.forEach((m,i)=>{const[x,y]=P([m[1],m[2]]);s+=`<g class="pt" data-z="${m[3]}"><circle class="pulse" cx="${x}" cy="${y}" r="5" fill="${Z[m[3]].c}" style="animation-delay:${i*.3}s"/><circle cx="${x}" cy="${y}" r="3.5" fill="${Z[m[3]].c}"/><text x="${+x+8}" y="${+y+3}" class="lbl">${m[0]}</text></g>`});
+s+='<text x="14" y="544" class="lbl">Simplified outlines. Approximate coordinates.</text>';
+$("map").innerHTML=s;document.querySelectorAll("#map [data-z]").forEach(g=>g.onclick=()=>sel(g.dataset.z))}
+function count(el,to){let t0=null;const f=t=>{t0=t0||t;const p=Math.min((t-t0)/900,1);el.textContent=Math.round(to*p);if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f)}
+function drawCards(){$("cards").innerHTML=Object.keys(Z).map(k=>`<div class="card ${k==cur?"on":""}" data-z="${k}" style="--c:${Z[k].c}"><span class="lvl">${Z[k].n} · ${lvl(comp(k))}</span><b>0</b><span>Composite risk, 0 to 100</span></div>`).join("");
+document.querySelectorAll(".card").forEach(c=>{c.onclick=()=>sel(c.dataset.z);count(c.querySelector("b"),comp(c.dataset.z))})}
+function drawSide(){const z=Z[cur];$("side").style.setProperty("--c",z.c);
+$("side").innerHTML=`<h3>${z.n}, risk components</h3>`+Object.keys(K).map(k=>`<div class="bar"><div><span>${K[k]}</span><span>${z.s[k]}</span></div><div class="trk"><div class="fill" data-w="${z.s[k]}"></div></div></div>`).join("")+`<div class="stats">${z.st.map(a=>`<div><b>${a[0]}</b>${a[1]}</div>`).join("")}</div>`;
+setTimeout(()=>document.querySelectorAll(".fill").forEach(f=>f.style.width=f.dataset.w+"%"),30)}
+const d0=new Date("2026-05-25"),d1=new Date("2026-11-27"),X=d=>60+(new Date(d)-d0)/(d1-d0)*920,Y={tw:60,sc:125,kr:190};
+function drawTL(){let s="";["tw","sc","kr"].forEach(k=>s+=`<line x1="60" x2="980" y1="${Y[k]}" y2="${Y[k]}" stroke="#1d2638"/><text x="4" y="${Y[k]+4}" class="lbl" style="fill:${Z[k].c}">${Z[k].n.split(" ").slice(-1)[0]}</text>`);
+["06-01","07-01","08-01","09-01","10-01","11-01"].forEach(m=>{const x=X("2026-"+m);s+=`<line x1="${x}" x2="${x}" y1="30" y2="215" stroke="#121a2a"/><text x="${x-12}" y="235" class="lbl">${["Jun","Jul","Aug","Sep","Oct","Nov"][+m.slice(0,2)-6]}</text>`});
+E.forEach((e,i)=>{const x=X(e[0]),y=Y[e[1]]+(i%3-1)*9,r=3+e[3]*1.6,c=Z[e[1]].c;
+s+=`<g class="pt" data-i="${i}" opacity="${e[1]==cur?1:.35}"><circle class="pulse" cx="${x}" cy="${y}" r="${r}" fill="${c}" style="animation-delay:${(i%7)*.25}s"/><circle cx="${x}" cy="${y}" r="${r}" fill="${c}" fill-opacity=".85" stroke="#080c14"/></g>`});
+s+=`<line y1="26" y2="218" stroke="#e3b341" stroke-width="1.5" stroke-opacity=".7"><animate attributeName="x1" values="60;980;60" dur="14s" repeatCount="indefinite"/><animate attributeName="x2" values="60;980;60" dur="14s" repeatCount="indefinite"/></line>`;
+$("tl").innerHTML=s;document.querySelectorAll("#tl [data-i]").forEach(g=>g.onclick=()=>{const e=E[g.dataset.i];cur=e[1];all();pick(+g.dataset.i)})}
+function pick(i){const e=E[i];$("det").style.setProperty("--c",Z[e[1]].c);$("det").innerHTML=`<b>${e[4]}</b> <small>${e[0]} · ${Z[e[1]].n} · severity ${e[3]} of 5</small><br>${e[5]}<br><a style="color:var(--gd)" href="${e[7]}" target="_blank" rel="noopener">${e[6]}</a>`;
+const it=document.getElementById("i"+i);if(it){it.classList.add("hl");it.scrollIntoView({block:"nearest",behavior:"smooth"})}}
+function drawFeed(){const T={gov:"Government",think:"Think tank",news:"News"};
+$("flt").innerHTML=[["all","All"],["gov","Government"],["think","Think tank"],["news","News"]].map(a=>`<button class="${ty==a[0]?"on":""}" data-t="${a[0]}">${a[1]}</button>`).join("");
+document.querySelectorAll("#flt button").forEach(b=>b.onclick=()=>{ty=b.dataset.t;drawFeed()});
+$("feed").innerHTML=E.map((e,i)=>[e,i]).filter(([e])=>e[1]==cur&&(ty=="all"||e[2]==ty)).sort((a,b)=>b[0][0].localeCompare(a[0][0])).map(([e,i],j)=>`<div class="item" id="i${i}" style="animation-delay:${j*.05}s"><span class="tag" style="color:${Z[e[1]].c}">${T[e[2]]}</span><b>${e[4]}</b><br><small>${e[0]} · ${e[6]}</small><br>${e[5]}<br><a href="${e[7]}" target="_blank" rel="noopener">Open source</a></div>`).join("")||"<small>No items for this filter.</small>"}
+const SRC=[["Taiwan MND","Government",95,"2026-11-08","https://www.mnd.gov.tw/en/tag/pla/2"],["Japan MOD Joint Staff","Government",96,"2026-11-17","https://www.mod.go.jp/js/pdf/2026/p20261117_03e.pdf"],["Australian Department of Defence","Government",94,"2026-08-26","https://www.defence.gov.au/news-events/releases/2026-08-26/australia-philippines-united-states-demonstrate-collective-resolve-through-maritime-cooperative-activity"],["ROK Joint Chiefs, via Reuters","Government",90,"2026-11-04","https://www.thestar.com.my/news/world/2026/11/04/north-korea-fires-multiple-missiles-in-fourth-weapons-launch-in-a-month-seoul-says"],["Philippine Coast Guard, via Philstar","Government",82,"2026-09-25","https://interaksyon.philstar.com/?p=319737"],["USNI News","News",88,"2026-09-28","https://news.usni.org/?p=125527"],["CFR Conflict Tracker","Think tank",90,"2026-08-27","https://www.cfr.org/global-conflict-tracker/conflict/territorial-disputes-south-china-sea"],["Arms Control Association","Think tank",90,"2026-11","https://www.armscontrol.org/node/15539"]];
+const PUB=[["Master’s Thesis","China’s Role in the Indo-Pacific","The Role of China in the Indo-Pacific and Neighbouring Countries: Strategic, Economic and Geopolitical Dimensions. University of Mumbai, SIRSS, 2025 to 2026.",""],["Research Papers","US-Iran conflict","Published analysis on the US-Iran conflict.",""],["Research Papers","Critical minerals governance","Published analysis on critical minerals governance.",""],["Policy Briefs","South and Southeast Asian governance","Government-adopted briefs on governance and UN SDG frameworks.",""],["Strategic Assessments","Indo-Pacific Risk Index","Composite risk scoring for three flashpoints, sourced to official and media reporting.","#"],["OSINT Reports","Open-source incident reporting","Incident alerts and risk assessments built from open sources.",""],["Regional Security Analysis","Strait of Malacca tracker","Transit data and maritime risk analysis for a global chokepoint.","index.html"]];
+const SK=["Geopolitical Risk Analysis","Open-Source Intelligence (OSINT)","Defense Intelligence","Indo-Pacific Security","Strategic Forecasting","Military Capability Assessment","Maritime Security","Data Visualization","Research & Policy Analysis"];
+function drawExtra(){$("sg").innerHTML=SRC.map(s=>`<div class="src rv"><h4>${s[0]}</h4><span class="tag" style="color:var(--gd)">${s[1]}</span><div class="rel"><i data-w="${s[2]}"></i></div><div class="meta"><span>Reliability ${s[2]}/100</span><span>Updated ${s[3]}</span></div><a class="btn" href="${s[4]}" target="_blank" rel="noopener">Open source</a></div>`).join("");
+$("pg").innerHTML=PUB.map((p,i)=>`<div class="pub rv ${i?"":"big"}"><small>${p[0]}</small><h4>${p[1]}</h4><p>${p[2]}</p>${p[3]?`<a class="btn" href="${p[3]}" target="_blank" rel="noopener">${p[3].endsWith(".pdf")?"PDF":"Open"}</a>`:'<span class="btn off">PDF link pending</span>'}</div>`).join("");
+$("sk").innerHTML=SK.map(s=>`<div class="rv">${s}</div>`).join("");
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");e.target.querySelectorAll(".rel i").forEach(i=>i.style.width=i.dataset.w+"%");io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll(".rv").forEach((el,i)=>{el.style.transitionDelay=(i%4*.08)+"s";io.observe(el)})}
+drawExtra();
+function all(){drawMap();drawCards();drawSide();drawTL();drawFeed()}
+function sel(k){cur=k;all();$("det").innerHTML=""}
+all();
+</script></body></html>
