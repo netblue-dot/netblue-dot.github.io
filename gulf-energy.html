@@ -56,6 +56,7 @@ h1{font:700 clamp(30px,5vw,50px)/1.1 "Playfair Display",Georgia,serif;margin:10p
 .rate{display:inline-block;font:11px "JetBrains Mono",monospace;padding:2px 10px;border-radius:99px;border:1px solid var(--gold);color:var(--gold);margin-right:6px}
 @media(max-width:700px){.cc{grid-template-columns:1fr}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}.feed ul,.snk .fl,.sw,.bl,.dot{animation:none}.feed{overflow:auto}}
+.leaflet-tile-pane{filter:invert(1) hue-rotate(180deg) brightness(.95) contrast(.9) saturate(.6)}
 </style>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"></head><body><div class="wrap">
 <a class="btn" href="index.html#middle-east">← Middle East</a>
@@ -179,7 +180,7 @@ y1+=t;y2+=t+gap});document.getElementById("sk").innerHTML=h})();
 (function(){
 const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
 const map=L.map("gmap",{worldCopyJump:true}).setView([21,60],4);
-L.tileLayer("https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png",{maxZoom:10,attribution:"© OpenStreetMap contributors © CARTO"}).addTo(map);
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png",{maxZoom:12,attribution:"© OpenStreetMap contributors"}).addTo(map);
 const R=[
 {n:"Gulf to East Asia via Hormuz and Malacca",c:"#d9a93f",k:7,p:[[26.64,50.16],[26.8,51.6],[26.3,54.0],[26.4,56.5],[25.5,57.3],[24.5,58.8],[22.5,60.5],[19,64],[15,68],[9,76],[6.5,82],[5.5,92],[5.5,97],[3.5,100.3],[1.4,104.2],[5,108],[12,112],[21.5,115.5]]},
 {n:"Gulf to India via Hormuz",c:"#d9a93f",k:4,p:[[26.64,50.16],[26.8,51.6],[26.3,54.0],[26.4,56.5],[25.5,57.3],[24.5,58.8],[22.5,60.5],[19,64],[18.5,70],[18.9,72.4]]},
@@ -202,7 +203,9 @@ if(paused)document.getElementById("pz").textContent="▶ Play";
 function frame(now){const dt=now-last;last=now;if(!paused)ph+=dt/90000;
  R.forEach((r,ri)=>r.t.forEach((m,i)=>m.setLatLng(at(r,(ph+i/r.k+ri*.13)%1))));requestAnimationFrame(frame)}
 requestAnimationFrame(frame);
-setTimeout(()=>map.invalidateSize(),300);
+const allPts=R.flatMap(r=>r.p);
+function fit(){map.invalidateSize();map.fitBounds(allPts,{padding:[24,24]})}
+fit();setTimeout(fit,300);addEventListener("resize",fit);
 })();
 </script>
 <script>
